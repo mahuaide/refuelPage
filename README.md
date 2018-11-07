@@ -19,4 +19,6 @@ npm run build --report
 ```
 
 ![登录](https://github.com/mahuaide/refuelPage/raw/master/screenshots/login.png)
-![首页](https://github.com/mahuaide/refuelPage/raw/master/screenshots/home413.png)
+![注册](https://github.com/mahuaide/refuelPage/raw/master/screenshots/register.png)
+![列表](https://github.com/mahuaide/refuelPage/raw/master/screenshots/list.png)
+![增加](https://github.com/mahuaide/refuelPage/raw/master/screenshots/add.png)
