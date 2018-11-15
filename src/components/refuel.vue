@@ -6,6 +6,9 @@
         <el-button type="primary" size="small" icon="el-icon-circle-plus" @click="add"
                    style="float: right;margin: 8px 20px 0 0">新增
         </el-button>
+        <el-button type="primary" size="small" icon="el-icon-circle-plus" @click="addSation"
+                   style="float: right;margin: 8px 20px 0 0">加油站
+        </el-button>
       </p>
       <template>
         <el-table
@@ -166,6 +169,9 @@
       this._getStationAll();
     },
     methods: {
+      addSation(){
+        this.$router.push('/station');
+      },
       close(){
         this.$refs['addOneForm'].resetFields();
       },
