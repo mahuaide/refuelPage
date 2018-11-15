@@ -1,6 +1,6 @@
 # refuel
 
-> 前端项目 vue.js + ElementUI1
+> 前端项目 vue.js + ElementUI
 
 ## Build Setup
 
