@@ -199,7 +199,7 @@
 <style lang="stylus" rel="stylesheet/stylus" scoped>
   .wrapper
     position fixed
-    background url('./xtrail.jpg') 50% 50% / cover no-repeat fixed
+    background url('./login.jpg') 50% 50% / cover no-repeat fixed
     width 100%
     height 100%
     z-index 0
