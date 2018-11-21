@@ -86,7 +86,6 @@
       dragLeave(ev){
         console.log('leave')
         var dropBack = document.getElementById('dropBackground');
-
       },
       dragEnd(ev){
       },
