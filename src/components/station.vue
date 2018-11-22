@@ -1,39 +1,42 @@
 <template>
-    <div class="grad" id="mydiv"
-         @dragover="dragOver($event)"
-         @dragenter="dragEnter($event)"
-         @drop="drop($event)"
-         @dragleave="dragLeave($event)">
-      <!--背景定位,初始时相对于父元素绝对定位到屏幕外，拖拽时随鼠标移动，被拖拽元素drop时，将此元素left、top赋值给被拖拽元素-->
-      <div class="dropBackground" id="dropBackground"></div>
-      <!--被拖拽元素 2X2 -->
-      <div id='echarts1'
-           draggable="true"
-           @dragstart="dragStart($event)"
-           @dragend="dragEnd($event)"
-           class="echarts_2X2"
-           data-w="2"
-           data-h="2"
-      >
-      </div>
-      <!--被拖拽元素 3X3 -->
-      <div id='echarts2'
-           draggable="true"
-           @dragstart="dragStart($event)"
-           @dragend="dragEnd"
-           class="echarts_3X2"
-           data-w="3"
-           data-h="2"
-      >
-      </div>
+  <div class="grad" id="mydiv"
+       @dragover="dragOver($event)"
+       @dragenter="dragEnter($event)"
+       @drop="drop($event)"
+       @dragleave="dragLeave($event)">
+    <!--背景定位,初始时相对于父元素绝对定位到屏幕外，拖拽时随鼠标移动，被拖拽元素drop时，将此元素left、top赋值给被拖拽元素-->
+    <div class="dropBackground" id="dropBackground"></div>
+    <!--被拖拽元素 2X2 -->
+    <div id='echarts1'
+         draggable="true"
+         @dragstart="dragStart($event)"
+         @dragend="dragEnd($event)"
+         class="echarts_2X2"
+         data-w="2"
+         data-h="2"
+    >
     </div>
+    <!--被拖拽元素 3X3 -->
+    <div id='echarts2'
+         draggable="true"
+         @dragstart="dragStart($event)"
+         @dragend="dragEnd"
+         class="echarts_3X2"
+         data-w="3"
+         data-h="2"
+    >
+    </div>
+  </div>
 </template>
 <script type="text/ecmascript-6">
   import echarts from 'echarts'
   export default{
     data(){
       return {
-        dragEleId: '' //被拖拽元素ID
+        dragEleId: '', //被拖拽元素ID
+        dragMap: (() => {
+          return new Map()
+        })(),  //已进入目标区域的被拖拽元素队列
       }
     },
     methods: {
@@ -60,7 +63,16 @@
         var dragEle = document.getElementById(id);
         //设置被拖拽元素位置
         var backgroundEle = document.getElementById('dropBackground');
-        this._changePosition(dragEle,backgroundEle.getAttribute('x'),backgroundEle.getAttribute('y'))
+        var x = backgroundEle.getAttribute('x')
+        var y = backgroundEle.getAttribute('y')
+        //被拖拽元素更新拖拽队列
+        this.dragMap.set(id, {x, y})
+        //解决位置冲突，重新排列dragMap中拖拽元素位置
+
+        //重绘队列所有元素位置
+        for (let [id, position] of this.dragMap.entries()) {
+          this._changePosition(document.getElementById(id), position.x, position.y)
+        }
         //拖拽完毕后背景元素隐藏
         this._hideBackground();
       },
@@ -86,7 +98,7 @@
         backgroundEle.style.width = window.getComputedStyle(dragEle).width;
         //背景元素要和被拖拽元素同高
         backgroundEle.style.height = window.getComputedStyle(dragEle).height;
-        this._changePosition(backgroundEle,axis_x,axis_y);
+        this._changePosition(backgroundEle, axis_x, axis_y);
       },
       //隐藏背景元素
       _hideBackground(){
@@ -103,18 +115,18 @@
         } else {
           window.event.returnValue = false;
         }
-        if(ev.stopPropagation){
+        if (ev.stopPropagation) {
           ev.stopPropagation()
-        }else{
+        } else {
           window.event.cancelBubble = true;
         }
       },
       //设置元素位置
-      _changePosition(Ele,x,y){
+      _changePosition(Ele, x, y){
         Ele.style.left = x * (177) + 5 + 'px';
         Ele.style.top = y * (177) + 7 + 'px';
-        Ele.setAttribute('x',x)
-        Ele.setAttribute('y',y)
+        Ele.setAttribute('x', x)
+        Ele.setAttribute('y', y)
       },
     },
     mounted(){
@@ -256,7 +268,7 @@
     background-size: 177px 177px !important;
     border-left 1px solid #CAF1F3
     background-image: linear-gradient(90deg, #CAF1F3, #CAF1F3 1px, hsla(0, 0%, 91%, 0) 0px, hsla(0, 0%, 91%, 0) 172px, #CAF1F3 175px, #CAF1F3 177px),
-                      linear-gradient(0deg, #CAF1F3, #CAF1F3 1px, hsla(0, 0%, 91%, 0) 0px, hsla(0, 0%, 91%, 0) 172px, #CAF1F3 175px, #CAF1F3 177px) !important;
+      linear-gradient(0deg, #CAF1F3, #CAF1F3 1px, hsla(0, 0%, 91%, 0) 0px, hsla(0, 0%, 91%, 0) 172px, #CAF1F3 175px, #CAF1F3 177px) !important;
     .echarts_2X2
       position absolute
       left 0
