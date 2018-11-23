@@ -26,6 +26,16 @@
          data-h="2"
     >
     </div>
+    <!--被拖拽元素 2X2 -->
+    <div id='echarts3'
+         draggable="true"
+         @dragstart="dragStart($event)"
+         @dragend="dragEnd($event)"
+         class="echarts_2X2"
+         data-w="2"
+         data-h="2"
+    >
+    </div>
   </div>
 </template>
 <script type="text/ecmascript-6">
@@ -63,12 +73,14 @@
         let dragEle = document.getElementById(id);
         //设置被拖拽元素位置
         let backgroundEle = document.getElementById('dropBackground');
-        let x = backgroundEle.getAttribute('x')
-        let y = backgroundEle.getAttribute('y')
+        let x = parseInt(backgroundEle.getAttribute('x'));
+        let y = parseInt(backgroundEle.getAttribute('y'));
+        let w = parseInt(dragEle.getAttribute('data-w'));
+        let h = parseInt(dragEle.getAttribute('data-h'));
         //被拖拽元素更新拖拽队列
-        this.dragMap.set(id, {x, y})
+        this.dragMap.set(id, {x, y, w, h})
         //解决位置冲突，重新排列dragMap中拖拽元素位置
-        this._reSetDragMap();
+        this._reSetDragMap([id]);
         //重绘队列所有被拖拽元素位置
         this._drowDragEle();
         //拖拽完毕后背景元素隐藏
@@ -77,24 +89,51 @@
       dragLeave(ev){
       },
       //解决位置冲突，重新排列dragMap中拖拽元素位置
-      _reSetDragMap(){
+      _reSetDragMap(moveIds){
         if (this.dragMap.size <= 1) {
           return;
         } else {
           let mapOldJSON = JSON.stringify(this.dragMap);
-          this._redo()
-          this._drowDragEle();
+          this._conflict(moveIds)
+          let mapNewJSON = JSON.stringify(this.dragMap);
+          if (mapOldJSON != mapNewJSON) {
+            this._drowDragEle();
+          }
         }
       },
-      _redo(i=0){
-        let arrayMap = [...this.dragMap];
-        if(i == arrayMap.length-1){
-            return;
-        }else{
-          if(arrayMap[i][1].x == arrayMap[i+1][1].x && arrayMap[i][1].y == arrayMap[i+1][1].y){
-            this.dragMap.set(arrayMap[i][0],{x:0,y:2})
+      //优先保证移动元素位置，冲突时静止元素优先向下移动，
+      _conflict(moveIds){
+        if (this.dragMap.size == 0 || !moveIds || moveIds.length == 0) {
+          return;
+        } else {
+          let newMoveIds = [];
+          //移动元素为M，map中元素为O
+          for (let M of moveIds) {
+            let M_position = this.dragMap.get(M)
+            for (let [O, O_position] of this.dragMap) {
+              //如果不是本身，需要比较位置冲突
+              if (M != O) {
+                //X轴差值小于距离Y轴近的元素的宽度，且Y轴差值小于距离X轴近元素的高度，则视为冲突
+                let confictY = Math.abs(M_position.y - O_position.y) < (M_position.y - O_position.y >= 0 ? O_position.h : M_position.h);
+                let confictX = Math.abs(M_position.x - O_position.x) < (M_position.x - O_position.x >= 0 ? O_position.w : M_position.w);
+                //如果冲突
+                if (confictY && confictX) {
+                  //如果移动元素位于静止元素下方或者重叠
+                  if (M_position.y - O_position.y >= 0) {
+                    O_position.y += M_position.h + (M_position.y - O_position.y)
+                    //如果移动元素位于静止元素上方
+                  } else {
+                    O_position.y += M_position.h - (O_position.y - M_position.y)
+                  }
+                  //重置静止元素位置
+                  this.dragMap.set(O, O_position);
+                  //由于静止元素位置改变，再次递归时，视为移动元素
+                  newMoveIds.unshift(O)
+                }
+              }
+            }
           }
-          this._redo(++i)
+          this._conflict(newMoveIds)
         }
       },
       //定位背景元素位置
@@ -121,7 +160,7 @@
       },
       //重绘队列所有被拖拽元素位置
       _drowDragEle(){
-        for (let [id, position] of this.dragMap.entries()) {
+        for (let [id, position] of this.dragMap) {
           this._changePosition(document.getElementById(id), position.x, position.y)
         }
       },
@@ -157,6 +196,7 @@
     mounted(){
       let echartsInstance1 = echarts.init(document.getElementById('echarts1'))
       let echartsInstance2 = echarts.init(document.getElementById('echarts2'))
+      let echartsInstance3 = echarts.init(document.getElementById('echarts3'))
       echartsInstance1.setOption({
         tooltip: {
           trigger: 'item',
@@ -278,6 +318,53 @@
           }
         ]
       })
+      echartsInstance3.setOption({
+        tooltip: {
+          trigger: 'item',
+          formatter: "{a} <br/>{b}: {c} ({d}%)"
+        },
+        backgroundColor: {
+          color: 'rgba(255,255,255,0.6)'
+        },
+        legend: {
+          orient: 'vertical',
+          x: 'left',
+          data: ['直接访问', '邮件营销', '联盟广告', '视频广告', '搜索引擎']
+        },
+        series: [
+          {
+            name: '访问来源',
+            type: 'pie',
+            radius: ['50%', '70%'],
+            avoidLabelOverlap: false,
+            label: {
+              normal: {
+                show: false,
+                position: 'center'
+              },
+              emphasis: {
+                show: true,
+                textStyle: {
+                  fontSize: '30',
+                  fontWeight: 'bold'
+                }
+              }
+            },
+            labelLine: {
+              normal: {
+                show: false
+              }
+            },
+            data: [
+              {value: 335, name: '直接访问'},
+              {value: 310, name: '邮件营销'},
+              {value: 234, name: '联盟广告'},
+              {value: 135, name: '视频广告'},
+              {value: 1548, name: '搜索引擎'}
+            ]
+          }
+        ]
+      });
     },
     computed: {},
     components: {}
