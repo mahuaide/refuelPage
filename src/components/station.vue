@@ -58,51 +58,76 @@
       },
       drop(ev){
         this._preventDefault(ev);
-        var id = ev.dataTransfer.getData("Text");
+        let id = ev.dataTransfer.getData("Text");
         //被拖拽元素
-        var dragEle = document.getElementById(id);
+        let dragEle = document.getElementById(id);
         //设置被拖拽元素位置
-        var backgroundEle = document.getElementById('dropBackground');
-        var x = backgroundEle.getAttribute('x')
-        var y = backgroundEle.getAttribute('y')
+        let backgroundEle = document.getElementById('dropBackground');
+        let x = backgroundEle.getAttribute('x')
+        let y = backgroundEle.getAttribute('y')
         //被拖拽元素更新拖拽队列
         this.dragMap.set(id, {x, y})
         //解决位置冲突，重新排列dragMap中拖拽元素位置
-
-        //重绘队列所有元素位置
-        for (let [id, position] of this.dragMap.entries()) {
-          this._changePosition(document.getElementById(id), position.x, position.y)
-        }
+        this._reSetDragMap();
+        //重绘队列所有被拖拽元素位置
+        this._drowDragEle();
         //拖拽完毕后背景元素隐藏
         this._hideBackground();
       },
       dragLeave(ev){
       },
+      //解决位置冲突，重新排列dragMap中拖拽元素位置
+      _reSetDragMap(){
+        if (this.dragMap.size <= 1) {
+          return;
+        } else {
+          let mapOldJSON = JSON.stringify(this.dragMap);
+          this._redo()
+          this._drowDragEle();
+        }
+      },
+      _redo(i=0){
+        let arrayMap = [...this.dragMap];
+        if(i == arrayMap.length-1){
+            return;
+        }else{
+          if(arrayMap[i][1].x == arrayMap[i+1][1].x && arrayMap[i][1].y == arrayMap[i+1][1].y){
+            this.dragMap.set(arrayMap[i][0],{x:0,y:2})
+          }
+          this._redo(++i)
+        }
+      },
       //定位背景元素位置
       _findPosition(ev){
         //目标区域
-        var wrapper = document.getElementById('mydiv');
+        let wrapper = document.getElementById('mydiv');
         //背景元素
-        var backgroundEle = document.getElementById('dropBackground');
+        let backgroundEle = document.getElementById('dropBackground');
         //被拖拽元素
-        var dragEle = document.getElementById(this.dragEleId);
+        let dragEle = document.getElementById(this.dragEleId);
         //鼠标距目标区域左侧距离
-        var off_x = ev.clientX - wrapper.clientLeft;
+        let off_x = ev.clientX - wrapper.clientLeft;
         //鼠标距目标区域上侧距离
-        var off_y = ev.clientY - (wrapper.offsetTop - document.documentElement.scrollTop)
+        let off_y = ev.clientY - (wrapper.offsetTop - document.documentElement.scrollTop)
         //计算坐标X
-        var axis_x = (Math.round(off_x / 177)) - 1 < 0 ? 0 : (Math.round(off_x / 177)) - 1;
+        let axis_x = (Math.round(off_x / 177)) - 1 < 0 ? 0 : (Math.round(off_x / 177)) - 1;
         //计算坐标Y
-        var axis_y = (Math.round(off_y / 177)) - 1 < 0 ? 0 : (Math.round(off_y / 177)) - 1;
+        let axis_y = (Math.round(off_y / 177)) - 1 < 0 ? 0 : (Math.round(off_y / 177)) - 1;
         //背景元素要和被拖拽元素同宽
         backgroundEle.style.width = window.getComputedStyle(dragEle).width;
         //背景元素要和被拖拽元素同高
         backgroundEle.style.height = window.getComputedStyle(dragEle).height;
         this._changePosition(backgroundEle, axis_x, axis_y);
       },
+      //重绘队列所有被拖拽元素位置
+      _drowDragEle(){
+        for (let [id, position] of this.dragMap.entries()) {
+          this._changePosition(document.getElementById(id), position.x, position.y)
+        }
+      },
       //隐藏背景元素
       _hideBackground(){
-        var backgroundEle = document.getElementById('dropBackground');
+        let backgroundEle = document.getElementById('dropBackground');
         backgroundEle.style.width = 0 + 'px';
         backgroundEle.style.height = 0 + 'px';
         backgroundEle.style.left = 0 + 'px';
@@ -130,8 +155,8 @@
       },
     },
     mounted(){
-      var echartsInstance1 = echarts.init(document.getElementById('echarts1'))
-      var echartsInstance2 = echarts.init(document.getElementById('echarts2'))
+      let echartsInstance1 = echarts.init(document.getElementById('echarts1'))
+      let echartsInstance2 = echarts.init(document.getElementById('echarts2'))
       echartsInstance1.setOption({
         tooltip: {
           trigger: 'item',
