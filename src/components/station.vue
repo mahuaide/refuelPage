@@ -15,6 +15,8 @@
          data-w="2"
          data-h="2"
     >
+      <i class="icon el-icon-close" @click="_del('echarts1')"></i>
+      <div class="echarts_body" id="echarts1_body"></div>
     </div>
     <!--被拖拽元素 3X3 -->
     <div id='echarts2'
@@ -25,6 +27,8 @@
          data-w="3"
          data-h="2"
     >
+      <i class="icon el-icon-close" @click="_del('echarts2')"></i>
+      <div class="echarts_body" id="echarts2_body"></div>
     </div>
     <!--被拖拽元素 2X2 -->
     <div id='echarts3'
@@ -35,6 +39,8 @@
          data-w="2"
          data-h="2"
     >
+      <i class="icon el-icon-close" @click="_del('echarts3')"></i>
+      <div class="echarts_body" id="echarts3_body"></div>
     </div>
   </div>
 </template>
@@ -45,13 +51,18 @@
       return {
         dragEleId: '', //被拖拽元素ID
         dragMap: (() => {
-          return new Map()
-        })(),  //已进入目标区域的被拖拽元素队列
+          return new Map();
+        })(),  //已进入目标区域的被拖拽元素队列,结构为["ID",{"x":0,"y":0,"w":2,"h":2}]
+        echartsMapImg: (() => {
+          return new Map();//存放echarts微缩图，拖拽时使用
+        })(),
       }
     },
     methods: {
       dragStart(ev){
         ev.dataTransfer.setData("Text", ev.target.id);
+        ev.dataTransfer.effectAllowed ='copy'
+        ev.dataTransfer.setDragImage(this.echartsMapImg.get(ev.target.id), 177, 177);
         //记录被拖拽元素ID
         this.dragEleId = ev.target.id;
       },
@@ -64,7 +75,7 @@
       dragOver(ev){
         this._preventDefault(ev);
         //拖拽过程中计算鼠标距离，定位背景元素距离和宽高
-        this._findPosition(ev)
+        this._findPosition(ev);
       },
       drop(ev){
         this._preventDefault(ev);
@@ -73,67 +84,74 @@
         let dragEle = document.getElementById(id);
         //设置被拖拽元素位置
         let backgroundEle = document.getElementById('dropBackground');
-        let x = parseInt(backgroundEle.getAttribute('x'));
-        let y = parseInt(backgroundEle.getAttribute('y'));
+        let x = parseInt(backgroundEle.getAttribute('data-x'));
+        let y = parseInt(backgroundEle.getAttribute('data-y'));
         let w = parseInt(dragEle.getAttribute('data-w'));
         let h = parseInt(dragEle.getAttribute('data-h'));
+        //记录下拖拽前的数据
+        let mapOldJSON = JSON.stringify(this.dragMap);
         //被拖拽元素更新拖拽队列
-        this.dragMap.set(id, {x, y, w, h})
+        this.dragMap.set(id, {x, y, w, h});
         //解决位置冲突，重新排列dragMap中拖拽元素位置
-        this._reSetDragMap([id]);
-        //重绘队列所有被拖拽元素位置
-        this._drowDragEle();
-        //拖拽完毕后背景元素隐藏
-        this._hideBackground();
+        this._resolveConflict([id]);
+        //记录下拖拽后的数据
+        let mapNewJSON = JSON.stringify(this.dragMap);
+        //如果JSON前后不一致，说明位置变化，需要重新绘制页面，并发请求给后台
+        if (mapOldJSON != mapNewJSON) {
+          //重绘队列所有被拖拽元素位置
+          this._drowDragEle();
+          //给后台发请求，记录元素位置
+        }
       },
       dragLeave(ev){
       },
-      //解决位置冲突，重新排列dragMap中拖拽元素位置
-      _reSetDragMap(moveIds){
-        if (this.dragMap.size <= 1) {
+      //删除目标区域中的图
+      _del(id){
+        if (!this.dragMap.has(id)) {
           return;
         } else {
-          let mapOldJSON = JSON.stringify(this.dragMap);
-          this._conflict(moveIds)
-          let mapNewJSON = JSON.stringify(this.dragMap);
-          if (mapOldJSON != mapNewJSON) {
-            this._drowDragEle();
-          }
+          this.dragMap.delete(id);
+          let Ele = document.getElementById(id);
+          Ele.style.left = 0 + 'px';
+          Ele.style.top = -342 + 'px';
+          Ele.setAttribute('data-x', 0);
+          Ele.setAttribute('data-y', 0);
         }
       },
-      //优先保证移动元素位置，冲突时静止元素优先向下移动，
-      _conflict(moveIds){
-        if (this.dragMap.size == 0 || !moveIds || moveIds.length == 0) {
+      //解决位置冲突，重新排列dragMap中拖拽元素位置,（优先保证移动元素位置）
+      _resolveConflict(moveIds){
+        //如果map中就一个元素，或者没有可移动元素，退出
+        if (this.dragMap.size <= 1 || !moveIds || moveIds.length == 0) {
           return;
         } else {
           let newMoveIds = [];
           //移动元素为M，map中元素为O
           for (let M of moveIds) {
-            let M_position = this.dragMap.get(M)
+            let M_position = this.dragMap.get(M);
             for (let [O, O_position] of this.dragMap) {
               //如果不是本身，需要比较位置冲突
               if (M != O) {
                 //X轴差值小于距离Y轴近的元素的宽度，且Y轴差值小于距离X轴近元素的高度，则视为冲突
-                let confictY = Math.abs(M_position.y - O_position.y) < (M_position.y - O_position.y >= 0 ? O_position.h : M_position.h);
-                let confictX = Math.abs(M_position.x - O_position.x) < (M_position.x - O_position.x >= 0 ? O_position.w : M_position.w);
+                let conflictY = Math.abs(M_position.y - O_position.y) < (M_position.y - O_position.y >= 0 ? O_position.h : M_position.h);
+                let conflictX = Math.abs(M_position.x - O_position.x) < (M_position.x - O_position.x >= 0 ? O_position.w : M_position.w);
                 //如果冲突
-                if (confictY && confictX) {
+                if (conflictY && conflictX) {
                   //如果移动元素位于静止元素下方或者重叠
                   if (M_position.y - O_position.y >= 0) {
-                    O_position.y += M_position.h + (M_position.y - O_position.y)
+                    O_position.y += M_position.h + (M_position.y - O_position.y);
                     //如果移动元素位于静止元素上方
                   } else {
-                    O_position.y += M_position.h - (O_position.y - M_position.y)
+                    O_position.y += M_position.h - (O_position.y - M_position.y);
                   }
-                  //重置静止元素位置
+                  //重置静止元素新位置
                   this.dragMap.set(O, O_position);
                   //由于静止元素位置改变，再次递归时，视为移动元素
-                  newMoveIds.unshift(O)
+                  newMoveIds.unshift(O);
                 }
               }
             }
           }
-          this._conflict(newMoveIds)
+          this._resolveConflict(newMoveIds);
         }
       },
       //定位背景元素位置
@@ -147,7 +165,7 @@
         //鼠标距目标区域左侧距离
         let off_x = ev.clientX - wrapper.clientLeft;
         //鼠标距目标区域上侧距离
-        let off_y = ev.clientY - (wrapper.offsetTop - document.documentElement.scrollTop)
+        let off_y = ev.clientY - (wrapper.offsetTop - document.documentElement.scrollTop);
         //计算坐标X
         let axis_x = (Math.round(off_x / 177)) - 1 < 0 ? 0 : (Math.round(off_x / 177)) - 1;
         //计算坐标Y
@@ -161,7 +179,7 @@
       //重绘队列所有被拖拽元素位置
       _drowDragEle(){
         for (let [id, position] of this.dragMap) {
-          this._changePosition(document.getElementById(id), position.x, position.y)
+          this._changePosition(document.getElementById(id), position.x, position.y);
         }
       },
       //隐藏背景元素
@@ -189,21 +207,23 @@
       _changePosition(Ele, x, y){
         Ele.style.left = x * (177) + 5 + 'px';
         Ele.style.top = y * (177) + 7 + 'px';
-        Ele.setAttribute('x', x)
-        Ele.setAttribute('y', y)
+        Ele.setAttribute('data-x', x);
+        Ele.setAttribute('data-y', y);
       },
     },
     mounted(){
-      let echartsInstance1 = echarts.init(document.getElementById('echarts1'))
-      let echartsInstance2 = echarts.init(document.getElementById('echarts2'))
-      let echartsInstance3 = echarts.init(document.getElementById('echarts3'))
+      //获得echart实例
+      let echartsInstance1 = echarts.init(document.getElementById('echarts1_body'));
+      let echartsInstance2 = echarts.init(document.getElementById('echarts2_body'));
+      let echartsInstance3 = echarts.init(document.getElementById('echarts3_body'));
+      //echarts实例绘图
       echartsInstance1.setOption({
         tooltip: {
           trigger: 'item',
           formatter: "{a} <br/>{b}: {c} ({d}%)"
         },
         backgroundColor: {
-          color: 'rgba(255,255,255,0.6)'
+          color: '#fff'
         },
         legend: {
           orient: 'vertical',
@@ -317,14 +337,14 @@
             data: [2.0, 2.2, 3.3, 4.5, 6.3, 10.2, 20.3, 23.4, 23.0, 16.5, 12.0, 6.2]
           }
         ]
-      })
+      });
       echartsInstance3.setOption({
         tooltip: {
           trigger: 'item',
           formatter: "{a} <br/>{b}: {c} ({d}%)"
         },
         backgroundColor: {
-          color: 'rgba(255,255,255,0.6)'
+          color: '#fff'
         },
         legend: {
           orient: 'vertical',
@@ -365,6 +385,27 @@
           }
         ]
       });
+      //为了在拖拽过程中显示echarts微缩图，先生成base64，由于echarts有过渡动画，所以间隔1秒
+      setTimeout(()=>{
+        var image1 = new Image();
+        image1.src = echartsInstance1.getDataURL({
+          pixelRatio: 1,
+          backgroundColor: '#ddd'
+        });
+        this.echartsMapImg.set('echarts1',image1);
+        var image2 = new Image();
+        image2.src = echartsInstance2.getDataURL({
+          pixelRatio: 1,
+          backgroundColor: '#fff'
+        });
+        this.echartsMapImg.set('echarts2',image2);
+        var image3 = new Image();
+        image3.src = echartsInstance3.getDataURL({
+          pixelRatio: 1,
+          backgroundColor: '#fff'
+        });
+        this.echartsMapImg.set('echarts3',image3);
+      },1000)
     },
     computed: {},
     components: {}
@@ -392,9 +433,20 @@
       background-color: rgba(255, 255, 255, 0.6)
       cursor move
       transition top 0.3s, left 0.3s
+      .icon
+        position absolute
+        top 5px
+        right 5px
+        font-size 22px
+        color #000
+        z-index 1000
+        cursor pointer
+      .echarts_body
+        width 100%
+        height 100%
     .echarts_3X2
       position absolute
-      left 344px
+      left 0x
       top -342px
       width: unit* 3 + 5
       height: unit* 2
@@ -403,6 +455,17 @@
       background-color: rgba(255, 255, 255, 0.8)
       cursor move
       transition top 0.3s, left 0.3s
+      .icon
+        position absolute
+        top 5px
+        right 5px
+        font-size 22px
+        color #000
+        z-index 1000
+        cursor pointer
+      .echarts_body
+        width 100%
+        height 100%
     .dropBackground
       position absolute
       left 0
