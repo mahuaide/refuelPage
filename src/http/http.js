@@ -7,7 +7,7 @@ import router from '../router/index.js';
 // axios 公共配置
 axios.defaults.timeout = 60000;
 // axios.defaults.baseURL = "http://refuel.applinzi.com";
-axios.defaults.baseURL = "http://10.1.45.26:3000";
+axios.defaults.baseURL = "http://localhost:3000";
 axios.defaults.withCredentials = true;
 
 // http request 拦截器
