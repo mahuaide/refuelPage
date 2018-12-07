@@ -11,5 +11,6 @@ export default {
   login:USER +'/login/{userName}/{password}',
   getLoginUserInfo:USER +'/getLoginUserInfo',
   checkUserExist:USER + '/checkUserExist/{userName}',
+  getRefuelLogInStation:REFUEL + '/query/instation',
 }
 

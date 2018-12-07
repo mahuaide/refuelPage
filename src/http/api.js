@@ -12,6 +12,7 @@ export const getLoginUserInfo = params=>{return axios.get(resfulParamsToUrl(Path
 export const checkUserExist = params=>{return axios.get(resfulParamsToUrl(Path.checkUserExist,params),{params})}
 //加油记录
 export const getRefuelLogAll = params=>{return axios.get(resfulParamsToUrl(Path.getRefuelLogAll,params),{params})}
+export const getRefuelLogInStation = params=>{return axios.get(resfulParamsToUrl(Path.getRefuelLogInStation,params),{params})}
 export const delRefuelLogById = params=>{return axios.delete(resfulParamsToUrl(Path.delRefuelLogById,params),{params})}
 export const newRefuelLog = params=>{return axios.post(resfulParamsToUrl(Path.newRefuelLog,params),params)}
 export const updateRefuelLogById = params=>{return axios.post(resfulParamsToUrl(Path.updateRefuelLogById,params),params)}
