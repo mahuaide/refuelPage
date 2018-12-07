@@ -29,7 +29,7 @@
             var marker = new BMap.Marker(new BMap.Point(data[i].lng, data[i].lat));
             mp.addOverlay(marker);
             (function () {
-              var temp = data[i]
+              var temp = data[i];
               marker.addEventListener("click",function(){
                 bdwin(this,temp);
               });

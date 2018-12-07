@@ -22,3 +22,4 @@ npm run build --report
 ![注册](https://github.com/mahuaide/refuelPage/raw/master/screenshots/register.png)
 ![列表](https://github.com/mahuaide/refuelPage/raw/master/screenshots/list.png)
 ![增加](https://github.com/mahuaide/refuelPage/raw/master/screenshots/add.png)
+![地图](https://github.com/mahuaide/refuelPage/raw/master/screenshots/map.png)
