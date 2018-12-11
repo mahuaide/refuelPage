@@ -28,12 +28,11 @@
           for (var i = 0; i < data.length; i++) {
             var marker = new BMap.Marker(new BMap.Point(data[i].lng, data[i].lat));
             mp.addOverlay(marker);
-            (function () {
-              var temp = data[i];
+            (function (i) {
               marker.addEventListener("click",function(){
-                bdwin(this,temp);
+                bdwin(this,data[i]);
               });
-            })();
+            })(i);
           }
           //绘制窗口提示
           function bdwin(marker,data) {
