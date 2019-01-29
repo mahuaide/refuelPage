@@ -1,8 +1,9 @@
 <template>
   <div class="warpper">
     <div class="refuel-log">
-      <p class="title"><span class="license">{{$store.state.user.license}}</span><b style="font-size: 14px;color: #999"> ({{$store.state.user.carType}})</b>
-        <span class="tip">车主：<b>{{$store.state.user.userName}}</b>，共 <b>{{count}}</b> 次，总计 <b>{{sum || 0 }}</b> 元</span>
+      <p class="title"><span class="license">{{$store.state.user.license}}</span><b style="font-size: 14px;color: #999">
+        ({{$store.state.user.carType}})</b>
+        <span class="tip">车主：<b>{{$store.state.user.userName}}</b>，共 <b>{{count}}</b> 次，总计 <b>{{sum || 0 }}</b> 元，总里程：<b>{{$store.state.user.mileage}}公里</b></span>
         <el-button type="primary" size="small" icon="el-icon-circle-plus" @click="add"
                    style="float: right;margin: 8px 20px 0 0">新增
         </el-button>
@@ -54,7 +55,13 @@
             prop="station_address"
             label="地址"
             align="left"
-            >
+          >
+          </el-table-column>
+          <el-table-column
+            prop="mileage"
+            label="里程"
+            align="left"
+          >
           </el-table-column>
           <el-table-column
             label="操作"
@@ -69,11 +76,11 @@
           </el-table-column>
         </el-table>
         <el-pagination style="float: right;margin-top: 10px"
-          @current-change="handleCurrentChange"
-          :current-page="page"
-          :page-size="pageSize"
-          layout="prev, pager, next"
-          :total="count">
+                       @current-change="handleCurrentChange"
+                       :current-page="page"
+                       :page-size="pageSize"
+                       layout="prev, pager, next"
+                       :total="count">
         </el-pagination>
       </template>
     </div>
@@ -107,7 +114,6 @@
             <el-option label="微信" value="wechat"></el-option>
             <el-option label="支付宝" value="alipay"></el-option>
             <el-option label="银行卡" value="card"></el-option>
-            <el-option label="其他" value="other"></el-option>
           </el-select>
         </el-form-item>
         <el-form-item label="油号：" :label-width="formLabelWidth" prop="oil_type" required>
@@ -127,6 +133,9 @@
             </el-option>
           </el-select>
         </el-form-item>
+        <el-form-item label="里程：" :label-width="formLabelWidth" prop="mileage">
+          <el-input-number v-model="form.mileage" :precision="1" :step="100" :max="10000000"></el-input-number>
+        </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
         <el-button @click="addOne = false">取 消</el-button>
@@ -142,8 +151,8 @@
   export default {
     data () {
       return {
-        page:1,
-        pageSize:10,
+        page: 1,
+        pageSize: 10,
         count: 0,
         sum: 0,
         addorEdit: 'add',
@@ -159,6 +168,7 @@
           oil_type: '92',
           liters: '',
           refuel_station_id: '',
+          mileage: ''
         },
         stations: []
       }
@@ -196,8 +206,8 @@
         })
       },
       _getRefuelLogAll(){
-        getRefuelLogAll({page:this.page,pageSize:this.pageSize}).then(res => {
-          let {code, log, count, sum,errMsg} = res.data;
+        getRefuelLogAll({page: this.page, pageSize: this.pageSize}).then(res => {
+          let {code, log, count, sum, errMsg} = res.data;
           if (code == 200) {
             this.refuelLog = log;
             this.count = count;
