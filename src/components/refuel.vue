@@ -3,7 +3,7 @@
     <div class="refuel-log">
       <p class="title"><span class="license">{{$store.state.user.license}}</span><b style="font-size: 14px;color: #999">
         ({{$store.state.user.carType}})</b>
-        <span class="tip">车主：<b>{{$store.state.user.userName}}</b>，共 <b>{{count}}</b> 次，总计 <b>{{sum || 0 }}</b> 元，总里程：<b>{{$store.state.user.mileage}}公里</b></span>
+        <span class="tip">车主：<b>{{$store.state.user.userName}}</b>，共 <b>{{count}}</b> 次，总计 <b>{{$store.state.user.payTotal || 0 }}</b> 元，总里程：<b>{{$store.state.user.mileage}}公里</b></span>
         <el-button type="primary" size="small" icon="el-icon-circle-plus" @click="add"
                    style="float: right;margin: 8px 20px 0 0">新增
         </el-button>
@@ -147,7 +147,8 @@
 </template>
 
 <script type="text/ecmascript-6">
-  import {getRefuelLogAll, delRefuelLogById, getStationAll, newRefuelLog, updateRefuelLogById} from '@http/api.js'
+  import {getRefuelLogAll, delRefuelLogById, getStationAll, newRefuelLog, updateRefuelLogById,getLoginUserInfo} from '@http/api.js'
+  import * as types from '../store/type'
   export default {
     data () {
       return {
@@ -179,6 +180,14 @@
       this._getStationAll();
     },
     methods: {
+      getLoginUser(){
+        getLoginUserInfo().then(res => {
+          let {code, data, errMsg} = res.data;
+          if (code == 200) {
+            this.$store.commit(types.LOGIN, data);
+          }
+        })
+      },
       addSation(){
         this.$router.push('/station');
       },
@@ -234,7 +243,7 @@
               let {code, data, errMsg} = res.data;
               if (code == 200) {
                 this._getRefuelLogAll();
-
+                this.getLoginUser()
                 this.addOne = false;
               } else {
                 this.$notify({
@@ -262,6 +271,7 @@
             if (code == 200) {
               this.delConfirm = false;
               this._getRefuelLogAll();
+              this.getLoginUser()
             } else {
               this.$notify({
                 title: 'wrong',
@@ -282,6 +292,7 @@
               let {code, data, errMsg} = res.data;
               if (code == 200) {
                 this._getRefuelLogAll();
+                this.getLoginUser()
                 this.addOne = false;
               } else {
                 this.$notify({
