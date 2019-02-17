@@ -257,19 +257,19 @@
         this.delConfirm = true;
       },
       delConfirmSubmit(){
-        delRefuelLogById({id: this.refuelObj.refuel_id}).then(res => {
-          let {code, data, errMsg} = res.data;
-          if (code == 200) {
-            this.delConfirm = false;
-            this._getRefuelLogAll();
-          } else {
-            this.$notify({
-              title: 'wrong',
-              message: errMsg || 'delRefuelLogById error!',
-              type: 'error'
-            })
-          }
-        })
+          delRefuelLogById({id: this.refuelObj.refuel_id}).then(res => {
+            let {code, data, errMsg} = res.data;
+            if (code == 200) {
+              this.delConfirm = false;
+              this._getRefuelLogAll();
+            } else {
+              this.$notify({
+                title: 'wrong',
+                message: errMsg || 'delRefuelLogById error!',
+                type: 'error'
+              })
+            }
+          })
       },
       add(){
         this.addorEdit = 'add';

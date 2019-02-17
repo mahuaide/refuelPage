@@ -129,7 +129,7 @@
                 getLoginUserInfo().then(res => {
                   let {code, data, errMsg} = res.data;
                   if (code == 200) {
-                    this.$store.commit(types.LOGIN, data[0]);
+                    this.$store.commit(types.LOGIN, data);
                     this.$router.push('/refuel');
                   }
                 })
@@ -165,7 +165,7 @@
                     getLoginUserInfo().then(res => {
                       let {code, data, errMsg} = res.data;
                       if (code == 200) {
-                        this.$store.commit(types.LOGIN, data[0]);
+                        this.$store.commit(types.LOGIN, data);
                         this.$router.push('/refuel');
                       }
                     })
