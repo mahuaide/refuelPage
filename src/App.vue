@@ -10,12 +10,6 @@
   export default {
     name: 'App',
     mounted(){
-      getLoginUserInfo().then(res => {
-        let {code, data, errMsg} = res.data;
-        if (code == 200) {
-          this.$store.commit(types.LOGIN, data);
-        }
-      })
     },
   }
 </script>

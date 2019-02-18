@@ -28,5 +28,10 @@ export default new Router({
       name: 'station',
       component: gasStation
     },
+    {
+      path: '/dash',
+      name: 'dash',
+      component: station
+    }
   ]
 })
