@@ -1,7 +1,8 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import refuel from '@/components/refuel'
-import station from '@/components/station'
+import dndEcharts from '@/components/dndEcharts'
+import demo from '@/components/demo'
 import gasStation from '@/components/gasStation'
 import login from '@/components/login'
 
@@ -29,9 +30,14 @@ export default new Router({
       component: gasStation
     },
     {
-      path: '/dash',
-      name: 'dash',
-      component: station
+      path: '/demo',
+      name: 'demo',
+      component: demo
+    },
+    {
+      path: '/dndEcharts',
+      name: 'dndEcharts',
+      component: dndEcharts
     }
   ]
 })
