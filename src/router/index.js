@@ -2,6 +2,7 @@ import Vue from 'vue'
 import Router from 'vue-router'
 import refuel from '@/components/refuel'
 import dndEcharts from '@/components/dndEcharts'
+import customLane from '@/components/customLane'
 import demo from '@/components/demo'
 import gasStation from '@/components/gasStation'
 import login from '@/components/login'
@@ -38,6 +39,11 @@ export default new Router({
       path: '/dndEcharts',
       name: 'dndEcharts',
       component: dndEcharts
+    },
+    {
+      path: '/customLane',
+      name: 'customLane',
+      component: customLane
     }
   ]
 })
