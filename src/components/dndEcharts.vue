@@ -60,7 +60,9 @@
     },
     methods: {
       dragStart(ev){
-        ev.dataTransfer.setData("Text", ev.target.id);
+        if(navigator.userAgent.indexOf("MSIE")==-1) {
+          ev.dataTransfer.setData("Text", ev.target.id);
+        }
         ev.dataTransfer.effectAllowed ='copy'
         ev.dataTransfer.setDragImage(this.echartsMapImg.get(ev.target.id), 177, 177);
         //记录被拖拽元素ID

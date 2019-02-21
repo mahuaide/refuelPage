@@ -8,13 +8,20 @@
           <div class="board-main-content">
             <div class="board-header">tools-bar</div>
             <div class="board-canvas">
-              <div id="board">
+              <div id="board"
+                   @dragover="dragLaneOver($event)"
+                   @dragenter="dragLaneEnter($event)"
+                   @drop="dropLane($event)"
+                   @dragleave="dragLaneLeave($event)">
                 <template v-for="(item,index) in list">
                   <div class="list-wrapper" v-if="!item.temp">
-                    <div class="list" draggable="true">
+                    <div class="list" :id="item.id"
+                         draggable="true"
+                         @dragstart="dragLaneStart($event)"
+                         @dragend="dragLaneEnd($event)">
                       <div class="list-header">
                         <div class="list-header-target"></div>
-                        <textarea class="mod-list-name" >{{item.lane}}</textarea>
+                        <textarea class="mod-list-name">{{item.lane}}</textarea>
                       </div>
                       <div class="list-cards">
                         <a class="list-card" draggable="true" v-for="(card,index) in item.cards">
@@ -32,7 +39,7 @@
                   </div>
                   <div v-if="item.temp" class="list-wrapper-temp" style="height: 200px;">1</div>
                 </template>
-
+                <div class="list-wrapper mod-add" @click="addLane">添加泳道</div>
               </div>
             </div>
           </div>
@@ -45,20 +52,79 @@
   export default{
     data(){
       return {
+        dragLane: {},
         list: [
           {
+            "id": 1,
             "lane": "开始",
             "cards": [{"title": 11}, {"title": 12}, {"title": 13}, {"title": 14}, {"title": "langlanglanglanglanglanglanglanglanglanglanglanglanglanglanglanglanglanglanglanglanglanglanglanglanglanglanglanglang"}]
           },
-          {"temp": true},
-          {"lane": "开发", "cards": [{"title": 21}, {"title": 22}, {"title": 23}, {"title": 24}, {"title": 25}]},
-          {"lane": "阻塞", "cards": [{"title": 31}, {"title": 32}, {"title": 33}, {"title": 34}, {"title": 35}]},
-          {"lane": "测试", "cards": [{"title": 41}, {"title": 42}, {"title": 43}, {"title": 44}, {"title": 45}]},
-          {"lane": "完成", "cards": [{"title": 51}, {"title": 52}, {"title": 53}, {"title": 54}, {"title": 55}]},
+          {"id": 2, "lane": "开发", "cards": [{"title": 21}, {"title": 22}, {"title": 23}, {"title": 24}, {"title": 25}]},
+          {"id": 3, "lane": "阻塞", "cards": [{"title": 31}, {"title": 32}, {"title": 33}, {"title": 34}, {"title": 35}]},
+          {"id": 4, "lane": "测试", "cards": [{"title": 41}, {"title": 42}, {"title": 43}, {"title": 44}, {"title": 45}]},
+          {"id": 5, "lane": "完成", "cards": [{"title": 51}, {"title": 52}, {"title": 53}, {"title": 54}, {"title": 55}]},
         ]
       }
     },
-    methods: {},
+    methods: {
+      addLane(){
+        var id = Math.random();
+        this.list.push(
+          {"id": id, "lane": id, "cards": [{"title": 51}, {"title": 52}, {"title": 53}, {"title": 54}, {"title": 55}]},
+        )
+      },
+      dragLaneStart(ev){
+        console.log('start');
+        if (navigator.userAgent.indexOf("MSIE") == -1 && navigator.userAgent.indexOf("Trident") == -1) {
+          ev.dataTransfer.setData("dragId", ev.target.id);
+        }
+        this.list.forEach((item, index) => {
+          if (item.id == ev.target.id) {
+            this.dragLane = this.list.splice(index, 1, {"temp": true})[0]
+          }
+        })
+      },
+      dragLaneEnd(ev){
+        console.log('end')
+        this.list.forEach((item, index) => {
+          if (item.temp) {
+            this.list.splice(index, 1, this.dragLane);
+          }
+        })
+      },
+      _preventDefault(ev){
+        if (ev.preventDefault) {
+          ev.preventDefault();
+        } else {
+          window.event.returnValue = false;
+        }
+        if (ev.stopPropagation) {
+          ev.stopPropagation()
+        } else {
+          window.event.cancelBubble = true;
+        }
+      },
+      dragLaneOver(ev){
+        console.log('over')
+        ev.dataTransfer.dropEffect = 'move';
+        let scrollLeft = document.getElementById('board').scrollLeft
+        let offsetX = Math.floor((ev.clientX + scrollLeft) / 280);
+        this.list.forEach((item, index) => {
+          if (item.temp) {
+            this.list.splice(index, 1)
+            this.list.splice(offsetX, 0, {"temp": true})
+          }
+        })
+
+      },
+      dragLaneEnter(){
+      },
+      dropLane(){
+        this._preventDefault(ev);
+      },
+      dragLaneLeave(){
+      }
+    },
     mounted(){
 //      var board = document.getElementById('board')
 //      var offset;
@@ -176,6 +242,8 @@
                 right: 0;
                 bottom: 0;
                 left: 0;
+                .list-wrapper-temp:first-child
+                  margin-left 8px
                 .list-wrapper-temp
                   width: 272px;
                   margin: 0 4px;
@@ -230,6 +298,7 @@
                         padding: 4px 7px;
                         resize: none;
                         max-height: 256px;
+                        font-size 14px
                         &:focus
                           background-color #fff
                           border none;
@@ -282,4 +351,15 @@
                       -moz-user-select: none;
                       -ms-user-select: none;
                       user-select: none;
+                .mod-add
+                  cursor pointer
+                  background-color: rgba(0, 0, 0, .3)
+                  border-radius: 3px;
+                  height 36px
+                  padding 0 20px
+                  font-size 14px
+                  line-height 36px
+                  color #fff
+                  &:hover
+                    background-color: rgba(0, 0, 0, .5)
 </style>
