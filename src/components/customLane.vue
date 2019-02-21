@@ -110,7 +110,7 @@
       },
       dragLaneEnter(){
       },
-      dropLane(){
+      dropLane(ev){
         this._preventDefault(ev);
       },
       dragLaneLeave(){
