@@ -60,7 +60,7 @@
     },
     methods: {
       dragStart(ev){
-        if(navigator.userAgent.indexOf("MSIE")==-1) {
+        if(navigator.userAgent.indexOf("MSIE")==-1 && navigator.userAgent.indexOf("Trident") == -1) {
           ev.dataTransfer.setData("Text", ev.target.id);
         }
         ev.dataTransfer.effectAllowed ='copy'

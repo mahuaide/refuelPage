@@ -13,7 +13,7 @@
                    @dragenter="dragLaneEnter($event)"
                    @drop="dropLane($event)"
                    @dragleave="dragLaneLeave($event)">
-                <template v-for="(item,index) in list">
+                <template v-for="(item,index) in list" :keys="item.id">
                   <div class="list-wrapper" v-if="!item.temp">
                     <div class="list" :id="item.id"
                          draggable="true"
@@ -78,19 +78,42 @@
         if (navigator.userAgent.indexOf("MSIE") == -1 && navigator.userAgent.indexOf("Trident") == -1) {
           ev.dataTransfer.setData("dragId", ev.target.id);
         }
-        this.list.forEach((item, index) => {
-          if (item.id == ev.target.id) {
-            this.dragLane = this.list.splice(index, 1, {"temp": true})[0]
-          }
-        })
+          this.list.forEach((item, index) => {
+            if (item.id == ev.target.id) {
+              this.dragLane = this.list.splice(index, 1, {"temp": true})[0]
+            }
+          })
       },
       dragLaneEnd(ev){
-        console.log('end')
         this.list.forEach((item, index) => {
           if (item.temp) {
             this.list.splice(index, 1, this.dragLane);
           }
         })
+      },
+      dragLaneOver(ev){
+        if (ev.preventDefault) {
+          ev.preventDefault();
+        } else {
+          window.event.returnValue = false;
+        }
+        console.log('over')
+        ev.dataTransfer.dropEffect = 'move';
+        let scrollLeft = document.getElementById('board').scrollLeft
+        let offsetX = Math.floor((ev.clientX + scrollLeft) / 280);
+        this.list.forEach((item, index) => {
+          if (item.temp && offsetX != index) {
+            this.list.splice(index, 1)
+            this.list.splice(offsetX, 0, {"temp": true})
+          }
+        })
+      },
+      dragLaneEnter(){
+      },
+      dropLane(){
+        this._preventDefault(ev);
+      },
+      dragLaneLeave(){
       },
       _preventDefault(ev){
         if (ev.preventDefault) {
@@ -104,26 +127,6 @@
           window.event.cancelBubble = true;
         }
       },
-      dragLaneOver(ev){
-        console.log('over')
-        ev.dataTransfer.dropEffect = 'move';
-        let scrollLeft = document.getElementById('board').scrollLeft
-        let offsetX = Math.floor((ev.clientX + scrollLeft) / 280);
-        this.list.forEach((item, index) => {
-          if (item.temp) {
-            this.list.splice(index, 1)
-            this.list.splice(offsetX, 0, {"temp": true})
-          }
-        })
-
-      },
-      dragLaneEnter(){
-      },
-      dropLane(){
-        this._preventDefault(ev);
-      },
-      dragLaneLeave(){
-      }
     },
     mounted(){
 //      var board = document.getElementById('board')
