@@ -13,8 +13,9 @@
                    @dragenter="dragLaneEnter($event)"
                    @drop="dropLane($event)"
                    @dragleave="dragLaneLeave($event)">
+
                 <template v-for="(item,index) in list" :keys="item.id">
-                  <div class="list-wrapper" v-if="!item.temp">
+                  <div class="list-wrapper" v-if="!item.temp" @drop="dropLane($event)">
                     <div class="list" :id="item.id"
                          draggable="true"
                          @dragstart="dragLaneStart($event)"
@@ -74,7 +75,7 @@
         )
       },
       dragLaneStart(ev){
-//        console.log('start');
+        console.log('start');
         if (navigator.userAgent.indexOf("MSIE") == -1 && navigator.userAgent.indexOf("Trident") == -1) {
           ev.dataTransfer.setData("dragId", ev.target.id);
         }
@@ -93,8 +94,9 @@
         })
       },
       dragLaneOver(ev){
-//        console.log('over')
-        ev.dataTransfer.dropEffect = 'move';
+//        ev.preventDefault();
+        this._preventDefault(ev)
+        console.log('over')
         let scrollLeft = document.getElementById('board').scrollLeft
         let offsetX = Math.floor((ev.clientX + scrollLeft) / 280);
         this.list.forEach((item, index) => {
@@ -105,10 +107,11 @@
         })
       },
       dragLaneEnter(){
+        console.log("enter");
       },
       dropLane(ev){
-        this._preventDefault(ev);
-//        console.log("drop");
+        ev.preventDefault();
+        console.log("drop");
         this.list.forEach((item, index) => {
           if (item.temp) {
             this.list.splice(index, 1, this.dragLane);
@@ -116,6 +119,7 @@
         })
       },
       dragLaneLeave(){
+        console.log("leave");
       },
       _preventDefault(ev){
         if (ev.preventDefault) {
@@ -236,7 +240,6 @@
               position: relative;
               flex-grow: 1;
               #board
-                user-select: none;
                 white-space: nowrap;
                 margin-bottom: 8px;
                 overflow-x: auto;

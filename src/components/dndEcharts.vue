@@ -80,6 +80,7 @@
         this._findPosition(ev);
       },
       drop(ev){
+          console.log("drop")
         this._preventDefault(ev);
         let id = ev.dataTransfer.getData("Text");
         //被拖拽元素
