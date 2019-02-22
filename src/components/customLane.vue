@@ -1,5 +1,9 @@
 <template>
   <div class="root"
+       @dragover="dragLaneOver($event)"
+       @dragenter="dragLaneEnter($event)"
+       @drop="dropLane($event)"
+       @dragleave="dragLaneLeave($event)"
        style="background-image: url('https://trello-backgrounds.s3.amazonaws.com/SharedBackground/2560x1701/c8ab52d5f2f4372d17e75c4b71ae81de/photo-1549989476-69a92fa57c36');">
     <div class="surface">
       <div class="header">header</div>
@@ -8,37 +12,44 @@
           <div class="board-main-content">
             <div class="board-header">tools-bar</div>
             <div class="board-canvas">
-              <div id="board"
-                   @dragover="dragLaneOver($event)"
-                   @dragenter="dragLaneEnter($event)"
-                   @drop="dropLane($event)"
-                   @dragleave="dragLaneLeave($event)">
-
+              <div id="board">
                 <template v-for="(item,index) in list" :keys="item.id">
-                  <div class="list-wrapper" v-if="!item.temp" @drop="dropLane($event)">
+                  <div class="list-wrapper"
+                       v-if="!item.temp"
+                       :id="item.id">
                     <div class="list" :id="item.id"
-                         draggable="true"
-                         @dragstart="dragLaneStart($event)"
+                         :draggable="islaneDrag"
+                         @dragstart="dragLaneStart($event,index)"
                          @dragend="dragLaneEnd($event)">
                       <div class="list-header">
                         <div class="list-header-target"></div>
                         <textarea class="mod-list-name">{{item.lane}}</textarea>
                       </div>
-                      <div class="list-cards">
-                        <a class="list-card" draggable="true" v-for="(card,index) in item.cards">
-                          <div class="list-card-details">
+                      <div class="list-cards"
+                      >
+                        <template v-for="(card,indexCard) in item.cards">
+                          <div class="list-card"
+                               draggable="true"
+                               @dragstart="dragCardStart($event,item.cards,indexCard)"
+                               @dragend="dragCardEnd($event)"
+                               v-if="!card.temp"
+                               :cardId="card.title"
+                          >
+                            <div class="list-card-details">
                           <span class="list-card-title">
                                 {{card.title}}
                           </span>
+                            </div>
                           </div>
-                        </a>
+                          <div class="list-card-temp" v-if="card.temp" :style="{height: tempHeight}"></div>
+                        </template>
                       </div>
                       <a class="open-card-composer">
-                        <span class="js-add-a-card hide">添加卡片</span>
+                        <span class="js-add-a-card hide" @click.stop="addCard(item)">添加卡片</span>
                       </a>
                     </div>
                   </div>
-                  <div v-if="item.temp" class="list-wrapper-temp" style="height: 200px;">1</div>
+                  <div v-if="item.temp" class="list-wrapper-temp" :style="{height: tempHeight}"></div>
                 </template>
                 <div class="list-wrapper mod-add" @click="addLane">添加泳道</div>
               </div>
@@ -53,14 +64,21 @@
   export default{
     data(){
       return {
-        dragLane: {},
+        islaneDrag: true,
+        tempHeight: 200,
+        dragLane: null,
+        dragCard: null,
         list: [
           {
             "id": 1,
             "lane": "开始",
             "cards": [{"title": 11}, {"title": 12}, {"title": 13}, {"title": 14}, {"title": "langlanglanglanglanglanglanglanglanglanglanglanglanglanglanglanglanglanglanglanglanglanglanglanglanglanglanglanglang"}]
           },
-          {"id": 2, "lane": "开发", "cards": [{"title": 21}, {"title": 22}, {"title": 23}, {"title": 24}, {"title": 25}]},
+          {
+            "id": 2,
+            "lane": "开发",
+            "cards": [{"title": 21}, {"title": 22}, {"title": 23}, {"title": 24}, {"title": 25}]
+          },
           {"id": 3, "lane": "阻塞", "cards": [{"title": 31}, {"title": 32}, {"title": 33}, {"title": 34}, {"title": 35}]},
           {"id": 4, "lane": "测试", "cards": [{"title": 41}, {"title": 42}, {"title": 43}, {"title": 44}, {"title": 45}]},
           {"id": 5, "lane": "完成", "cards": [{"title": 51}, {"title": 52}, {"title": 53}, {"title": 54}, {"title": 55}]},
@@ -68,34 +86,123 @@
       }
     },
     methods: {
+      addCard(lane){
+        var id = Math.random();
+        lane.cards.push({"title": id})
+      },
       addLane(){
         var id = Math.random();
         this.list.push(
-          {"id": id, "lane": id, "cards": [{"title": 51}, {"title": 52}, {"title": 53}, {"title": 54}, {"title": 55}]},
+          {"id": id, "lane": id, "cards": []},
         )
       },
-      dragLaneStart(ev){
-        console.log('start');
+//      卡片拖拽
+      dragCardStart(ev, cards, index){
+        console.log("Card---Start");
         if (navigator.userAgent.indexOf("MSIE") == -1 && navigator.userAgent.indexOf("Trident") == -1) {
-          ev.dataTransfer.setData("dragId", ev.target.id);
+          ev.dataTransfer.setData("cardId", ev.target.cardId);
         }
-        this.list.forEach((item, index) => {
-          if (item.id == ev.target.id) {
-            this.dragLane = this.list.splice(index, 1, {"temp": true})[0]
+        this.tempHeight = getComputedStyle(ev.target).height;
+        this.dragCard = cards.splice(index, 1, {"temp": true})[0]
+      },
+      dragCardEnd(ev){
+        if (this.dragCard == null) {
+          return;
+        }
+        console.log("Card---End");
+        this.list.forEach((item, laneIndex) => {
+          item.cards.forEach((card, cardIndex) => {
+            if (card.temp) {
+              item.cards.splice(cardIndex, 1, this.dragCard);
+              this.dragCard = null;
+            }
+          })
+        })
+      },
+      dragCardOver(ev, index){
+        this._preventDefault(ev)
+        if (this.dragCard == null) {
+          return
+        }
+        console.log("Card---Over");
+        //先清除其他泳道的temp
+        this.list.forEach((item, laneIndex) => {
+          if (index != laneIndex) {
+            item.cards.forEach((card, cardIndex) => {
+              if (card.temp) {
+                item.cards.splice(cardIndex, 1);
+              }
+            })
           }
         })
+        //当前泳道清除temp，同时指定新temp位置
+        this.list[index].cards.forEach((card, tempindex) => {
+          if (card.temp) {
+            this.list[index].cards.splice(tempindex, 1);
+          }
+        })
+        this.list[index].cards.push({"temp": true})
+      },
+      dragCardEnter(ev){
+        if (this.dragCard == null) {
+          return;
+        }
+        console.log("Card---Enter");
+      },
+      dropCard(ev){
+        if (this.dragCard == null) {
+          return;
+        }
+        ev.preventDefault();
+        console.log("drop---Card");
+        this.list.forEach((item, laneIndex) => {
+          item.cards.forEach((card, cardIndex) => {
+            if (card.temp) {
+              item.cards.splice(cardIndex, 1, this.dragCard);
+              this.dragCard = null;
+            }
+          })
+        })
+      },
+      dragCardLeave(ev){
+        if (this.dragCard == null) {
+          return;
+        }
+        console.log("Card---Leave");
+      },
+
+//      泳道拖拽
+      dragLaneStart(ev, index){
+        if(this.dragCard == null) {
+          console.log('start');
+          if (navigator.userAgent.indexOf("MSIE") == -1 && navigator.userAgent.indexOf("Trident") == -1) {
+            ev.dataTransfer.setData("laneId", ev.target.id);
+          }
+          this.tempHeight = getComputedStyle(ev.target).height;
+          this.dragLane = this.list.splice(index, 1, {"temp": true})[0];
+        }
       },
       dragLaneEnd(ev){
         console.log("end")
         this.list.forEach((item, index) => {
           if (item.temp) {
             this.list.splice(index, 1, this.dragLane);
+            this.dragLane = null;
           }
         })
+        if (this.dragCard != null) {
+          this.list.forEach((item, laneIndex) => {
+            item.cards.forEach((card, cardIndex) => {
+              if (card.temp) {
+                item.cards.splice(cardIndex, 1, this.dragCard);
+                this.dragCard = null;
+              }
+            })
+          })
+        }
       },
       dragLaneOver(ev){
-//        ev.preventDefault();
-        this._preventDefault(ev)
+        this._preventDefault(ev);
         console.log('over')
         let scrollLeft = document.getElementById('board').scrollLeft
         let offsetX = Math.floor((ev.clientX + scrollLeft) / 280);
@@ -105,20 +212,48 @@
             this.list.splice(offsetX, 0, {"temp": true})
           }
         })
+        if (this.dragCard != null) {
+          this.list.forEach((item, laneIndex) => {
+            item.cards.forEach((card, cardIndex) => {
+              if (card.temp) {
+                item.cards.splice(cardIndex, 1);
+              }
+            })
+          })
+          this.list[offsetX].cards.forEach((card, tempindex) => {
+            if (card.temp) {
+              this.list[offsetX].cards.splice(tempindex, 1);
+            }
+          })
+          this.list[offsetX].cards.push({"temp": true})
+        }
       },
-      dragLaneEnter(){
+      dragLaneEnter(ev){
+        this._preventDefault(ev);
         console.log("enter");
       },
       dropLane(ev){
-        ev.preventDefault();
+        this._preventDefault(ev);
         console.log("drop");
         this.list.forEach((item, index) => {
           if (item.temp) {
             this.list.splice(index, 1, this.dragLane);
+            this.dragLane = null;
           }
         })
+        if (this.dragCard != null) {
+          this.list.forEach((item, laneIndex) => {
+            item.cards.forEach((card, cardIndex) => {
+              if (card.temp) {
+                item.cards.splice(cardIndex, 1, this.dragCard);
+                this.dragCard = null;
+              }
+            })
+          })
+        }
       },
-      dragLaneLeave(){
+      dragLaneLeave(ev){
+        this._preventDefault(ev);
         console.log("leave");
       },
       _preventDefault(ev){
@@ -259,7 +394,7 @@
                   display: inline-block;
                   vertical-align: top;
                   white-space: nowrap;
-                  background-color: rgba(0, 0, 0, .3)
+                  background-color: rgba(0, 0, 0, .4)
                   border-radius: 3px;
                 .list-wrapper:first-child
                   margin-left 8px
@@ -320,6 +455,16 @@
                       padding: 0 4px;
                       z-index: 1;
                       min-height: 0;
+                      .list-card-temp
+                        background-color: #999;
+                        border-radius: 3px;
+                        box-shadow: 0 1px 0 rgba(9, 45, 66, .25);
+                        display: block;
+                        margin-bottom: 8px;
+                        max-width: 300px;
+                        min-height: 28px;
+                        position: relative;
+                        z-index: 0;
                       .list-card
                         background-color: #fff;
                         border-radius: 3px;
@@ -338,6 +483,7 @@
                           position: relative;
                           z-index: 10;
                           .list-card-title
+                            font-family "Microsoft YaHei"
                             font-size 12px
                             clear: both;
                             display: block;
@@ -347,11 +493,13 @@
                             word-wrap: break-word;
                             color: #17394d;
                     .open-card-composer
+                      cursor pointer
                       border-radius: 0 0 3px 3px;
                       color: #6b808c;
                       display: block;
                       flex: 0 0 auto;
                       padding: 8px;
+                      font-family "Microsoft YaHei"
                       font-size 14px
                       position: relative;
                       text-decoration: none;
@@ -365,6 +513,7 @@
                   border-radius: 3px;
                   height 36px
                   padding 0 20px
+                  font-family "Microsoft YaHei"
                   font-size 14px
                   line-height 36px
                   color #fff
