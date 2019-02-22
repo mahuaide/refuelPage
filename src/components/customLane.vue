@@ -1,9 +1,5 @@
 <template>
   <div class="root"
-       @dragover="dragLaneOver($event)"
-       @dragenter="dragLaneEnter($event)"
-       @drop="dropLane($event)"
-       @dragleave="dragLaneLeave($event)"
        style="background-image: url('https://trello-backgrounds.s3.amazonaws.com/SharedBackground/2560x1701/c8ab52d5f2f4372d17e75c4b71ae81de/photo-1549989476-69a92fa57c36');">
     <div class="surface">
       <div class="header">header</div>
@@ -12,7 +8,11 @@
           <div class="board-main-content">
             <div class="board-header">tools-bar</div>
             <div class="board-canvas">
-              <div id="board">
+              <div id="board"
+                   @dragover="dragLaneOver($event)"
+                   @dragenter="dragLaneEnter($event)"
+                   @drop="dropLane($event)"
+                   @dragleave="dragLaneLeave($event)">
                 <template v-for="(item,index) in list" :keys="item.id">
                   <div class="list-wrapper"
                        v-if="!item.temp"
@@ -28,17 +28,17 @@
                       <div class="list-cards"
                       >
                         <template v-for="(card,indexCard) in item.cards">
-                          <div class="list-card"
-                               draggable="true"
-                               @dragstart="dragCardStart($event,item.cards,indexCard)"
-                               @dragend="dragCardEnd($event)"
-                               v-if="!card.temp"
-                               :cardId="card.title"
-                          >
-                            <div class="list-card-details">
-                          <span class="list-card-title">
-                                {{card.title}}
-                          </span>
+                          <div v-if="!card.temp" :cardId="card.title">
+                            <div class="list-card"
+                                 draggable="true"
+                                 @dragstart.stop="dragCardStart($event,item.cards,indexCard)"
+                                 @dragend="dragCardEnd($event)"
+                            >
+                              <div class="list-card-details">
+                                <span class="list-card-title">
+                                      {{card.title}}
+                                </span>
+                              </div>
                             </div>
                           </div>
                           <div class="list-card-temp" v-if="card.temp" :style="{height: tempHeight}"></div>
@@ -119,68 +119,13 @@
           })
         })
       },
-      dragCardOver(ev, index){
-        this._preventDefault(ev)
-        if (this.dragCard == null) {
-          return
-        }
-        console.log("Card---Over");
-        //先清除其他泳道的temp
-        this.list.forEach((item, laneIndex) => {
-          if (index != laneIndex) {
-            item.cards.forEach((card, cardIndex) => {
-              if (card.temp) {
-                item.cards.splice(cardIndex, 1);
-              }
-            })
-          }
-        })
-        //当前泳道清除temp，同时指定新temp位置
-        this.list[index].cards.forEach((card, tempindex) => {
-          if (card.temp) {
-            this.list[index].cards.splice(tempindex, 1);
-          }
-        })
-        this.list[index].cards.push({"temp": true})
-      },
-      dragCardEnter(ev){
-        if (this.dragCard == null) {
-          return;
-        }
-        console.log("Card---Enter");
-      },
-      dropCard(ev){
-        if (this.dragCard == null) {
-          return;
-        }
-        ev.preventDefault();
-        console.log("drop---Card");
-        this.list.forEach((item, laneIndex) => {
-          item.cards.forEach((card, cardIndex) => {
-            if (card.temp) {
-              item.cards.splice(cardIndex, 1, this.dragCard);
-              this.dragCard = null;
-            }
-          })
-        })
-      },
-      dragCardLeave(ev){
-        if (this.dragCard == null) {
-          return;
-        }
-        console.log("Card---Leave");
-      },
-
-//      泳道拖拽
       dragLaneStart(ev, index){
-        if(this.dragCard == null) {
-          console.log('start');
-          if (navigator.userAgent.indexOf("MSIE") == -1 && navigator.userAgent.indexOf("Trident") == -1) {
-            ev.dataTransfer.setData("laneId", ev.target.id);
-          }
-          this.tempHeight = getComputedStyle(ev.target).height;
-          this.dragLane = this.list.splice(index, 1, {"temp": true})[0];
+        console.log('start');
+        if (navigator.userAgent.indexOf("MSIE") == -1 && navigator.userAgent.indexOf("Trident") == -1) {
+          ev.dataTransfer.setData("laneId", ev.target.id);
         }
+        this.tempHeight = getComputedStyle(ev.target).height;
+        this.dragLane = this.list.splice(index, 1, {"temp": true})[0];
       },
       dragLaneEnd(ev){
         console.log("end")
@@ -202,7 +147,7 @@
         }
       },
       dragLaneOver(ev){
-        this._preventDefault(ev);
+        ev.preventDefault();
         console.log('over')
         let scrollLeft = document.getElementById('board').scrollLeft
         let offsetX = Math.floor((ev.clientX + scrollLeft) / 280);
@@ -229,11 +174,10 @@
         }
       },
       dragLaneEnter(ev){
-        this._preventDefault(ev);
         console.log("enter");
       },
       dropLane(ev){
-        this._preventDefault(ev);
+        ev.preventDefault();
         console.log("drop");
         this.list.forEach((item, index) => {
           if (item.temp) {
@@ -253,7 +197,6 @@
         }
       },
       dragLaneLeave(ev){
-        this._preventDefault(ev);
         console.log("leave");
       },
       _preventDefault(ev){
