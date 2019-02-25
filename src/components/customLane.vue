@@ -27,12 +27,12 @@
                       </div>
                       <div class="list-cards">
                         <template v-for="(card,indexCard) in item.cards">
-                          <div v-if="!card.temp">
-                            <div class="list-card carddrag"
+                          <div v-if="!card.temp" class="carddrag" :cardId="card.title">
+                            <div class="list-card"
                                  draggable="true"
                                  @dragstart.stop="dragCardStart($event,item.cards,indexCard)"
                                  @dragend="dragCardEnd($event)"
-                                 :cardId="card.title">
+                                 >
                               <div class="list-card-details">
                                 <span class="list-card-title">
                                       {{card.title}}
@@ -71,14 +71,14 @@
           {
             "id": 1,
             "lane": "开始",
-            "cards": [{"title": 11}, {"title": 12}, {"title": 13}, {"title": 14}, {"title": "langlanglanglanglanglanglanglanglanglanglanglanglanglanglanglanglanglanglanglanglanglanglanglanglanglanglanglanglang"}]
+            "cards": [{"title": 11}, {"title": 12}, {"title": 13}, {"title": 14}, {"title": "langlanglanglanglanglanglanglanglanglanglanglanglanglanglanglanglanglanglanglanglanglanglanglanglanglanglanglanglang"},{"title": 111}]
           },
           {
             "id": 2,
             "lane": "开发",
             "cards": [{"title": 21}, {"title": 22}, {"title": 23}, {"title": 24}, {"title": 25}]
           },
-          {"id": 3, "lane": "阻塞", "cards": [{"title": "langlanglanglanglanglanglanglanglanglanglanglanglanglanglanglanglanglanglanglanglanglanglanglanglanglanglanglanglang"}, {"title": 32}, {"title": 33}, {"title": 34}, {"title": 35}]},
+          {"id": 3, "lane": "阻塞", "cards": [{"title": "langlanglanglanglanglanglanglanglanglanglanglanglanglanglanglanglanglanglanglanglanglanglanglanglanglanglanglanglang1111111111111111111111111111111111111111111111langlanglanglanglanglanglanglanglanglanglanglanglanglanglanglanglanglanglanglanglanglanglanglanglanglanglanglanglang1111111111111111111111111111111111111111111111langlanglanglanglanglanglanglanglanglanglanglanglanglanglanglanglanglanglanglanglanglanglanglanglanglanglanglanglang1111111111111111111111111111111111111111111111langlanglanglanglanglanglanglanglanglanglanglanglanglanglanglanglanglanglanglanglanglanglanglanglanglanglanglanglang1111111111111111111111111111111111111111111111"}, {"title": 32}, {"title": 33}, {"title": 34}, {"title": 35}]},
           {"id": 4, "lane": "测试", "cards": [{"title": 41}, {"title": 42}, {"title": 43}, {"title": 44}, {"title": 45}]},
           {"id": 5, "lane": "完成", "cards": [{"title": 51}, {"title": 52}, {"title": 53}, {"title": 54}, {"title": 55}]},
         ]
@@ -164,21 +164,25 @@
         //如果是卡片拖拽中
         if (this.dragCard != null) {
           //如果鼠标悬浮在占位元素上，则不计算位置
-          if (ev.target.className == 'list-card-temp')
+          if (ev.target.className.indexOf('list-card-temp') !=-1){
             return;
-          //否则先删除占位元素
-          this.list.forEach((item, laneIndex) => {
-            item.cards.forEach((card, cardIndex) => {
-              if (card.temp) {
-                item.cards.splice(cardIndex, 1);
-              }
-            })
-          })
+          }
           //计算占位元素位置
           let current_listWrapper = board.getElementsByClassName('list-wrapper');
           var current_listCards = current_listWrapper[offsetX].getElementsByClassName('list-cards')[0];
           var current_listCard = Array.from(current_listWrapper[offsetX].getElementsByClassName('carddrag'));
-          this.list[offsetX].cards.splice(this.getIndexCards(current_listCard, offsetY, board_offsetTop, current_listCards.scrollTop), 0, {"temp": true})
+          let tempIndex = this.getIndexCards(current_listCard, offsetY, board_offsetTop, current_listCards.scrollTop);
+          if(tempIndex>=0){
+            this.list.forEach((item, laneIndex) => {
+              item.cards.forEach((card, cardIndex) => {
+                if (card.temp) {
+                  item.cards.splice(cardIndex, 1);
+                }
+              })
+            })
+            this.list[offsetX].cards.splice(tempIndex, 0, {"temp": true})
+          }
+
         }
       },
 
@@ -241,9 +245,10 @@
           //如果，鼠标位置在两个卡片之间，则插入当前位置
           for (let i = 0; i < array.length; i++) {
             let cur_ele_top = this.getElementTop(array[i]) - board_offsetTop - 40 - scrollTop;
+            let crr_height = parseInt(getComputedStyle(array[i]).height);
             let nex_ele_top = this.getElementTop(array[i + 1]) - board_offsetTop - 40 - scrollTop;
-            if (cur_ele_top <= offsetY && offsetY <= nex_ele_top) {
-              return i
+            if (cur_ele_top <= (offsetY-32) && (offsetY -32) <= nex_ele_top) {
+              return i+1
               break;
             } else {
               continue;
