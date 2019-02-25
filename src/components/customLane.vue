@@ -18,30 +18,30 @@
                        v-if="!item.temp"
                        :id="item.id">
                     <div class="list" :id="item.id"
-                         :draggable="islaneDrag"
+                         draggable="islaneDrag"
                          @dragstart="dragLaneStart($event,index)"
                          @dragend="dragLaneEnd($event)">
                       <div class="list-header">
                         <div class="list-header-target"></div>
                         <textarea class="mod-list-name">{{item.lane}}</textarea>
                       </div>
-                      <div class="list-cards"
-                      >
+                      <div class="list-cards">
                         <template v-for="(card,indexCard) in item.cards">
-                          <div v-if="!card.temp" :cardId="card.title">
-                            <div class="list-card"
+                          <div v-if="!card.temp">
+                            <div class="list-card carddrag"
                                  draggable="true"
                                  @dragstart.stop="dragCardStart($event,item.cards,indexCard)"
                                  @dragend="dragCardEnd($event)"
-                            >
+                                 :cardId="card.title">
                               <div class="list-card-details">
                                 <span class="list-card-title">
                                       {{card.title}}
                                 </span>
+                                <i class="el-icon-delete"></i>
                               </div>
                             </div>
                           </div>
-                          <div class="list-card-temp" v-if="card.temp" :style="{height: tempHeight}"></div>
+                          <div class="list-card-temp carddrag" v-if="card.temp" :style="{height: tempHeight}"></div>
                         </template>
                       </div>
                       <a class="open-card-composer">
@@ -64,8 +64,7 @@
   export default{
     data(){
       return {
-        islaneDrag: true,
-        tempHeight: 200,
+        tempHeight: 0,
         dragLane: null,
         dragCard: null,
         list: [
@@ -79,7 +78,7 @@
             "lane": "开发",
             "cards": [{"title": 21}, {"title": 22}, {"title": 23}, {"title": 24}, {"title": 25}]
           },
-          {"id": 3, "lane": "阻塞", "cards": [{"title": 31}, {"title": 32}, {"title": 33}, {"title": 34}, {"title": 35}]},
+          {"id": 3, "lane": "阻塞", "cards": [{"title": "langlanglanglanglanglanglanglanglanglanglanglanglanglanglanglanglanglanglanglanglanglanglanglanglanglanglanglanglang"}, {"title": 32}, {"title": 33}, {"title": 34}, {"title": 35}]},
           {"id": 4, "lane": "测试", "cards": [{"title": 41}, {"title": 42}, {"title": 43}, {"title": 44}, {"title": 45}]},
           {"id": 5, "lane": "完成", "cards": [{"title": 51}, {"title": 52}, {"title": 53}, {"title": 54}, {"title": 55}]},
         ]
@@ -98,7 +97,7 @@
       },
 //      卡片拖拽
       dragCardStart(ev, cards, index){
-        console.log("Card---Start");
+        //("Card---Start");
         if (navigator.userAgent.indexOf("MSIE") == -1 && navigator.userAgent.indexOf("Trident") == -1) {
           ev.dataTransfer.setData("cardId", ev.target.cardId);
         }
@@ -109,7 +108,7 @@
         if (this.dragCard == null) {
           return;
         }
-        console.log("Card---End");
+        //("Card---End");
         this.list.forEach((item, laneIndex) => {
           item.cards.forEach((card, cardIndex) => {
             if (card.temp) {
@@ -120,7 +119,7 @@
         })
       },
       dragLaneStart(ev, index){
-        console.log('start');
+        //('start');
         if (navigator.userAgent.indexOf("MSIE") == -1 && navigator.userAgent.indexOf("Trident") == -1) {
           ev.dataTransfer.setData("laneId", ev.target.id);
         }
@@ -128,7 +127,7 @@
         this.dragLane = this.list.splice(index, 1, {"temp": true})[0];
       },
       dragLaneEnd(ev){
-        console.log("end")
+        //("end")
         this.list.forEach((item, index) => {
           if (item.temp) {
             this.list.splice(index, 1, this.dragLane);
@@ -148,16 +147,26 @@
       },
       dragLaneOver(ev){
         ev.preventDefault();
-        console.log('over')
-        let scrollLeft = document.getElementById('board').scrollLeft
-        let offsetX = Math.floor((ev.clientX + scrollLeft) / 280);
+        //('over')
+        let board = document.getElementById('board');
+        let board_scrollLeft = board.scrollLeft;
+        let board_offsetTop = this.getElementTop(board);
+        let offsetX = Math.floor((ev.clientX + board_scrollLeft) / 280);
+        let offsetY = ev.clientY - board_offsetTop - 40;
+        //如果是泳道拖拽中
         this.list.forEach((item, index) => {
           if (item.temp && offsetX != index) {
             this.list.splice(index, 1)
             this.list.splice(offsetX, 0, {"temp": true})
           }
         })
+
+        //如果是卡片拖拽中
         if (this.dragCard != null) {
+          //如果鼠标悬浮在占位元素上，则不计算位置
+          if (ev.target.className == 'list-card-temp')
+            return;
+          //否则先删除占位元素
           this.list.forEach((item, laneIndex) => {
             item.cards.forEach((card, cardIndex) => {
               if (card.temp) {
@@ -165,20 +174,20 @@
               }
             })
           })
-          this.list[offsetX].cards.forEach((card, tempindex) => {
-            if (card.temp) {
-              this.list[offsetX].cards.splice(tempindex, 1);
-            }
-          })
-          this.list[offsetX].cards.push({"temp": true})
+          //计算占位元素位置
+          let current_listWrapper = board.getElementsByClassName('list-wrapper');
+          var current_listCards = current_listWrapper[offsetX].getElementsByClassName('list-cards')[0];
+          var current_listCard = Array.from(current_listWrapper[offsetX].getElementsByClassName('carddrag'));
+          this.list[offsetX].cards.splice(this.getIndexCards(current_listCard, offsetY, board_offsetTop, current_listCards.scrollTop), 0, {"temp": true})
         }
       },
+
       dragLaneEnter(ev){
-        console.log("enter");
+        //("enter");
       },
       dropLane(ev){
         ev.preventDefault();
-        console.log("drop");
+        //("drop");
         this.list.forEach((item, index) => {
           if (item.temp) {
             this.list.splice(index, 1, this.dragLane);
@@ -197,7 +206,7 @@
         }
       },
       dragLaneLeave(ev){
-        console.log("leave");
+        //("leave");
       },
       _preventDefault(ev){
         if (ev.preventDefault) {
@@ -211,8 +220,41 @@
           window.event.cancelBubble = true;
         }
       },
-    },
-    mounted(){
+      //获取元素相对高度
+      getElementTop(element){
+        var actualTop = element.offsetTop;
+        var current = element.offsetParent;
+        while (current !== null) {
+          actualTop += current.offsetTop;
+          current = current.offsetParent;
+        }
+        return actualTop;
+      },
+      getIndexCards(array, offsetY, board_offsetTop, scrollTop){
+        //如果是新建的泳道，或者鼠标在用上上面，则插入首位
+        if (!array || array.length == 0 || offsetY <= 0) {
+          return 0;
+          //如果，鼠标位置在当前泳道的末尾外围，则插入最后
+        } else if (offsetY >= this.getElementTop(array[array.length - 1]) - board_offsetTop - 40 - scrollTop) {
+          return array.length - 1;
+        } else {
+          //如果，鼠标位置在两个卡片之间，则插入当前位置
+          for (let i = 0; i < array.length; i++) {
+            let cur_ele_top = this.getElementTop(array[i]) - board_offsetTop - 40 - scrollTop;
+            let nex_ele_top = this.getElementTop(array[i + 1]) - board_offsetTop - 40 - scrollTop;
+            if (cur_ele_top <= offsetY && offsetY <= nex_ele_top) {
+              return i
+              break;
+            } else {
+              continue;
+            }
+          }
+        }
+      }
+  },
+
+  mounted()
+  {
 //      var board = document.getElementById('board')
 //      var offset;
 //      var last_left = 0;
@@ -230,9 +272,13 @@
 //      window.onmouseup = function(e){
 //         board.onmousemove = null;
 //      }
-    },
-    computed: {},
-    components: {}
+  }
+  ,
+  computed: {
+  }
+  ,
+  components: {
+  }
   }
 </script>
 <style>
@@ -390,6 +436,7 @@
                           border none;
                           box-shadow 0 0 2px blue
                     .list-cards
+                      font-size 0
                       flex: 1 1 auto;
                       margin-bottom: 0;
                       overflow-y: auto;
@@ -435,6 +482,18 @@
                             text-decoration: none;
                             word-wrap: break-word;
                             color: #17394d;
+                          .el-icon-delete
+                            background-color: #f5f6f7;
+                            background-clip: padding-box;
+                            background-origin: padding-box;
+                            border-radius: 3px;
+                            opacity: .8;
+                            font-size 15px
+                            padding: 4px;
+                            position: absolute;
+                            right: 2px;
+                            top: 2px;
+                            z-index: 40;
                     .open-card-composer
                       cursor pointer
                       border-radius: 0 0 3px 3px;
