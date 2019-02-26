@@ -103,7 +103,7 @@
       dragCardStart(ev, cards, index){
         //("Card---Start");
         if(!this.isIE()){
-          ev.dataTransfer.setData("cardId", ev.target.cardId);
+          ev.dataTransfer.setData("cardId", ev.target.cardid);
         }
         this.tempHeight = getComputedStyle(ev.target).height;
         this.dragCard = cards.splice(index, 1, {"temp": true})[0]
