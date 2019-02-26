@@ -18,7 +18,7 @@
                        v-if="!item.temp"
                        :id="item.id">
                     <div class="list" :id="item.id"
-                         draggable="islaneDrag"
+                         draggable="true"
                          @dragstart="dragLaneStart($event,index)"
                          @dragend="dragLaneEnd($event)">
                       <div class="list-header">
@@ -32,7 +32,7 @@
                                  draggable="true"
                                  @dragstart.stop="dragCardStart($event,item.cards,indexCard)"
                                  @dragend="dragCardEnd($event)"
-                                 >
+                            >
                               <div class="list-card-details">
                                 <span class="list-card-title">
                                       {{card.title}}
@@ -44,9 +44,9 @@
                           <div class="list-card-temp carddrag" v-if="card.temp" :style="{height: tempHeight}"></div>
                         </template>
                       </div>
-                      <a class="open-card-composer">
+                      <div class="open-card-composer">
                         <span class="js-add-a-card hide" @click.stop="addCard(item)">添加卡片</span>
-                      </a>
+                      </div>
                     </div>
                   </div>
                   <div v-if="item.temp" class="list-wrapper-temp" :style="{height: tempHeight}"></div>
@@ -71,14 +71,18 @@
           {
             "id": 1,
             "lane": "开始",
-            "cards": [{"title": 11}, {"title": 12}, {"title": 13}, {"title": 14}, {"title": "langlanglanglanglanglanglanglanglanglanglanglanglanglanglanglanglanglanglanglanglanglanglanglanglanglanglanglanglang"},{"title": 111}]
+            "cards": [{"title": 11}, {"title": 12}, {"title": 13}, {"title": 14}, {"title": "langlanglanglanglanglanglanglanglanglanglanglanglanglanglanglanglanglanglanglanglanglanglanglanglanglanglanglanglang"}, {"title": 111}, {"title": 111}, {"title": 111}, {"title": 111}, {"title": 111}, {"title": 111}, {"title": 111}, {"title": 111}]
           },
           {
             "id": 2,
             "lane": "开发",
             "cards": [{"title": 21}, {"title": 22}, {"title": 23}, {"title": 24}, {"title": 25}]
           },
-          {"id": 3, "lane": "阻塞", "cards": [{"title": "langlanglanglanglanglanglanglanglanglanglanglanglanglanglanglanglanglanglanglanglanglanglanglanglanglanglanglanglang1111111111111111111111111111111111111111111111langlanglanglanglanglanglanglanglanglanglanglanglanglanglanglanglanglanglanglanglanglanglanglanglanglanglanglanglang1111111111111111111111111111111111111111111111langlanglanglanglanglanglanglanglanglanglanglanglanglanglanglanglanglanglanglanglanglanglanglanglanglanglanglanglang1111111111111111111111111111111111111111111111langlanglanglanglanglanglanglanglanglanglanglanglanglanglanglanglanglanglanglanglanglanglanglanglanglanglanglanglang1111111111111111111111111111111111111111111111"}, {"title": 32}, {"title": 33}, {"title": 34}, {"title": 35}]},
+          {
+            "id": 3,
+            "lane": "阻塞",
+            "cards": [{"title": "langlanglanglanglanglanglanglanglanglanglanglanglanglanglanglanglanglanglanglanglanglanglanglanglanglanglanglanglang1111111111111111111111111111111111111111111111langlanglanglanglanglanglanglanglanglanglanglanglanglanglanglanglanglanglanglanglanglanglanglanglanglanglanglanglang1111111111111111111111111111111111111111111111langlanglanglanglanglanglanglanglanglanglanglanglanglanglanglanglanglanglanglanglanglanglanglanglanglanglanglanglang1111111111111111111111111111111111111111111111langlanglanglanglanglanglanglanglanglanglanglanglanglanglanglanglanglanglanglanglanglanglanglanglanglanglanglanglang1111111111111111111111111111111111111111111111"}, {"title": 32}, {"title": 33}, {"title": 34}, {"title": 35}]
+          },
           {"id": 4, "lane": "测试", "cards": [{"title": 41}, {"title": 42}, {"title": 43}, {"title": 44}, {"title": 45}]},
           {"id": 5, "lane": "完成", "cards": [{"title": 51}, {"title": 52}, {"title": 53}, {"title": 54}, {"title": 55}]},
         ]
@@ -98,7 +102,7 @@
 //      卡片拖拽
       dragCardStart(ev, cards, index){
         //("Card---Start");
-        if (navigator.userAgent.indexOf("MSIE") == -1 && navigator.userAgent.indexOf("Trident") == -1) {
+        if(!this.isIE()){
           ev.dataTransfer.setData("cardId", ev.target.cardId);
         }
         this.tempHeight = getComputedStyle(ev.target).height;
@@ -132,6 +136,7 @@
           if (item.temp) {
             this.list.splice(index, 1, this.dragLane);
             this.dragLane = null;
+            this.computListCardMaxHeight();
           }
         })
         if (this.dragCard != null) {
@@ -164,7 +169,7 @@
         //如果是卡片拖拽中
         if (this.dragCard != null) {
           //如果鼠标悬浮在占位元素上，则不计算位置
-          if (ev.target.className.indexOf('list-card-temp') !=-1){
+          if (ev.target.className.indexOf('list-card-temp') != -1) {
             return;
           }
           //计算占位元素位置
@@ -172,7 +177,7 @@
           var current_listCards = current_listWrapper[offsetX].getElementsByClassName('list-cards')[0];
           var current_listCard = Array.from(current_listWrapper[offsetX].getElementsByClassName('carddrag'));
           let tempIndex = this.getIndexCards(current_listCard, offsetY, board_offsetTop, current_listCards.scrollTop);
-          if(tempIndex>=0){
+          if (tempIndex >= 0) {
             this.list.forEach((item, laneIndex) => {
               item.cards.forEach((card, cardIndex) => {
                 if (card.temp) {
@@ -196,6 +201,7 @@
           if (item.temp) {
             this.list.splice(index, 1, this.dragLane);
             this.dragLane = null;
+            this.computListCardMaxHeight();
           }
         })
         if (this.dragCard != null) {
@@ -245,21 +251,39 @@
           //如果，鼠标位置在两个卡片之间，则插入当前位置
           for (let i = 0; i < array.length; i++) {
             let cur_ele_top = this.getElementTop(array[i]) - board_offsetTop - 40 - scrollTop;
-            let crr_height = parseInt(getComputedStyle(array[i]).height);
             let nex_ele_top = this.getElementTop(array[i + 1]) - board_offsetTop - 40 - scrollTop;
-            if (cur_ele_top <= (offsetY-32) && (offsetY -32) <= nex_ele_top) {
-              return i+1
-              break;
+            if (cur_ele_top <= (offsetY - 32) && (offsetY - 32) <= nex_ele_top) {
+              return i + 1;
             } else {
               continue;
             }
           }
         }
+      },
+      computListCardMaxHeight(){
+        if(this.isIE()){
+          this.$nextTick(() => {
+            let listCrads = document.getElementsByClassName('list-cards');
+            let board = document.getElementById('board')
+            for (let i = 0; i < listCrads.length; i++) {
+              listCrads[i].style.maxHeight = (parseFloat(getComputedStyle(board).height) - 40 - 35) + 'px'
+            }
+          })
+        }
+      },
+      isIE(){
+          return navigator.userAgent.indexOf("MSIE") != -1 || navigator.userAgent.indexOf("Trident") != -1;
       }
-  },
+    },
+    mounted()
+    {
+      let _this = this;
+      _this.computListCardMaxHeight()
+      window.onresize = function(){
+        _this.computListCardMaxHeight()
+      }
 
-  mounted()
-  {
+
 //      var board = document.getElementById('board')
 //      var offset;
 //      var last_left = 0;
@@ -277,13 +301,11 @@
 //      window.onmouseup = function(e){
 //         board.onmousemove = null;
 //      }
-  }
-  ,
-  computed: {
-  }
-  ,
-  components: {
-  }
+    }
+    ,
+    computed: {}
+    ,
+    components: {}
   }
 </script>
 <style>
@@ -308,6 +330,7 @@
     background-color: rgba(125, 125, 125, 0.7);
     -webkit-border-radius: 6px;
   }
+
 </style>
 <style lang="stylus" rel="stylesheet/stylus" scoped>
   .root
@@ -441,7 +464,6 @@
                           border none;
                           box-shadow 0 0 2px blue
                     .list-cards
-                      font-size 0
                       flex: 1 1 auto;
                       margin-bottom: 0;
                       overflow-y: auto;
@@ -450,6 +472,7 @@
                       padding: 0 4px;
                       z-index: 1;
                       min-height: 0;
+                      font-size 0
                       .list-card-temp
                         background-color: #999;
                         border-radius: 3px;
@@ -461,6 +484,7 @@
                         position: relative;
                         z-index: 0;
                       .list-card
+                        zoom 1
                         background-color: #fff;
                         border-radius: 3px;
                         box-shadow: 0 1px 0 rgba(9, 45, 66, .25);
@@ -469,8 +493,6 @@
                         margin-bottom: 8px;
                         max-width: 300px;
                         min-height: 20px;
-                        position: relative;
-                        text-decoration: none;
                         z-index: 0;
                         .list-card-details
                           overflow: hidden;
