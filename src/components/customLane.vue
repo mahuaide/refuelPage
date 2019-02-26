@@ -103,7 +103,7 @@
 //      卡片拖拽
       dragCardStart(ev, cards, index){
         //("Card---Start");
-        if(!this.isIE()){
+        if (!this.isIE()) {
           ev.dataTransfer.setData("cardId", ev.target.id);
         }
         this.tempHeight = getComputedStyle(ev.target).height;
@@ -125,7 +125,7 @@
       },
       dragLaneStart(ev, index){
         //('start');
-        if(!this.isIE()){
+        if (!this.isIE()) {
           ev.dataTransfer.setData("laneId", ev.target.id);
         }
         this.tempHeight = getComputedStyle(ev.target).height;
@@ -179,17 +179,14 @@
           var current_listCards = current_listWrapper[offsetX].getElementsByClassName('list-cards')[0];
           var current_listCard = Array.from(current_listWrapper[offsetX].getElementsByClassName('carddrag'));
           let tempIndex = this.getIndexCards(current_listCard, offsetY, board_offsetTop, current_listCards.scrollTop);
-          if (tempIndex >= 0) {
-            this.list.forEach((item, laneIndex) => {
-              item.cards.forEach((card, cardIndex) => {
-                if (card.temp) {
-                  item.cards.splice(cardIndex, 1);
-                }
-              })
+          this.list.forEach((item, laneIndex) => {
+            item.cards.forEach((card, cardIndex) => {
+              if (card.temp) {
+                item.cards.splice(cardIndex, 1);
+              }
             })
-            this.list[offsetX].cards.splice(tempIndex, 0, {"temp": true})
-          }
-
+          })
+          this.list[offsetX].cards.splice(tempIndex, 0, {"temp": true})
         }
       },
 
@@ -263,7 +260,7 @@
         }
       },
       computListCardMaxHeight(){
-        if(this.isIE()){
+        if (this.isIE()) {
           this.$nextTick(() => {
             let listCrads = document.getElementsByClassName('list-cards');
             let board = document.getElementById('board')
@@ -274,14 +271,14 @@
         }
       },
       isIE(){
-          return navigator.userAgent.indexOf("MSIE") != -1 || navigator.userAgent.indexOf("Trident") != -1;
+        return navigator.userAgent.indexOf("MSIE") != -1 || navigator.userAgent.indexOf("Trident") != -1;
       }
     },
     mounted()
     {
       let _this = this;
       _this.computListCardMaxHeight()
-      window.onresize = function(){
+      window.onresize = function () {
         _this.computListCardMaxHeight()
       }
 
