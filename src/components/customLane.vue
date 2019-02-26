@@ -27,11 +27,12 @@
                       </div>
                       <div class="list-cards">
                         <template v-for="(card,indexCard) in item.cards">
-                          <div v-if="!card.temp" class="carddrag" :cardId="card.title">
+                          <div v-if="!card.temp" class="carddrag">
                             <div class="list-card"
                                  draggable="true"
                                  @dragstart.stop="dragCardStart($event,item.cards,indexCard)"
                                  @dragend="dragCardEnd($event)"
+                                 :id="card.title"
                             >
                               <div class="list-card-details">
                                 <span class="list-card-title">
@@ -103,7 +104,7 @@
       dragCardStart(ev, cards, index){
         //("Card---Start");
         if(!this.isIE()){
-          ev.dataTransfer.setData("cardId", ev.target.cardid);
+          ev.dataTransfer.setData("cardId", ev.target.id);
         }
         this.tempHeight = getComputedStyle(ev.target).height;
         this.dragCard = cards.splice(index, 1, {"temp": true})[0]
