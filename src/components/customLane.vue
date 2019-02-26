@@ -159,6 +159,7 @@
         let board_offsetTop = this.getElementTop(board);
         let offsetX = Math.floor((ev.clientX + board_scrollLeft) / 280);
         let offsetY = ev.clientY - board_offsetTop - 40;
+        this.computListCardMaxHeight();
         //如果是泳道拖拽中
         this.list.forEach((item, index) => {
           if (item.temp && offsetX != index) {
