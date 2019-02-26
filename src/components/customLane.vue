@@ -124,7 +124,7 @@
       },
       dragLaneStart(ev, index){
         //('start');
-        if (navigator.userAgent.indexOf("MSIE") == -1 && navigator.userAgent.indexOf("Trident") == -1) {
+        if(!this.isIE()){
           ev.dataTransfer.setData("laneId", ev.target.id);
         }
         this.tempHeight = getComputedStyle(ev.target).height;
