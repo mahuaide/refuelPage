@@ -104,7 +104,6 @@
         )
         let board = document.getElementById('board');
         this.$nextTick(() => {
-          console.log(board.scrollWidth)
           board.scrollLeft += 300;
         })
 
