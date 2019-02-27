@@ -160,6 +160,20 @@
         let offsetX = Math.floor((ev.clientX + board_scrollLeft) / 280);
         let offsetY = ev.clientY - board_offsetTop - 40;
         this.computListCardMaxHeight();
+        //视口移动
+        let clientX = ev.clientX;
+        let scrollLeft = board.scrollLeft;
+        if (clientX >= window.innerWidth - 150) {
+          setTimeout(() => {
+            console.log(board.scrollLeft);
+            board.scrollLeft = scrollLeft + (clientX)/68;
+          }, 20)
+        }
+        if (clientX <= 150) {
+          setTimeout(() => {
+            board.scrollLeft = scrollLeft - (window.innerWidth-clientX)/68;
+          }, 20)
+        }
         //如果是泳道拖拽中
         this.list.forEach((item, index) => {
           if (item.temp && offsetX != index) {
@@ -281,29 +295,8 @@
       window.onresize = function () {
         _this.computListCardMaxHeight()
       }
-
-
-//      var board = document.getElementById('board')
-//      var offset;
-//      var last_left = 0;
-//      board.onmousedown = function(e){
-//         board.onmousemove =function(e){
-//           last_left = e.clientX - offset;
-//           board.scrollLeft = e.clientX - offset;
-//         }
-//        if(last_left > 0 ){
-//          offset = e.clientX-last_left;
-//        }else{
-//          offset = e.clientX;
-//        }
-//      }
-//      window.onmouseup = function(e){
-//         board.onmousemove = null;
-//      }
-    }
-    ,
-    computed: {}
-    ,
+    },
+    computed: {},
     components: {}
   }
 </script>
