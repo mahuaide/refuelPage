@@ -38,7 +38,7 @@
                                 <span class="list-card-title">
                                       {{card.title}}
                                 </span>
-                                <i class="el-icon-delete"></i>
+                                <i class="el-icon-delete" @click="delCard(item.cards,indexCard)"></i>
                               </div>
                             </div>
                           </div>
@@ -90,6 +90,9 @@
       }
     },
     methods: {
+      delCard(item, index){
+        item.splice(index, 1);
+      },
       addCard(lane){
         var id = Math.random();
         lane.cards.push({"title": id})
@@ -99,6 +102,12 @@
         this.list.push(
           {"id": id, "lane": id, "cards": []},
         )
+        let board = document.getElementById('board');
+        this.$nextTick(() => {
+          console.log(board.scrollWidth)
+          board.scrollLeft += 300;
+        })
+
       },
 //      卡片拖拽
       dragCardStart(ev, cards, index){
@@ -156,45 +165,46 @@
         //('over')
         let board = document.getElementById('board');
         let board_scrollLeft = board.scrollLeft;
-        let board_offsetTop = this.getElementTop(board);
         let offsetX = Math.floor((ev.clientX + board_scrollLeft) / 280);
-        let offsetY = ev.clientY - board_offsetTop - 40;
         this.computListCardMaxHeight();
         //视口移动
         let clientX = ev.clientX;
         let scrollLeft = board.scrollLeft;
         if (clientX >= window.innerWidth - 150) {
           setTimeout(() => {
-            board.scrollLeft = scrollLeft + (clientX)/68;
-          }, 1000/60)
+            board.scrollLeft = scrollLeft + (clientX) / 68;
+          }, 1000 / 60)
         }
         if (clientX <= 150) {
           setTimeout(() => {
-            board.scrollLeft = scrollLeft - (window.innerWidth-clientX)/68;
-          }, 1000/60)
+            board.scrollLeft = scrollLeft - (window.innerWidth - clientX) / 68;
+          }, 1000 / 60)
         }
         //如果是泳道拖拽中
-        this.list.forEach((item, index) => {
-          if (item.temp && offsetX != index) {
-            this.list.splice(index, 1)
-            this.list.splice(offsetX, 0, {"temp": true})
-          }
-        })
-
+        if (this.dragLane != null) {
+          this.list.forEach((item, index) => {
+            if (item.temp && offsetX != index) {
+              this.list.splice(index, 1)
+              this.list.splice(offsetX, 0, {"temp": true})
+            }
+          })
+        }
         //如果是卡片拖拽中
         if (this.dragCard != null) {
+          let board_offsetTop = this.getElementTop(board);
+          let offsetY = ev.clientY - board_offsetTop - 40;
           //泳道内视口移动
           let current_listWrapper = board.getElementsByClassName('list-wrapper');
           var current_listCards = current_listWrapper[offsetX].getElementsByClassName('list-cards')[0];
-          if(offsetY<36){
+          if (offsetY < 36) {
             setTimeout(() => {
-              current_listCards.scrollTop = current_listCards.scrollTop-10;
-            }, 1000/60)
+              current_listCards.scrollTop = current_listCards.scrollTop - 8;
+            }, 1000 / 60)
           }
-          if(offsetY>parseFloat(getComputedStyle(current_listCards).height)-36){
+          if (offsetY > parseFloat(getComputedStyle(current_listCards).height) - 36) {
             setTimeout(() => {
-              current_listCards.scrollTop = current_listCards.scrollTop+10;
-            }, 1000/60)
+              current_listCards.scrollTop = current_listCards.scrollTop + 8;
+            }, 1000 / 60)
           }
           //如果鼠标悬浮在占位元素上，则不计算位置
           if (ev.target.className.indexOf('list-card-temp') != -1) {
@@ -214,10 +224,13 @@
         }
       },
 
-      dragLaneEnter(ev){
+      dragLaneEnter(ev)
+      {
         //("enter");
-      },
-      dropLane(ev){
+      }
+      ,
+      dropLane(ev)
+      {
         ev.preventDefault();
         //("drop");
         this.list.forEach((item, index) => {
@@ -237,11 +250,15 @@
             })
           })
         }
-      },
-      dragLaneLeave(ev){
+      }
+      ,
+      dragLaneLeave(ev)
+      {
         //("leave");
-      },
-      _preventDefault(ev){
+      }
+      ,
+      _preventDefault(ev)
+      {
         if (ev.preventDefault) {
           ev.preventDefault();
         } else {
@@ -252,9 +269,11 @@
         } else {
           window.event.cancelBubble = true;
         }
-      },
+      }
+      ,
       //获取元素相对高度
-      getElementTop(element){
+      getElementTop(element)
+      {
         var actualTop = element.offsetTop;
         var current = element.offsetParent;
         while (current !== null) {
@@ -262,8 +281,10 @@
           current = current.offsetParent;
         }
         return actualTop;
-      },
-      getIndexCards(array, offsetY, board_offsetTop, scrollTop){
+      }
+      ,
+      getIndexCards(array, offsetY, board_offsetTop, scrollTop)
+      {
         //如果是新建的泳道，或者鼠标在用上上面，则插入首位
         if (!array || array.length == 0 || offsetY <= 0) {
           return 0;
@@ -282,8 +303,10 @@
             }
           }
         }
-      },
-      computListCardMaxHeight(){
+      }
+      ,
+      computListCardMaxHeight()
+      {
         if (this.isIE()) {
           this.$nextTick(() => {
             let listCrads = document.getElementsByClassName('list-cards');
@@ -293,8 +316,10 @@
             }
           })
         }
-      },
-      isIE(){
+      }
+      ,
+      isIE()
+      {
         return navigator.userAgent.indexOf("MSIE") != -1 || navigator.userAgent.indexOf("Trident") != -1;
       }
     },
@@ -305,8 +330,10 @@
       window.onresize = function () {
         _this.computListCardMaxHeight()
       }
-    },
-    computed: {},
+    }
+    ,
+    computed: {}
+    ,
     components: {}
   }
 </script>
