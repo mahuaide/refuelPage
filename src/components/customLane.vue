@@ -165,14 +165,13 @@
         let scrollLeft = board.scrollLeft;
         if (clientX >= window.innerWidth - 150) {
           setTimeout(() => {
-            console.log(board.scrollLeft);
             board.scrollLeft = scrollLeft + (clientX)/68;
-          }, 20)
+          }, 1000/60)
         }
         if (clientX <= 150) {
           setTimeout(() => {
             board.scrollLeft = scrollLeft - (window.innerWidth-clientX)/68;
-          }, 20)
+          }, 1000/60)
         }
         //如果是泳道拖拽中
         this.list.forEach((item, index) => {
@@ -184,13 +183,24 @@
 
         //如果是卡片拖拽中
         if (this.dragCard != null) {
+          //泳道内视口移动
+          let current_listWrapper = board.getElementsByClassName('list-wrapper');
+          var current_listCards = current_listWrapper[offsetX].getElementsByClassName('list-cards')[0];
+          if(offsetY<36){
+            setTimeout(() => {
+              current_listCards.scrollTop = current_listCards.scrollTop-10;
+            }, 1000/60)
+          }
+          if(offsetY>parseFloat(getComputedStyle(current_listCards).height)-36){
+            setTimeout(() => {
+              current_listCards.scrollTop = current_listCards.scrollTop+10;
+            }, 1000/60)
+          }
           //如果鼠标悬浮在占位元素上，则不计算位置
           if (ev.target.className.indexOf('list-card-temp') != -1) {
             return;
           }
           //计算占位元素位置
-          let current_listWrapper = board.getElementsByClassName('list-wrapper');
-          var current_listCards = current_listWrapper[offsetX].getElementsByClassName('list-cards')[0];
           var current_listCard = Array.from(current_listWrapper[offsetX].getElementsByClassName('carddrag'));
           let tempIndex = this.getIndexCards(current_listCard, offsetY, board_offsetTop, current_listCards.scrollTop);
           this.list.forEach((item, laneIndex) => {
