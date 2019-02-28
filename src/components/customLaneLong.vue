@@ -308,7 +308,7 @@
       ,
       computListCardMaxHeight()
       {
-
+        return false;
         if (this.isIE()) {
           this.$nextTick(() => {
             let listCrads = document.getElementsByClassName('list-cards');
@@ -370,7 +370,7 @@
     position relative
     background-position: 50%;
     background-size: cover;
-    overflow: hidden;
+    /*overflow: hidden;*/
     .surface
       height 100%
       display: flex;
@@ -390,9 +390,9 @@
       .content
         position: relative;
         flex-grow: 1;
-        overflow-y: auto;
+        /*overflow-y: auto;*/
         outline: none;
-        height 100%
+        /*height 100%*/
         .board-wrapper
           font-size 0
           position: absolute;
@@ -400,7 +400,7 @@
           right: 0;
           top: 0;
           bottom: 0;
-          height 100%
+          /*height 100%*/
           .board-main-content
             height: 100%;
             display: flex;
@@ -426,7 +426,7 @@
                 white-space: nowrap;
                 margin-bottom: 8px;
                 overflow-x: auto;
-                overflow-y: hidden;
+                /*overflow-y: hidden;*/
                 padding-bottom: 8px;
                 position: absolute;
                 top: 0;
@@ -449,7 +449,7 @@
                 .list-wrapper
                   width: 272px;
                   margin: 0 4px;
-                  height: 100%;
+                  /*height: 100%;*/
                   box-sizing: border-box;
                   display: inline-block;
                   vertical-align: top;
@@ -498,7 +498,7 @@
                       flex: 1 1 auto;
                       margin-bottom: 0;
                       overflow-y: auto;
-                      overflow-x: hidden;
+                      /*overflow-x: hidden;*/
                       margin: 0 4px;
                       padding: 0 4px;
                       z-index: 1;
@@ -526,7 +526,7 @@
                         min-height: 20px;
                         z-index: 0;
                         .list-card-details
-                          overflow: hidden;
+                          /*overflow: hidden;*/
                           padding: 6px 8px 2px;
                           position: relative;
                           z-index: 10;
@@ -536,7 +536,7 @@
                             clear: both;
                             display: block;
                             margin: 0 0 4px;
-                            overflow: hidden;
+                            /*overflow: hidden;*/
                             text-decoration: none;
                             word-wrap: break-word;
                             color: #17394d;

@@ -1,7 +1,8 @@
 <template>
   <div>
     <router-link to="/dndEcharts" tag="li">可拖拽式仪表盘</router-link>
-    <router-link to="/customLane" tag="li">自定义泳道</router-link>
+    <router-link to="/customLane" tag="li">自定义泳道（单屏）</router-link>
+    <router-link to="/customLanelong" tag="li">自定义泳道（多屏）</router-link>
   </div>
 </template>
 

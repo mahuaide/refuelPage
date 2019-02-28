@@ -3,6 +3,7 @@ import Router from 'vue-router'
 import refuel from '@/components/refuel'
 import dndEcharts from '@/components/dndEcharts'
 import customLane from '@/components/customLane'
+import customLaneLong from '@/components/customLaneLong'
 import demo from '@/components/demo'
 import gasStation from '@/components/gasStation'
 import login from '@/components/login'
@@ -44,6 +45,11 @@ export default new Router({
       path: '/customLane',
       name: 'customLane',
       component: customLane
+    },
+    {
+      path: '/customLaneLong',
+      name: 'customLaneLong',
+      component: customLaneLong
     }
   ]
 })
