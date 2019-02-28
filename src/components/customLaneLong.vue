@@ -142,7 +142,6 @@
           if (item.temp) {
             this.list.splice(index, 1, this.dragLane);
             this.dragLane = null;
-            this.computListCardMaxHeight();
           }
         })
         this.list.forEach((item, laneIndex) => {
@@ -160,7 +159,6 @@
         let board = document.getElementById('board');
         let board_scrollLeft = board.scrollLeft;
         let offsetX = Math.floor((ev.clientX + board_scrollLeft) / 280);
-        this.computListCardMaxHeight();
         //视口移动
         let clientX = ev.clientX;
         let scrollLeft = board.scrollLeft;
@@ -186,7 +184,7 @@
         //如果是卡片拖拽中
         if (this.dragCard != null) {
           let board_offsetTop = this.getElementTop(board);
-          let offsetY = ev.clientY - board_offsetTop - 40;
+          let offsetY = ev.clientY - board_offsetTop - 40 + board.scrollTop;
           //泳道内视口移动
           let current_listWrapper = board.getElementsByClassName('list-wrapper');
           var current_listCards = current_listWrapper[offsetX].getElementsByClassName('list-cards')[0];
@@ -232,7 +230,6 @@
             if (item.temp) {
               this.list.splice(index, 1, this.dragLane);
               this.dragLane = null;
-              this.computListCardMaxHeight();
             }
           })
         }
@@ -327,11 +324,6 @@
     },
     mounted()
     {
-      let _this = this;
-      _this.computListCardMaxHeight()
-      window.onresize = function () {
-        _this.computListCardMaxHeight()
-      }
     }
     ,
     computed: {}
