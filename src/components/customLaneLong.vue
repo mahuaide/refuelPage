@@ -188,14 +188,17 @@
           //泳道内视口移动
           let current_listWrapper = board.getElementsByClassName('list-wrapper');
           var current_listCards = current_listWrapper[offsetX].getElementsByClassName('list-cards')[0];
-          if (offsetY < 36) {
+          console.log(ev.clientY);
+          if (ev.clientY < 150) {
             setTimeout(() => {
-              current_listCards.scrollTop = current_listCards.scrollTop - 8;
+//              current_listCards.scrollTop = current_listCards.scrollTop - 8;
+              board.scrollTop  = board.scrollTop -9
             }, 1000 / 60)
           }
-          if (offsetY > parseFloat(getComputedStyle(current_listCards).height) - 36) {
+          if (offsetY > window.innerHeight -250) {
             setTimeout(() => {
-              current_listCards.scrollTop = current_listCards.scrollTop + 8;
+//              current_listCards.scrollTop = current_listCards.scrollTop + 8;
+              board.scrollTop  = board.scrollTop +9
             }, 1000 / 60)
           }
           //如果鼠标悬浮在占位元素上，则不计算位置
