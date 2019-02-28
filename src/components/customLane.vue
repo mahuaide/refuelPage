@@ -291,7 +291,12 @@
           //如果，鼠标位置在两个卡片之间，则插入当前位置
           for (let i = 0; i < array.length; i++) {
             let cur_ele_top = this.getElementTop(array[i]) - board_offsetTop - 40 - scrollTop;
-            let nex_ele_top = this.getElementTop(array[i + 1]) - board_offsetTop - 40 - scrollTop;
+            let nex_ele_top = 0;
+            if(i+1 == array.length){
+              nex_ele_top = Number.POSITIVE_INFINITY;
+            }else{
+              nex_ele_top = this.getElementTop(array[i + 1]) - board_offsetTop - 40 - scrollTop;
+            }
             if (cur_ele_top <= (offsetY - 32) && (offsetY - 32) <= nex_ele_top) {
               return i + 1;
             } else {
