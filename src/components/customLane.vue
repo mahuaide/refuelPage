@@ -31,7 +31,7 @@
                             <div class="list-card"
                                  draggable="true"
                                  @dragstart.stop="dragCardStart($event,item.cards,indexCard)"
-                                 @dragend="dragCardEnd($event)"
+                                 @dragend.stop="dragCardEnd($event)"
                                  :id="card.title"
                             >
                               <div class="list-card-details">
@@ -118,9 +118,6 @@
         this.dragCard = cards.splice(index, 1, {"temp": true})[0]
       },
       dragCardEnd(ev){
-        if (this.dragCard == null) {
-          return;
-        }
         //("Card---End");
         this.list.forEach((item, laneIndex) => {
           item.cards.forEach((card, cardIndex) => {
@@ -140,7 +137,7 @@
         this.dragLane = this.list.splice(index, 1, {"temp": true})[0];
       },
       dragLaneEnd(ev){
-        //("end")
+        //console.log("end")
         this.list.forEach((item, index) => {
           if (item.temp) {
             this.list.splice(index, 1, this.dragLane);
@@ -148,16 +145,14 @@
             this.computListCardMaxHeight();
           }
         })
-        if (this.dragCard != null) {
-          this.list.forEach((item, laneIndex) => {
-            item.cards.forEach((card, cardIndex) => {
-              if (card.temp) {
-                item.cards.splice(cardIndex, 1, this.dragCard);
-                this.dragCard = null;
-              }
-            })
+        this.list.forEach((item, laneIndex) => {
+          item.cards.forEach((card, cardIndex) => {
+            if (card.temp) {
+              item.cards.splice(cardIndex, 1, this.dragCard);
+              this.dragCard = null;
+            }
           })
-        }
+        })
       },
       dragLaneOver(ev){
         ev.preventDefault();
@@ -231,14 +226,16 @@
       dropLane(ev)
       {
         ev.preventDefault();
-        //("drop");
-        this.list.forEach((item, index) => {
-          if (item.temp) {
-            this.list.splice(index, 1, this.dragLane);
-            this.dragLane = null;
-            this.computListCardMaxHeight();
-          }
-        })
+        //console.log("drop");
+        if (this.dragLane != null) {
+          this.list.forEach((item, index) => {
+            if (item.temp) {
+              this.list.splice(index, 1, this.dragLane);
+              this.dragLane = null;
+              this.computListCardMaxHeight();
+            }
+          })
+        }
         if (this.dragCard != null) {
           this.list.forEach((item, laneIndex) => {
             item.cards.forEach((card, cardIndex) => {
