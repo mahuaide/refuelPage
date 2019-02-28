@@ -188,17 +188,14 @@
           //泳道内视口移动
           let current_listWrapper = board.getElementsByClassName('list-wrapper');
           var current_listCards = current_listWrapper[offsetX].getElementsByClassName('list-cards')[0];
-          console.log(ev.clientY);
           if (ev.clientY < 150) {
             setTimeout(() => {
-//              current_listCards.scrollTop = current_listCards.scrollTop - 8;
-              board.scrollTop  = board.scrollTop -9
+              board.scrollTop = board.scrollTop - 8
             }, 1000 / 60)
           }
-          if (offsetY > window.innerHeight -250) {
+          if (offsetY > window.innerHeight - 250) {
             setTimeout(() => {
-//              current_listCards.scrollTop = current_listCards.scrollTop + 8;
-              board.scrollTop  = board.scrollTop +9
+              board.scrollTop = board.scrollTop + 8
             }, 1000 / 60)
           }
           //如果鼠标悬浮在占位元素上，则不计算位置
@@ -222,8 +219,7 @@
       dragLaneEnter(ev)
       {
         //("enter");
-      }
-      ,
+      },
       dropLane(ev)
       {
         ev.preventDefault();
@@ -246,13 +242,11 @@
             })
           })
         }
-      }
-      ,
+      },
       dragLaneLeave(ev)
       {
         //("leave");
-      }
-      ,
+      },
       _preventDefault(ev)
       {
         if (ev.preventDefault) {
@@ -265,8 +259,7 @@
         } else {
           window.event.cancelBubble = true;
         }
-      }
-      ,
+      },
       //获取元素相对高度
       getElementTop(element)
       {
@@ -277,8 +270,7 @@
           current = current.offsetParent;
         }
         return actualTop;
-      }
-      ,
+      },
       getIndexCards(array, offsetY, board_offsetTop, scrollTop)
       {
         //如果是新建的泳道，或者鼠标在用上上面，则插入首位
@@ -292,9 +284,9 @@
           for (let i = 0; i < array.length; i++) {
             let cur_ele_top = this.getElementTop(array[i]) - board_offsetTop - 40 - scrollTop;
             let nex_ele_top = 0;
-            if(i+1 == array.length){
+            if (i + 1 == array.length) {
               nex_ele_top = Number.POSITIVE_INFINITY;
-            }else{
+            } else {
               nex_ele_top = this.getElementTop(array[i + 1]) - board_offsetTop - 40 - scrollTop;
             }
             if (cur_ele_top <= (offsetY - 32) && (offsetY - 32) <= nex_ele_top) {
@@ -304,8 +296,7 @@
             }
           }
         }
-      }
-      ,
+      },
       computListCardMaxHeight()
       {
         return false;
@@ -318,8 +309,7 @@
             }
           })
         }
-      }
-      ,
+      },
       isIE()
       {
         return navigator.userAgent.indexOf("MSIE") != -1 || navigator.userAgent.indexOf("Trident") != -1;
@@ -327,10 +317,8 @@
     },
     mounted()
     {
-    }
-    ,
-    computed: {}
-    ,
+    },
+    computed: {},
     components: {}
   }
 </script>
