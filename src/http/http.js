@@ -7,7 +7,8 @@ import router from '../router/index.js';
 // axios 公共配置
 axios.defaults.timeout = 60000;
 // axios.defaults.baseURL = "http://refuel.applinzi.com";
-axios.defaults.baseURL = "http://localhost:3000";
+// axios.defaults.baseURL = "http://k2321512s9.imwork.net:16607";
+  axios.defaults.baseURL = "http://111.192.33.202:3000";
 axios.defaults.withCredentials = true;
 
 // http request 拦截器
