@@ -26,7 +26,7 @@
                         <textarea class="mod-list-name">{{item.lane}}</textarea>
                       </div>
                       <div class="list-cards">
-                        <template v-for="(card,indexCard) in item.cards">
+                        <template v-for="(card,indexCard) in item.cards" :keys="card.title">
                           <div v-if="!card.temp" class="carddrag">
                             <div class="list-card"
                                  draggable="true"
@@ -90,35 +90,41 @@
       }
     },
     methods: {
+      //删除卡片
       delCard(item, index){
         item.splice(index, 1);
       },
+      //添加卡片
       addCard(lane){
         var id = Math.random();
         lane.cards.push({"title": id})
       },
+      //添加泳道
       addLane(){
         var id = Math.random();
         this.list.push(
           {"id": id, "lane": id, "cards": []},
         )
         let board = document.getElementById('board');
+        //添加成功后，页面右移一个泳道位置，为的是方便再次添加泳道
         this.$nextTick(() => {
           board.scrollLeft += 300;
         })
 
       },
-//      卡片拖拽
+      //开始拖拽卡片
       dragCardStart(ev, cards, index){
-        //("Card---Start");
+        //如果是非IE浏览器，需要setData，火狐尤其需要，否则报错,IE浏览器不需要
         if (!this.isIE()) {
           ev.dataTransfer.setData("cardId", ev.target.id);
         }
+        //被拖拽元素高度不确定，需要临时存储后，赋值给占位元素
         this.tempHeight = getComputedStyle(ev.target).height;
+        //先删除被拖拽元素，存储到dragCard中，在原有位置上增加临时占位元素
         this.dragCard = cards.splice(index, 1, {"temp": true})[0]
       },
+      //拖拽结束后（主要是离开可拖拽区域后释放元素）用实际元素替换当前占位元素
       dragCardEnd(ev){
-        //("Card---End");
         this.list.forEach((item, laneIndex) => {
           item.cards.forEach((card, cardIndex) => {
             if (card.temp) {
@@ -136,6 +142,7 @@
         this.tempHeight = getComputedStyle(ev.target).height;
         this.dragLane = this.list.splice(index, 1, {"temp": true})[0];
       },
+      //拖拽结束后（主要是离开可拖拽区域后释放元素）用实际元素替换当前占位元素
       dragLaneEnd(ev){
         //console.log("end")
         this.list.forEach((item, index) => {
@@ -144,20 +151,14 @@
             this.dragLane = null;
           }
         })
-        this.list.forEach((item, laneIndex) => {
-          item.cards.forEach((card, cardIndex) => {
-            if (card.temp) {
-              item.cards.splice(cardIndex, 1, this.dragCard);
-              this.dragCard = null;
-            }
-          })
-        })
       },
+      //被拖拽元素在可拖放区域内时
       dragLaneOver(ev){
         ev.preventDefault();
         //('over')
         let board = document.getElementById('board');
         let board_scrollLeft = board.scrollLeft;
+        //判断鼠标落入第几个泳道内
         let offsetX = Math.floor((ev.clientX + board_scrollLeft) / 280);
         //视口移动
         let clientX = ev.clientX;
@@ -184,6 +185,7 @@
         //如果是卡片拖拽中
         if (this.dragCard != null) {
           let board_offsetTop = this.getElementTop(board);
+          //卡片在泳道内，相对于泳道内边距，Y轴位置
           let offsetY = ev.clientY - board_offsetTop - 40 + board.scrollTop;
           //泳道内视口移动
           let current_listWrapper = board.getElementsByClassName('list-wrapper');
@@ -215,31 +217,20 @@
           this.list[offsetX].cards.splice(tempIndex, 0, {"temp": true})
         }
       },
-
       dragLaneEnter(ev)
       {
         //("enter");
       },
+      //泳道drop
       dropLane(ev)
       {
         ev.preventDefault();
-        //console.log("drop");
         if (this.dragLane != null) {
           this.list.forEach((item, index) => {
             if (item.temp) {
               this.list.splice(index, 1, this.dragLane);
               this.dragLane = null;
             }
-          })
-        }
-        if (this.dragCard != null) {
-          this.list.forEach((item, laneIndex) => {
-            item.cards.forEach((card, cardIndex) => {
-              if (card.temp) {
-                item.cards.splice(cardIndex, 1, this.dragCard);
-                this.dragCard = null;
-              }
-            })
           })
         }
       },
