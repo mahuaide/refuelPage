@@ -124,6 +124,7 @@
       },
       //拖拽结束后（主要是离开可拖拽区域后释放元素）用实际元素替换当前占位元素
       dragCardEnd(ev){
+        console.log('cardEnd')
         this.list.forEach((item, laneIndex) => {
           item.cards.forEach((card, cardIndex) => {
             if (card.temp) {
@@ -146,6 +147,7 @@
       },
       //拖拽结束后（主要是离开可拖拽区域后释放元素）用实际元素替换当前占位元素
       dragLaneEnd(ev){
+        console.log("laneEnd");
         this.list.forEach((item, index) => {
           if (item.temp) {
             this.list.splice(index, 1, this.dragLane);
@@ -228,15 +230,6 @@
       dropLane(ev)
       {
         ev.preventDefault();
-        if (this.dragLane != null) {
-          this.list.forEach((item, index) => {
-            if (item.temp) {
-              this.list.splice(index, 1, this.dragLane);
-              this.dragLane = null;
-              this.computListCardMaxHeight();
-            }
-          })
-        }
       }
       ,
       dragLaneLeave(ev)

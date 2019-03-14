@@ -110,7 +110,6 @@
         this.$nextTick(() => {
           board.scrollLeft += 300;
         })
-
       },
       //开始拖拽卡片
       dragCardStart(ev, cards, index){
@@ -225,14 +224,6 @@
       dropLane(ev)
       {
         ev.preventDefault();
-        if (this.dragLane != null) {
-          this.list.forEach((item, index) => {
-            if (item.temp) {
-              this.list.splice(index, 1, this.dragLane);
-              this.dragLane = null;
-            }
-          })
-        }
       },
       dragLaneLeave(ev)
       {
