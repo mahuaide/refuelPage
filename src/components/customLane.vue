@@ -122,18 +122,6 @@
         //先删除被拖拽元素，存储到dragCard中，在原有位置上增加临时占位元素
         this.dragCard = cards.splice(index, 1, {"temp": true})[0]
       },
-      //拖拽结束后（主要是离开可拖拽区域后释放元素）用实际元素替换当前占位元素
-      dragCardEnd(ev){
-        console.log('cardEnd')
-        this.list.forEach((item, laneIndex) => {
-          item.cards.forEach((card, cardIndex) => {
-            if (card.temp) {
-              item.cards.splice(cardIndex, 1, this.dragCard);
-              this.dragCard = null;
-            }
-          })
-        })
-      },
       //开始拖拽泳道
       dragLaneStart(ev, index){
         if (!this.isIE()) {
@@ -146,11 +134,24 @@
         this.dragLane = this.list.splice(index, 1, {"temp": true})[0];
       },
       //拖拽结束后（主要是离开可拖拽区域后释放元素）用实际元素替换当前占位元素
+      dragCardEnd(ev){
+        console.log('cardEnd')
+        this.list.forEach((item, laneIndex) => {
+          item.cards.forEach((card, cardIndex) => {
+            if (card.temp) {
+              item.cards.splice(cardIndex, 1, this.dragCard);
+              this.dragCard = null;
+            }
+          })
+        })
+      },
+      //拖拽结束后（主要是离开可拖拽区域后释放元素）用实际元素替换当前占位元素
       dragLaneEnd(ev){
         console.log("laneEnd");
         this.list.forEach((item, index) => {
           if (item.temp) {
             this.list.splice(index, 1, this.dragLane);
+            console.log(index)
             this.dragLane = null;
             this.computListCardMaxHeight();
           }
