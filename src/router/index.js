@@ -7,8 +7,14 @@ import customLaneLong from '@/components/customLaneLong'
 import demo from '@/components/demo'
 import gasStation from '@/components/gasStation'
 import login from '@/components/login'
+import store from '../store/store'
+import {lsWrite,lsRead} from '../common/js/ls'
+import * as types from '../store/type'
 
 Vue.use(Router)
+if(lsRead("user").userId){
+  store.commit(types.LOGIN, lsRead("user"));
+}
 
 export default new Router({
   routes: [

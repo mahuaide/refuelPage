@@ -11,7 +11,7 @@ axios.defaults.timeout = 60000;
 if (process.env.NODE_ENV === 'production') {
   axios.defaults.baseURL = "http://111.192.33.202:3000";
 }else{
-  axios.defaults.baseURL = "http://localhost:3000";
+  axios.defaults.baseURL = "http://192.168.0.37:3001";
 }
 axios.defaults.withCredentials = true;
 
