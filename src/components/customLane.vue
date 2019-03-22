@@ -231,7 +231,6 @@
       //泳道drop
       dropLane(ev)
       {
-
         ev.preventDefault();
         if (this.dragLane != null) {
           console.log("dropLane")
@@ -243,8 +242,7 @@
             }
           })
         }
-      }
-      ,
+      },
       dragLaneLeave(ev)
       {
         //("leave");
