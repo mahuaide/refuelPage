@@ -147,15 +147,16 @@
       },
       //拖拽结束后（主要是离开可拖拽区域后释放元素）用实际元素替换当前占位元素
       dragLaneEnd(ev){
-        console.log("laneEnd");
-        this.list.forEach((item, index) => {
-          if (item.temp) {
-            this.list.splice(index, 1, this.dragLane);
-            console.log(index)
-            this.dragLane = null;
-            this.computListCardMaxHeight();
-          }
-        })
+        if (this.dragLane != null) {
+          console.log("laneEnd");
+          this.list.forEach((item, index) => {
+            if (item.temp) {
+              this.list.splice(index, 1, this.dragLane);
+              this.dragLane = null;
+              this.computListCardMaxHeight();
+            }
+          })
+        }
       },
       dragLaneOver(ev){
         ev.preventDefault();
@@ -230,7 +231,18 @@
       //泳道drop
       dropLane(ev)
       {
+
         ev.preventDefault();
+        if (this.dragLane != null) {
+          console.log("dropLane")
+          this.list.forEach((item, index) => {
+            if (item.temp) {
+              this.list.splice(index, 1, this.dragLane);
+              this.dragLane = null;
+              this.computListCardMaxHeight();
+            }
+          })
+        }
       }
       ,
       dragLaneLeave(ev)
@@ -277,9 +289,9 @@
           for (let i = 0; i < array.length; i++) {
             let cur_ele_top = this.getElementTop(array[i]) - board_offsetTop - 40 - scrollTop;
             let nex_ele_top = 0
-            if(i+1 == array.length){
+            if (i + 1 == array.length) {
               nex_ele_top = Number.POSITIVE_INFINITY
-            }else{
+            } else {
               nex_ele_top = this.getElementTop(array[i + 1]) - board_offsetTop - 40 - scrollTop;
             }
             if (cur_ele_top <= (offsetY - 32) && (offsetY - 32) <= nex_ele_top) {
