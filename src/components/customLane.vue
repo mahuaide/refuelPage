@@ -135,20 +135,23 @@
       },
       //拖拽结束后（主要是离开可拖拽区域后释放元素）用实际元素替换当前占位元素
       dragCardEnd(ev){
-        console.log('cardEnd')
-        this.list.forEach((item, laneIndex) => {
-          item.cards.forEach((card, cardIndex) => {
-            if (card.temp) {
-              item.cards.splice(cardIndex, 1, this.dragCard);
-              this.dragCard = null;
-            }
+        //console.log('cardEnd')
+        if (this.dragCard != null) {
+          this.list.forEach((item, laneIndex) => {
+            item.cards.forEach((card, cardIndex) => {
+              if (card.temp) {
+                item.cards.splice(cardIndex, 1, this.dragCard);
+                this.dragCard = null;
+                this.dragCardToServer(laneIndex, cardIndex);
+              }
+            })
           })
-        })
+        }
       },
       //拖拽结束后（主要是离开可拖拽区域后释放元素）用实际元素替换当前占位元素
       dragLaneEnd(ev){
         if (this.dragLane != null) {
-          console.log("laneEnd");
+          //console.log("laneEnd");
           this.list.forEach((item, index) => {
             if (item.temp) {
               this.list.splice(index, 1, this.dragLane);
@@ -156,6 +159,7 @@
               this.computListCardMaxHeight();
             }
           })
+          this.dragLaneToServer();
         }
       },
       dragLaneOver(ev){
@@ -232,10 +236,9 @@
       dropLane(ev)
       {
         ev.preventDefault();
-        console.log("drop")
         //本想在dragEnd中统一处理，但是有时候不触发end，很恼火，所以在这里临时补下
         if (this.dragLane != null) {
-          console.log("dropLane")
+          //console.log("dropLane")
           this.list.forEach((item, index) => {
             if (item.temp) {
               this.list.splice(index, 1, this.dragLane);
@@ -243,6 +246,7 @@
               this.computListCardMaxHeight();
             }
           })
+          this.dragLaneToServer();
         }
         if (this.dragCard != null) {
           this.list.forEach((item, laneIndex) => {
@@ -250,6 +254,7 @@
               if (card.temp) {
                 item.cards.splice(cardIndex, 1, this.dragCard);
                 this.dragCard = null;
+                this.dragCardToServer(laneIndex, cardIndex)
               }
             })
           })
@@ -327,6 +332,20 @@
         }
       }
       ,
+      dragLaneToServer(){
+        var lanes = this.list.map(item => {
+          return item.id
+        }).join(',')
+        console.log("drag lane to Server:\n" + lanes);
+      },
+      dragCardToServer(laneIndex, cardIndex){
+        var laneId = this.list[laneIndex].id;
+        var cardList = this.list[laneIndex].cards.slice(0, cardIndex + 1).map(item => {
+          return item.title
+        })
+        var dragCardId = cardList[cardList.length-1];
+        console.log("drag card to Server:" +"\ndrag card:"+dragCardId+"\ndrop lane:" + laneId + "\nupCards:" + cardList);
+      },
       isIE()
       {
         return navigator.userAgent.indexOf("MSIE") != -1 || navigator.userAgent.indexOf("Trident") != -1;
