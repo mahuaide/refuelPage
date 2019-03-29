@@ -232,6 +232,8 @@
       dropLane(ev)
       {
         ev.preventDefault();
+        console.log("drop")
+        //本想在dragEnd中统一处理，但是有时候不触发end，很恼火，所以在这里临时补下
         if (this.dragLane != null) {
           console.log("dropLane")
           this.list.forEach((item, index) => {
@@ -242,7 +244,18 @@
             }
           })
         }
-      },
+        if (this.dragCard != null) {
+          this.list.forEach((item, laneIndex) => {
+            item.cards.forEach((card, cardIndex) => {
+              if (card.temp) {
+                item.cards.splice(cardIndex, 1, this.dragCard);
+                this.dragCard = null;
+              }
+            })
+          })
+        }
+      }
+      ,
       dragLaneLeave(ev)
       {
         //("leave");

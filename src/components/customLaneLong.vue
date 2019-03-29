@@ -235,6 +235,16 @@
             }
           })
         }
+        if (this.dragCard != null) {
+          this.list.forEach((item, laneIndex) => {
+            item.cards.forEach((card, cardIndex) => {
+              if (card.temp) {
+                item.cards.splice(cardIndex, 1, this.dragCard);
+                this.dragCard = null;
+              }
+            })
+          })
+        }
       },
       dragLaneLeave(ev)
       {
