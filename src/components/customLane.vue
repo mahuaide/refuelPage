@@ -62,34 +62,24 @@
   </div>
 </template>
 <script type="text/ecmascript-6">
+  import {getKanbanInfo,createBoard,delBoard,moveBoard,createTask,delTask,moveTask} from '../http/api'
   export default{
     data(){
       return {
-        tempHeight: 0,
-        dragLane: null,
-        dragCard: null,
-        list: [
-          {
-            "id": 1,
-            "lane": "开始",
-            "cards": [{"title": 11}, {"title": 12}, {"title": 13}, {"title": 14}, {"title": "langlanglanglanglanglanglanglanglanglanglanglanglanglanglanglanglanglanglanglanglanglanglanglanglanglanglanglanglang"}, {"title": 111}, {"title": 111}, {"title": 111}, {"title": 111}, {"title": 111}, {"title": 111}, {"title": 111}, {"title": 111}]
-          },
-          {
-            "id": 2,
-            "lane": "开发",
-            "cards": [{"title": 21}, {"title": 22}, {"title": 23}, {"title": 24}, {"title": 25}]
-          },
-          {
-            "id": 3,
-            "lane": "阻塞",
-            "cards": [{"title": "langlanglanglanglanglanglanglanglanglanglanglanglanglanglanglanglanglanglanglanglanglanglanglanglanglanglanglanglang1111111111111111111111111111111111111111111111langlanglanglanglanglanglanglanglanglanglanglanglanglanglanglanglanglanglanglanglanglanglanglanglanglanglanglanglang1111111111111111111111111111111111111111111111langlanglanglanglanglanglanglanglanglanglanglanglanglanglanglanglanglanglanglanglanglanglanglanglanglanglanglanglang1111111111111111111111111111111111111111111111langlanglanglanglanglanglanglanglanglanglanglanglanglanglanglanglanglanglanglanglanglanglanglanglanglanglanglanglang1111111111111111111111111111111111111111111111"}, {"title": 32}, {"title": 33}, {"title": 34}, {"title": 35}]
-          },
-          {"id": 4, "lane": "测试", "cards": [{"title": 41}, {"title": 42}, {"title": 43}, {"title": 44}, {"title": 45}]},
-          {"id": 5, "lane": "完成", "cards": [{"title": 51}, {"title": 52}, {"title": 53}, {"title": 54}, {"title": 55}]},
-        ]
+        kanbanId:1,
+        tempHeight: 0,   //临时高度存储
+        dragLane: null, //被拖拽泳道
+        dragCard: null, //被拖拽卡片
+        list: [],        //泳道卡片信息
       }
     },
     methods: {
+      //获取泳道信息
+      getLaneInfo(){
+        getKanbanInfo({kanbanId:this.kanbanId}).then(res=>{
+          this.list = res.data.data;
+        })
+      },
       //删除卡片
       delCard(item, index){
         item.splice(index, 1);
@@ -358,6 +348,7 @@
       window.onresize = function () {
         _this.computListCardMaxHeight()
       }
+
     }
     ,
     computed: {}

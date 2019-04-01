@@ -1,7 +1,7 @@
 [
   {
     "boardId": 1,
-    "boardName": "开发",
+    "boardName": "开发--->",
     "tasks": [
       {
         "taskId": 1,
@@ -32,7 +32,7 @@
   },
   {
     "boardId": 2,
-    "boardName": "测试",
+    "boardName": "测试--->",
     "tasks": [
       {
         "taskId": 7,
@@ -94,7 +94,7 @@
   },
   {
     "boardId": 4,
-    "boardName": "完成",
+    "boardName": "完成--->",
     "tasks": [
       {
         "taskId": 10,
