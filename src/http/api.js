@@ -18,4 +18,11 @@ export const newRefuelLog = params=>{return axios.post(resfulParamsToUrl(Path.ne
 export const updateRefuelLogById = params=>{return axios.post(resfulParamsToUrl(Path.updateRefuelLogById,params),params)}
 //加油站
 export const getStationAll = params=>{return axios.get(resfulParamsToUrl(Path.getStationAll,params),{params})}
-
+//看板
+export const getKanbanInfo = params=>{return axios.get(resfulParamsToUrl(Path.getKanbanInfo,params),{params})}
+export const createBoard = params=>{return axios.post(resfulParamsToUrl(Path.createBoard,params),params)}
+export const delBoard = params=>{return axios.delete(resfulParamsToUrl(Path.delBoard,params),{params})}
+export const moveBoard = params=>{return axios.post(resfulParamsToUrl(Path.moveBoard,params),params)}
+export const createTask = params=>{return axios.post(resfulParamsToUrl(Path.createTask,params),params)}
+export const delTask = params=>{return axios.delete(resfulParamsToUrl(Path.delTask,params),{params})}
+export const moveTask = params=>{return axios.post(resfulParamsToUrl(Path.moveTask,params),params)}

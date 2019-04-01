@@ -11,7 +11,7 @@ axios.defaults.timeout = 60000;
 if (process.env.NODE_ENV === 'production') {
   axios.defaults.baseURL = "http://k2321512s9.imwork.net:16607";
 }else{
-  axios.defaults.baseURL = "http://localhost:3000";
+  axios.defaults.baseURL = "http://localhost:3001";
 }
 axios.defaults.withCredentials = true;
 
