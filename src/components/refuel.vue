@@ -353,7 +353,7 @@
   .avatar-uploader .el-upload:hover {
     border-color: #409EFF;
   }
-  .avatar-uploader-icon {
+  .el-upload .avatar-uploader-icon {
     font-size: 28px;
     color: #8c939d;
     width: 178px;
