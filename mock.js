@@ -4,8 +4,8 @@
 var express = require('express');
 var fs = require('fs');
 var path = require('path');
-var formidable = require('formidable') //post请求接收参数或者上传文件时候可能会用到
-var gm = require('gm');
+// var formidable = require('formidable') //post请求接收参数或者上传文件时候可能会用到
+// var gm = require('gm');
 
 const IP = "localhost";
 // const IP = "172.18.9.211";

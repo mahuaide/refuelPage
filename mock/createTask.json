@@ -1,6 +1,6 @@
 {
-  "taskId": "int,任务ID",
-  "taskName": "String,任务描述",
+  "taskId": "1212",
+  "taskName": "taskX",
   "taskIndex": "int,任务排序唯一标识",
   "createTime": "date,创建时间",
   "boardId": "int,所属泳道ID",

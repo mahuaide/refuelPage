@@ -1,6 +1,7 @@
 {
   "boardId": "1",
-  "boardName": "String,泳道名称",
+  "boardName": "泳道名称",
   "currentIndex": "int,泳道位置的唯一标识，不可重复",
-  "orderId": "看板ID"
+  "orderId": "看板ID",
+  "tasks":[]
 }

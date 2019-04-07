@@ -13,32 +13,34 @@
                    @dragenter="dragLaneEnter($event)"
                    @drop="dropLane($event)"
                    @dragleave="dragLaneLeave($event)">
-                <template v-for="(item,index) in list" :keys="item.id">
+                <template v-for="(item,index) in list" :keys="item.boardId">
                   <div class="list-wrapper"
                        v-if="!item.temp"
-                       :id="item.id">
-                    <div class="list" :id="item.id"
+                       :id="item.boardId">
+                    <div class="list" :id="item.boardId"
                          draggable="true"
                          @dragstart="dragLaneStart($event,index)"
                          @dragend="dragLaneEnd($event)">
                       <div class="list-header">
-                        <div class="list-header-target"></div>
-                        <textarea class="mod-list-name">{{item.lane}}</textarea>
+                        <div class="list-header-target">
+                          <i class="el-icon-delete" @click="delLane(item,index)"></i>
+                        </div>
+                        <textarea class="mod-list-name">{{item.boardName}}</textarea>
                       </div>
                       <div class="list-cards">
-                        <template v-for="(card,indexCard) in item.cards" :keys="card.title">
+                        <template v-for="(card,indexCard) in item.tasks" :keys="card.taskId">
                           <div v-if="!card.temp" class="carddrag">
                             <div class="list-card"
                                  draggable="true"
-                                 @dragstart.stop="dragCardStart($event,item.cards,indexCard)"
+                                 @dragstart.stop="dragCardStart($event,item.tasks,indexCard)"
                                  @dragend.stop="dragCardEnd($event)"
-                                 :id="card.title"
+                                 :id="card.taskName"
                             >
                               <div class="list-card-details">
                                 <span class="list-card-title">
-                                      {{card.title}}
+                                      {{card.taskName}}
                                 </span>
-                                <i class="el-icon-delete" @click="delCard(item.cards,indexCard)"></i>
+                                <i class="el-icon-delete" @click="delCard(item.tasks,card,indexCard)"></i>
                               </div>
                             </div>
                           </div>
@@ -62,11 +64,11 @@
   </div>
 </template>
 <script type="text/ecmascript-6">
-  import {getKanbanInfo,createBoard,delBoard,moveBoard,createTask,delTask,moveTask} from '../http/api'
+  import {getKanbanInfo, createBoard, delBoard, moveBoard, createTask, delTask, moveTask} from '../http/api'
   export default{
     data(){
       return {
-        kanbanId:1,
+        kanbanId: 1,
         tempHeight: 0,   //临时高度存储
         dragLane: null, //被拖拽泳道
         dragCard: null, //被拖拽卡片
@@ -74,31 +76,41 @@
       }
     },
     methods: {
+      //删除泳道
+      delLane(item,index){
+        delBoard({kanbanId:this.kanbanId,boardId:item.boardId}).then(res=>{
+          this.list.splice(index,1)
+        })
+      },
       //获取泳道信息
       getLaneInfo(){
-        getKanbanInfo({kanbanId:this.kanbanId}).then(res=>{
-          this.list = res.data.data;
+        getKanbanInfo({kanbanId: this.kanbanId}).then(res => {
+          this.list = res.data;
         })
       },
       //删除卡片
-      delCard(item, index){
-        item.splice(index, 1);
+      delCard(tasks,task, index){
+        delTask({kanbanId:this.kanbanId,taskId:task.taskId}).then(res=>{
+          tasks.splice(index,1)
+        })
       },
       //添加卡片
       addCard(lane){
         var id = Math.random();
-        lane.cards.push({"title": id})
+        createTask({kanbanId:this.kanbanId,boardId:lane.boardId,taskName:id}).then(res=>{
+          lane.tasks.push(res.data)
+        })
       },
       //添加泳道
       addLane(){
         var id = Math.random();
-        this.list.push(
-          {"id": id, "lane": id, "cards": []},
-        )
-        let board = document.getElementById('board');
-        //添加成功后，页面右移一个泳道位置，为的是方便再次添加泳道
-        this.$nextTick(() => {
-          board.scrollLeft += 300;
+        createBoard({kanbanId: this.kanbanId, boardName: id}).then(res => {
+          this.list.push(res.data);
+          //添加成功后，页面右移一个泳道位置，为的是方便再次添加泳道
+          this.$nextTick(() => {
+            document.getElementById('board').scrollLeft += 300;
+            ;
+          })
         })
       },
       //开始拖拽卡片
@@ -128,9 +140,9 @@
         //console.log('cardEnd')
         if (this.dragCard != null) {
           this.list.forEach((item, laneIndex) => {
-            item.cards.forEach((card, cardIndex) => {
+            item.tasks.forEach((card, cardIndex) => {
               if (card.temp) {
-                item.cards.splice(cardIndex, 1, this.dragCard);
+                item.tasks.splice(cardIndex, 1, this.dragCard);
                 this.dragCard = null;
                 this.dragCardToServer(laneIndex, cardIndex);
               }
@@ -208,13 +220,13 @@
           var current_listCard = Array.from(current_listWrapper[offsetX].getElementsByClassName('carddrag'));
           let tempIndex = this.getIndexCards(current_listCard, offsetY, board_offsetTop, current_listCards.scrollTop);
           this.list.forEach((item, laneIndex) => {
-            item.cards.forEach((card, cardIndex) => {
+            item.tasks.forEach((card, cardIndex) => {
               if (card.temp) {
-                item.cards.splice(cardIndex, 1);
+                item.tasks.splice(cardIndex, 1);
               }
             })
           })
-          this.list[offsetX].cards.splice(tempIndex, 0, {"temp": true})
+          this.list[offsetX].tasks.splice(tempIndex, 0, {"temp": true})
         }
       },
 
@@ -240,9 +252,9 @@
         }
         if (this.dragCard != null) {
           this.list.forEach((item, laneIndex) => {
-            item.cards.forEach((card, cardIndex) => {
+            item.tasks.forEach((card, cardIndex) => {
               if (card.temp) {
-                item.cards.splice(cardIndex, 1, this.dragCard);
+                item.tasks.splice(cardIndex, 1, this.dragCard);
                 this.dragCard = null;
                 this.dragCardToServer(laneIndex, cardIndex)
               }
@@ -322,19 +334,25 @@
         }
       }
       ,
+      //拖拽泳道发后台
       dragLaneToServer(){
         var lanes = this.list.map(item => {
-          return item.id
+          return item.boardId
         }).join(',')
-        console.log("drag lane to Server:\n" + lanes);
-      },
-      dragCardToServer(laneIndex, cardIndex){
-        var laneId = this.list[laneIndex].id;
-        var cardList = this.list[laneIndex].cards.slice(0, cardIndex + 1).map(item => {
-          return item.title
+        moveBoard({kanbanId: this.kanbanId, currentIndexs: lanes}).then(res=>{
+
         })
-        var dragCardId = cardList[cardList.length-1];
-        console.log("drag card to Server:" +"\ndrag card:"+dragCardId+"\ndrop lane:" + laneId + "\nupCards:" + cardList);
+      },
+      //拖拽卡片发后台
+      dragCardToServer(laneIndex, cardIndex){
+        var laneId = this.list[laneIndex].boardId;
+        var cardList = this.list[laneIndex].tasks.slice(0, cardIndex).map(item => {
+          return item.taskId
+        })
+        var dragCardId = this.list[laneIndex].tasks[cardIndex].taskId;
+        moveTask({kanbanId: this.kanbanId, boardId: laneId, taskId: dragCardId, taskIndexs: cardList.join(',')}).then(res=>{
+
+        })
       },
       isIE()
       {
@@ -348,7 +366,7 @@
       window.onresize = function () {
         _this.computListCardMaxHeight()
       }
-
+      this.getLaneInfo()
     }
     ,
     computed: {}
@@ -492,6 +510,11 @@
                         left: 0;
                         right: 0;
                         bottom: 0;
+                        .el-icon-delete
+                          position absolute
+                          right 12px
+                          top 12px;
+                          font-size 16px
                       textarea.mod-list-name
                         font-family "Microsoft YaHei"
                         resize: none;
