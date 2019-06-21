@@ -4,10 +4,11 @@ import refuel from '@/components/refuel'
 import dndEcharts from '@/components/dndEcharts'
 import customLane from '@/components/customLane'
 import customLaneLong from '@/components/customLaneLong'
-import demo from '@/components/demo'
 import gasStation from '@/components/gasStation'
 import login from '@/components/login'
+import demo from '@/components/demo'
 import store from '../store/store'
+import complexKanban from '@/components/complexKanban'
 import {lsWrite,lsRead} from '../common/js/ls'
 import * as types from '../store/type'
 
@@ -37,11 +38,7 @@ export default new Router({
       name: 'station',
       component: gasStation
     },
-    {
-      path: '/demo',
-      name: 'demo',
-      component: demo
-    },
+
     {
       path: '/dndEcharts',
       name: 'dndEcharts',
@@ -56,6 +53,16 @@ export default new Router({
       path: '/customLaneLong',
       name: 'customLaneLong',
       component: customLaneLong
+    },
+    {
+      path: '/complexKanban',
+      name: 'complexKanban',
+      component: complexKanban
+    },
+    {
+      path: '/demo',
+      name: 'demo',
+      component: demo
     }
   ]
 })
