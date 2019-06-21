@@ -151,7 +151,7 @@
     background-color #fff
     .topHeader
       width 100%;
-      height 90px;
+      height 120px;
       display flex;
       flex-direction row
       .base-header
