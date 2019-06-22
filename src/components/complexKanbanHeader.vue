@@ -1,5 +1,5 @@
 <template>
-  <div class="topHeader">
+  <div class="topHeader" id="cxHeader" :style="headerStyle">
     <div class="xuqiu-header base-header">
       <div class="xuqiu-header-top top-base">需求规划阶段</div>
       <div class="xuqiu-header-bottom">
@@ -77,16 +77,50 @@
 </template>
 
 <script type="text/ecmascript-6">
-    export default{
-        data(){
-            return {}
-        },
-        methods: {},
-        mounted(){
-        },
-        computed: {},
-        components: {}
-    }
+  export default{
+    data(){
+      return {
+        headerStyle: {
+          position: 'static'
+        }
+      }
+    },
+    methods: {},
+    mounted(){
+      let that = this;
+      let headerWidth = document.getElementById('cxHeader').offsetWidth;
+      window.onscroll = function () {
+        //屏幕滚动高度
+        let scrollTop = document.documentElement.scrollTop;
+        //屏幕左右滚动距离
+        let scrollLeft = document.documentElement.scrollLeft;
+        //hedaer本身高度
+        let headerHeight = document.getElementById('cxHeader').offsetHeight;
+        //其他元素偏移量
+        let offSet = 0;
+        if (scrollTop >= headerHeight + offSet) {
+          that.headerStyle = {
+            position: 'fixed',
+            top: scrollTop,
+            left: (-scrollLeft) + 'px',
+            width: headerWidth + 'px',
+            zIndex: 1000,
+            opacity:0.9
+          }
+        } else {
+          that.headerStyle = {
+            position: 'static',
+            zIndex: 0,
+            opacity:1
+          }
+        }
+
+      }
+
+    },
+    computed: {},
+    components: {}
+  }
 </script>
 
 <style lang="stylus" rel="stylesheet/stylus" scoped>
@@ -98,6 +132,7 @@
     .base-header
       height 100%;
       border-right 1px solid #ddd;
+
       .top-base
         width 100%;
         height 30px;

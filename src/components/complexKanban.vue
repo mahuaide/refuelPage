@@ -1,7 +1,7 @@
 <template>
   <div class="kanbanContainer">
     <cx-header></cx-header>
-    <div class="content-body">
+    <div class="content-body" id="cxBody">
       <div class="content-4">
         <div class="content4-up">
           <div class="xuqiu-gaojia">
@@ -42,7 +42,9 @@
             </div>
           </div>
           <div class="yanshou-gaojia">
-            <div class="yanshouleixing-gaojie"></div>
+            <div class="yanshouleixing-gaojie">
+              <span class="text">功能测试</span>
+            </div>
             <div class="ceshi-todo-gaojie"></div>
             <div class="ceshi-doing-gaojie"></div>
             <div class="daishangxian-gaojie"></div>
@@ -103,7 +105,9 @@
             </div>
           </div>
           <div class="yanshou-changgui">
-            <div class="yanshouleixing-changgui"></div>
+            <div class="yanshouleixing-changgui">
+              <span class="text">功能测试</span>
+            </div>
             <div class="ceshi-todo-changgui"></div>
             <div class="ceshi-doing-changgui"></div>
             <div class="daishangxian-changgui"></div>
@@ -276,6 +280,19 @@
             .yanshouleixing-gaojie
               flex 1
               border-right 1px solid #ddd;
+              position relative;
+              .text
+                position absolute
+                top 50%
+                left 50%
+                text-align center
+                line-height 100px;
+                margin-top -50px;
+                margin-left -32px
+                display block;
+                height 100px;
+                font-size 16px;
+                font-weight bold
             .ceshi-todo-gaojie
               flex 1
               border-right 1px solid #ddd;
@@ -400,6 +417,19 @@
             .yanshouleixing-changgui
               flex 1
               border-right 1px solid #ddd;
+              position relative;
+              .text
+                position absolute
+                top 50%
+                left 50%
+                text-align center
+                line-height 100px;
+                margin-top -50px;
+                margin-left -32px
+                display block;
+                height 100px;
+                font-size 16px;
+                font-weight bold
             .ceshi-todo-changgui
               flex 1
               border-right 1px solid #ddd;
