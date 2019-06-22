@@ -155,6 +155,7 @@
       width 100%;
     }
     background-color #fff
+    margin-bottom 100px;
 
     .content-body
       display flex
