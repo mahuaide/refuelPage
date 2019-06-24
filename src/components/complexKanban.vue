@@ -317,10 +317,10 @@
     }
     background-color #fff
     margin-bottom 100px;
-
     .content-body
       display flex
       flex-direction row
+      background-color #EAF5F9
       .content-4
         flex 19
         display flex
@@ -626,6 +626,9 @@
         border-radius 10px
         margin-top 10px;
         text-align center
+        background-color #fff;
+        &:hover
+          cursor move
         > div
           padding 8px
           width 100%;
@@ -634,8 +637,6 @@
           box-sizing border-box
       .card:first-child
         margin-top 0px
-
-
 </style>
 <style>
   .templateli {
@@ -646,5 +647,8 @@
     text-align: center;
     line-height: 200px;
     margin-top: 10px;
+  }
+  .templateli:first-child{
+    margin-top: 0px;
   }
 </style>
