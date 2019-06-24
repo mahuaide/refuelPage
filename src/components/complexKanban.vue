@@ -6,9 +6,50 @@
         <div class="content4-up">
           <div class="xuqiu-gaojia">
             <div class="xuqiu-gaojia-left"><span class="text">高价值</span></div>
-            <div class="xuqiu-gaojia-todo">
+            <div class="xuqiu-gaojia-xuqiupool">
+              <!-- 需求pool 高价值-->
+              <ul class="card-list"
+                  @drop="drop($event)"
+                  @dragover="dragOver($event)"
+                  @dragenter="dragEnter"
+                  @dragleave="dragLeave"
+                  data-x=0     data-y="0" data-yy=""
+              >
+                <li class="card" draggable="true" v-for="card in datas" v-if="card.x==0 && card.y==0"
+                    @dragstart="dragStart($event)"
+                    :id="card.id"
+                    @dragend="dragEnd"
+                >
+                  <div>
+                    ID:{{card.id}}<br>
+                    x:{{card.x}} y:{{card.y}} yy:{{card.yy}}
+                  </div>
+
+                </li>
+              </ul>
             </div>
-            <div class="xuqiu-gaojia-doing"></div>
+            <!-- 需求澄清  高价值-->
+            <div class="xuqiu-gaojia-xuqiuchengqing">
+              <ul class="card-list"
+                  @drop="drop($event)"
+                  @dragover="dragOver($event)"
+                  @dragenter="dragEnter"
+                  @dragleave="dragLeave"
+                  data-x=1     data-y="0" data-yy=""
+              >
+                <li class="card" draggable="true" v-for="card in datas" v-if="card.x==1 && card.y==0"
+                    @dragstart="dragStart($event)"
+                    :id="card.id"
+                    @dragend="dragEnd"
+                >
+                  <div>
+                    ID:{{card.id}}<br>
+                    x:{{card.x}} y:{{card.y}} yy:{{card.yy}}
+                  </div>
+
+                </li>
+              </ul>
+            </div>
           </div>
           <div class="sheji-gaojia">
             <div class="gaojia-fenxi-todo common"></div>
@@ -53,8 +94,8 @@
         <div class="content4-down">
           <div class="xuqiu-changgui">
             <div class="xuqiu-changgui-left"><span class="text">常规</span></div>
-            <div class="xuqiu-changgui-todo"></div>
-            <div class="xuqiu-changgui-doing"></div>
+            <div class="xuqiu-changgui-xuqiupool"></div>
+            <div class="xuqiu-changgui-xuqiuchengqing"></div>
           </div>
           <div class="sheji-changgui">
             <div class="changgui-fenxi-todo common"></div>
@@ -128,9 +169,125 @@
   import  header from './complexKanbanHeader.vue'
   export default{
     data(){
-      return {}
+      return {
+        dropping: false,
+        dragCard:null,
+        dragIndex:0,
+        datas: [
+          {id: 1, x: 0, y: 0, yy: ''},
+          {id: 2, x: 0, y: 0, yy: ''},
+          {id: 3, x: 0, y: 0, yy: ''},
+          {id: 4, x: 1, y: 0, yy: ''},
+        ],
+        from: {x: '', y: '', yy: ''},
+        to: {x: '', y: '', yy: ''},
+      }
     },
-    methods: {},
+    methods: {
+      dragOver(ev){
+        if (ev.preventDefault) {
+          ev.preventDefault();
+        } else {
+          window.event.returnValue = false;
+        }
+      },
+      dragStart(ev) {
+        $("#" + ev.target.id).css({
+          transformOrigin: 'right top',
+          transform: 'rotate(-3deg)',
+          transition: 'all 0.1s ease-in-out'
+        })
+        ev.dataTransfer.setData("Text", ev.target.id);
+        this.from.x = $("#" + ev.target.id).parents("UL").data('x')
+        this.from.y = $("#" + ev.target.id).parents("UL").data('y')
+        this.from.yy = $("#" + ev.target.id).parents("UL").data('yy')
+      },
+      dragEnd(ev){
+        if (!this.dropping) {
+          $("#cxBody ul li").css({
+            transform: 'rotate(0deg)'
+          })
+          $("#templateli").remove();
+        }
+      },
+      dragEnter(ev){
+          console.log(1)
+        var liText = '<li id="templateli" class="templateli"><div>放这里</div></li>'
+        var $target = $(ev.target)
+        if ($target[0].id == 'templateli' || ($target.parents('LI')[0] && $target.parents('LI')[0].id == 'templateli')) {
+          return;
+        }
+        this.to.x = $target.parents("UL").data('x') == undefined ? $target.data('x') : $target.parents("UL").data('x');
+        this.to.y = $target.parents("UL").data('y') == undefined ? $target.data('y') : $target.parents("UL").data('y');
+        this.to.yy = $target.parents("UL").data('yy') == undefined ? $target.data('yy') : $target.parents("UL").data('yy');
+        $("#templateli").remove();
+        if ($target[0].tagName == 'UL') {
+          $target.append(liText)
+        } else if ($target[0].tagName == 'LI') {
+          $target.after(liText)
+        } else if ($target.parents("LI") != undefined) {
+          $target.parents("LI").before(liText)
+        }
+      },
+      dragLeave(ev){
+      },
+      drop(ev) {
+        this.dropping = true;
+        if (ev.preventDefault) {
+          ev.preventDefault();
+          ev.stopPropagation();
+        } else {
+          window.event.cancelBubble = true;
+          window.event.returnValue = false;
+        }
+        var id = ev.dataTransfer.getData("Text");
+        $("#templateli").text('同步中... ').append('<i class="el-icon-loading"></i>')
+        setTimeout(() => {
+          var index = $("#templateli").index();
+          this.datas.forEach((card, index) => {
+            if (card.id == id) {
+              this.dragCard = this.datas.splice(index,1)[0];
+              this.dragIndex = index;
+            }
+          })
+          this.dragCard.x = this.to.x;
+          this.dragCard.y = this.to.y;
+          this.dragCard.yy = this.to.yy;
+          if (index == 0) {
+            this.datas.splice(index,0,this.dragCard)
+            //如果放到目标用到非首位，先找到上一元素ID和位置，再位置+1后插入
+          } else {
+            var prvCardId = $("#templateli").prev()[0].id;
+            if(id == prvCardId){
+              this.datas.splice(this.dragIndex,0,this.dragCard)
+            }else{
+              this.datas.forEach((card,index)=>{
+                if(card.id == prvCardId){
+                  this.datas.splice(index+1,0,this.dragCard)
+                }
+              })
+            }
+
+          }
+
+          $("#templateli").remove();
+          this.dropping = false;
+          $("#cxBody ul li").css({
+            transform: 'rotate(0deg)'
+          })
+        }, 1000)
+      },
+      getElementTop(element)
+      {
+        var actualTop = element.offsetTop;
+        var current = element.offsetParent;
+        while (current !== null) {
+          actualTop += current.offsetTop;
+          current = current.offsetParent;
+        }
+        return actualTop;
+      }
+    },
     mounted(){
     },
     computed: {},
@@ -190,11 +347,11 @@
                 height 100px;
                 font-size 16px;
                 font-weight bold
-            .xuqiu-gaojia-todo
+            .xuqiu-gaojia-xuqiupool
               flex 1
               border-right 1px solid #dddddd
               border-bottom 1px solid #ddd
-            .xuqiu-gaojia-doing
+            .xuqiu-gaojia-xuqiuchengqing
               flex 1
               border-right 1px solid #dddddd
               border-bottom 1px solid #ddd
@@ -323,11 +480,11 @@
                 height 100px;
                 font-size 16px;
                 font-weight bold
-            .xuqiu-changgui-todo
+            .xuqiu-changgui-xuqiupool
               flex 1
               border-right 1px solid #dddddd
               border-bottom 1px solid #ddd
-            .xuqiu-changgui-doing
+            .xuqiu-changgui-xuqiuchengqing
               flex 1
               border-right 1px solid #dddddd
               border-bottom 1px solid #ddd
@@ -451,4 +608,43 @@
           border-right 1px solid #ddd;
         .fankui
           flex 1
+
+    .card-list
+      margin 0;
+      padding: 0
+      box-sizing border-box
+      list-style none
+      width 100%;
+      height 100%
+      padding 10px;
+      overflow hidden
+      .card
+        height 200px
+        width 100%;
+        box-sizing border-box
+        border 1px solid #ddd
+        border-radius 10px
+        margin-top 10px;
+        text-align center
+        > div
+          padding 8px
+          width 100%;
+          height 100%;
+          border-radius 10px
+          box-sizing border-box
+      .card:first-child
+        margin-top 0px
+
+
+</style>
+<style>
+  .templateli {
+    width: 100%;
+    height: 200px;
+    background-color: #ddd;
+    border-radius: 8px;
+    text-align: center;
+    line-height: 200px;
+    margin-top: 10px;
+  }
 </style>
