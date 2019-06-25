@@ -786,7 +786,7 @@
                       @dragover="dragOver($event)"
                       @dragenter="dragEnter"
                       @dragleave="dragLeave"
-                      data-x=8     data-y="1" data-yy="1"
+                      data-x=8 data-y="1" data-yy="1"
                   >
                     <li class="card" draggable="true" v-for="card in datas" v-if="card.x==8 && card.y==1 && card.yy==1"
                         @dragstart="dragStart($event)"
@@ -903,21 +903,247 @@
               </div>
               <div class="shishi-right-c">
                 <div class="shishi-right-up-unit">
+                  <ul class="card-list"
+                      @drop="drop($event)"
+                      @dragover="dragOver($event)"
+                      @dragenter="dragEnter"
+                      @dragleave="dragLeave"
+                      data-x=8 data-y="1" data-yy="2"
+                  >
+                    <li class="card" draggable="true" v-for="card in datas" v-if="card.x==8 && card.y==1 && card.yy==2"
+                        @dragstart="dragStart($event)"
+                        :id="card.id"
+                        @dragend="dragEnd"
+                    >
+                      <div>
+                        ID:{{card.id}}<br>
+                        x:{{card.x}} y:{{card.y}} yy:{{card.yy}}
+                      </div>
+                    </li>
+                  </ul>
                 </div>
-                <div class="shishi-right-up-unit"></div>
-                <div class="shishi-right-up-unit"></div>
-                <div class="shishi-right-up-unit"></div>
-                <div class="shishi-right-up-unit"></div>
-                <div class="shishi-right-up-unit"></div>
+                <div class="shishi-right-up-unit">
+                  <ul class="card-list"
+                      @drop="drop($event)"
+                      @dragover="dragOver($event)"
+                      @dragenter="dragEnter"
+                      @dragleave="dragLeave"
+                      data-x=9 data-y="1" data-yy="2"
+                  >
+                    <li class="card" draggable="true" v-for="card in datas" v-if="card.x==9 && card.y==1 && card.yy==2"
+                        @dragstart="dragStart($event)"
+                        :id="card.id"
+                        @dragend="dragEnd"
+                    >
+                      <div>
+                        ID:{{card.id}}<br>
+                        x:{{card.x}} y:{{card.y}} yy:{{card.yy}}
+                      </div>
+                    </li>
+                  </ul>
+                </div>
+                <div class="shishi-right-up-unit">
+                  <ul class="card-list"
+                      @drop="drop($event)"
+                      @dragover="dragOver($event)"
+                      @dragenter="dragEnter"
+                      @dragleave="dragLeave"
+                      data-x=10 data-y="1" data-yy="2"
+                  >
+                    <li class="card" draggable="true" v-for="card in datas" v-if="card.x==10 && card.y==1 && card.yy==2"
+                        @dragstart="dragStart($event)"
+                        :id="card.id"
+                        @dragend="dragEnd"
+                    >
+                      <div>
+                        ID:{{card.id}}<br>
+                        x:{{card.x}} y:{{card.y}} yy:{{card.yy}}
+                      </div>
+                    </li>
+                  </ul>
+                </div>
+                <div class="shishi-right-up-unit">
+                  <ul class="card-list"
+                      @drop="drop($event)"
+                      @dragover="dragOver($event)"
+                      @dragenter="dragEnter"
+                      @dragleave="dragLeave"
+                      data-x=11 data-y="1" data-yy="2"
+                  >
+                    <li class="card" draggable="true" v-for="card in datas" v-if="card.x==11 && card.y==1 && card.yy==2"
+                        @dragstart="dragStart($event)"
+                        :id="card.id"
+                        @dragend="dragEnd"
+                    >
+                      <div>
+                        ID:{{card.id}}<br>
+                        x:{{card.x}} y:{{card.y}} yy:{{card.yy}}
+                      </div>
+                    </li>
+                  </ul>
+                </div>
+                <div class="shishi-right-up-unit">
+                  <ul class="card-list"
+                      @drop="drop($event)"
+                      @dragover="dragOver($event)"
+                      @dragenter="dragEnter"
+                      @dragleave="dragLeave"
+                      data-x=12 data-y="1" data-yy="2"
+                  >
+                    <li class="card" draggable="true" v-for="card in datas" v-if="card.x==12 && card.y==1 && card.yy==2"
+                        @dragstart="dragStart($event)"
+                        :id="card.id"
+                        @dragend="dragEnd"
+                    >
+                      <div>
+                        ID:{{card.id}}<br>
+                        x:{{card.x}} y:{{card.y}} yy:{{card.yy}}
+                      </div>
+                    </li>
+                  </ul>
+                </div>
+                <div class="shishi-right-up-unit">
+                  <ul class="card-list"
+                      @drop="drop($event)"
+                      @dragover="dragOver($event)"
+                      @dragenter="dragEnter"
+                      @dragleave="dragLeave"
+                      data-x=13 data-y="1" data-yy="2"
+                  >
+                    <li class="card" draggable="true" v-for="card in datas" v-if="card.x==13 && card.y==1 && card.yy==2"
+                        @dragstart="dragStart($event)"
+                        :id="card.id"
+                        @dragend="dragEnd"
+                    >
+                      <div>
+                        ID:{{card.id}}<br>
+                        x:{{card.x}} y:{{card.y}} yy:{{card.yy}}
+                      </div>
+                    </li>
+                  </ul>
+                </div>
               </div>
               <div class="shishi-right-d">
                 <div class="shishi-right-up-unit">
+                  <ul class="card-list"
+                      @drop="drop($event)"
+                      @dragover="dragOver($event)"
+                      @dragenter="dragEnter"
+                      @dragleave="dragLeave"
+                      data-x=8 data-y="1" data-yy="3"
+                  >
+                    <li class="card" draggable="true" v-for="card in datas" v-if="card.x==8 && card.y==1 && card.yy==3"
+                        @dragstart="dragStart($event)"
+                        :id="card.id"
+                        @dragend="dragEnd"
+                    >
+                      <div>
+                        ID:{{card.id}}<br>
+                        x:{{card.x}} y:{{card.y}} yy:{{card.yy}}
+                      </div>
+                    </li>
+                  </ul>
                 </div>
-                <div class="shishi-right-up-unit"></div>
-                <div class="shishi-right-up-unit"></div>
-                <div class="shishi-right-up-unit"></div>
-                <div class="shishi-right-up-unit"></div>
-                <div class="shishi-right-up-unit"></div>
+                <div class="shishi-right-up-unit">
+                  <ul class="card-list"
+                      @drop="drop($event)"
+                      @dragover="dragOver($event)"
+                      @dragenter="dragEnter"
+                      @dragleave="dragLeave"
+                      data-x=9 data-y="1" data-yy="3"
+                  >
+                    <li class="card" draggable="true" v-for="card in datas" v-if="card.x==9 && card.y==1 && card.yy==3"
+                        @dragstart="dragStart($event)"
+                        :id="card.id"
+                        @dragend="dragEnd"
+                    >
+                      <div>
+                        ID:{{card.id}}<br>
+                        x:{{card.x}} y:{{card.y}} yy:{{card.yy}}
+                      </div>
+                    </li>
+                  </ul>
+                </div>
+                <div class="shishi-right-up-unit">
+                  <ul class="card-list"
+                      @drop="drop($event)"
+                      @dragover="dragOver($event)"
+                      @dragenter="dragEnter"
+                      @dragleave="dragLeave"
+                      data-x=10 data-y="1" data-yy="3"
+                  >
+                    <li class="card" draggable="true" v-for="card in datas" v-if="card.x==10 && card.y==1 && card.yy==3"
+                        @dragstart="dragStart($event)"
+                        :id="card.id"
+                        @dragend="dragEnd"
+                    >
+                      <div>
+                        ID:{{card.id}}<br>
+                        x:{{card.x}} y:{{card.y}} yy:{{card.yy}}
+                      </div>
+                    </li>
+                  </ul>
+                </div>
+                <div class="shishi-right-up-unit">
+                  <ul class="card-list"
+                      @drop="drop($event)"
+                      @dragover="dragOver($event)"
+                      @dragenter="dragEnter"
+                      @dragleave="dragLeave"
+                      data-x=11 data-y="1" data-yy="3"
+                  >
+                    <li class="card" draggable="true" v-for="card in datas" v-if="card.x==11 && card.y==1 && card.yy==3"
+                        @dragstart="dragStart($event)"
+                        :id="card.id"
+                        @dragend="dragEnd"
+                    >
+                      <div>
+                        ID:{{card.id}}<br>
+                        x:{{card.x}} y:{{card.y}} yy:{{card.yy}}
+                      </div>
+                    </li>
+                  </ul>
+                </div>
+                <div class="shishi-right-up-unit">
+                  <ul class="card-list"
+                      @drop="drop($event)"
+                      @dragover="dragOver($event)"
+                      @dragenter="dragEnter"
+                      @dragleave="dragLeave"
+                      data-x=12 data-y="1" data-yy="3"
+                  >
+                    <li class="card" draggable="true" v-for="card in datas" v-if="card.x==12 && card.y==1 && card.yy==3"
+                        @dragstart="dragStart($event)"
+                        :id="card.id"
+                        @dragend="dragEnd"
+                    >
+                      <div>
+                        ID:{{card.id}}<br>
+                        x:{{card.x}} y:{{card.y}} yy:{{card.yy}}
+                      </div>
+                    </li>
+                  </ul>
+                </div>
+                <div class="shishi-right-up-unit">
+                  <ul class="card-list"
+                      @drop="drop($event)"
+                      @dragover="dragOver($event)"
+                      @dragenter="dragEnter"
+                      @dragleave="dragLeave"
+                      data-x=13 data-y="1" data-yy="3"
+                  >
+                    <li class="card" draggable="true" v-for="card in datas" v-if="card.x==13 && card.y==1 && card.yy==3"
+                        @dragstart="dragStart($event)"
+                        :id="card.id"
+                        @dragend="dragEnd"
+                    >
+                      <div>
+                        ID:{{card.id}}<br>
+                        x:{{card.x}} y:{{card.y}} yy:{{card.yy}}
+                      </div>
+                    </li>
+                  </ul>
+                </div>
               </div>
             </div>
           </div>
