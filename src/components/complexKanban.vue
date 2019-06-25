@@ -1448,6 +1448,7 @@
         display flex
         flex-direction column
         .content4-up
+          min-height 400px
           display flex
           .xuqiu-gaojia
             flex 2
@@ -1527,7 +1528,6 @@
                 right 10px;
             .shishi-right
               flex 6
-              height 100%
               display flex
               flex-direction column
               .shishi-right-up
@@ -1537,6 +1537,7 @@
                 .shishi-right-up-unit
                   flex 1
                   border-right 1px solid #ddd
+                  min-height 200px;
                 .shishi-right-up-unit:last-child
                   border-right none;
               .shishi-right-down
@@ -1545,6 +1546,7 @@
                 .shishi-right-up-unit
                   flex 1
                   border-right 1px solid #ddd
+                  min-height 200px;
                 .shishi-right-up-unit:last-child
                   border-right none;
           .yanshou-gaojia
@@ -1577,6 +1579,7 @@
             .daishangxian-gaojie
               flex 1
         .content4-down
+          min-height 800px
           display flex
           .xuqiu-changgui
             flex 2
@@ -1644,11 +1647,12 @@
               flex-direction column
               .shishi-right-a
                 flex 1
+
                 border-bottom 1px solid #ddd
                 display flex
                 .shishi-right-up-unit
-                  min-height 200px
                   flex 1
+                  min-height 200px
                   border-right 1px solid #ddd
                 .shishi-right-up-unit:last-child
                   border-right none;
@@ -1731,8 +1735,7 @@
       box-sizing border-box
       list-style none
       width 100%;
-      min-height: 240px;
-      height 100%;
+      height: 100%;
       padding 10px;
       .card
         height 180px
