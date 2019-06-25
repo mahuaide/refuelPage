@@ -175,7 +175,7 @@
             </div>
             <div class="shishi-team"><span class="qianduan">前端</span></div>
             <div class="shishi-right">
-              <div class="shishi-right-up ">
+              <div  class="shishi-right-up">
                 <div class="shishi-right-up-unit">
                   <ul class="card-list"
                       @drop="drop($event)"
@@ -297,7 +297,7 @@
                   </ul>
                 </div>
               </div>
-              <div class="shishi-right-down">
+              <div  class="shishi-right-down">
                 <div class="shishi-right-up-unit">
                   <ul class="card-list"
                       @drop="drop($event)"
@@ -1319,6 +1319,7 @@
           transform: 'rotate(-3deg)',
           transition: 'all 0.1s ease-in-out'
         })
+        if(!ev.target.id) return;
         ev.dataTransfer.setData("Text", ev.target.id);
         this.from.x = $("#" + ev.target.id).parents("UL").data('x')
         this.from.y = $("#" + ev.target.id).parents("UL").data('y')
@@ -1333,7 +1334,6 @@
         }
       },
       dragEnter(ev){
-        console.log(1)
         var liText = '<li id="templateli" class="templateli"><div>放这里</div></li>'
         var $target = $(ev.target)
         if ($target[0].id == 'templateli' || ($target.parents('LI')[0] && $target.parents('LI')[0].id == 'templateli')) {
@@ -1448,7 +1448,6 @@
         display flex
         flex-direction column
         .content4-up
-          flex 1
           display flex
           .xuqiu-gaojia
             flex 2
@@ -1482,7 +1481,6 @@
             border-right 1px solid #ddd
             display flex
             .common
-              height 100%;
               flex 1
               border-bottom 1px solid #ddd;
               border-right 1px solid #ddd;
@@ -1529,6 +1527,7 @@
                 right 10px;
             .shishi-right
               flex 6
+              height 100%
               display flex
               flex-direction column
               .shishi-right-up
@@ -1536,7 +1535,6 @@
                 border-bottom 1px solid #ddd
                 display flex
                 .shishi-right-up-unit
-                  min-height 200px
                   flex 1
                   border-right 1px solid #ddd
                 .shishi-right-up-unit:last-child
@@ -1545,7 +1543,6 @@
                 flex 1
                 display flex
                 .shishi-right-up-unit
-                  min-height 200px
                   flex 1
                   border-right 1px solid #ddd
                 .shishi-right-up-unit:last-child
@@ -1580,7 +1577,6 @@
             .daishangxian-gaojie
               flex 1
         .content4-down
-          flex 1
           display flex
           .xuqiu-changgui
             flex 2
@@ -1614,7 +1610,6 @@
             border-right 1px solid #ddd
             display flex
             .common
-              height 100%;
               flex 1
               border-bottom 1px solid #ddd;
               border-right 1px solid #ddd;
@@ -1736,9 +1731,9 @@
       box-sizing border-box
       list-style none
       width 100%;
-      height 100%
+      min-height: 240px;
+      height 100%;
       padding 10px;
-      overflow hidden
       .card
         height 180px
         width 100%;
