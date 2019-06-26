@@ -1346,10 +1346,13 @@
         $("#templateli").remove();
         if ($target[0].tagName == 'UL') {
           $target.append(liText)
+          //this.setWEb()
         } else if ($target[0].tagName == 'LI') {
           $target.after(liText)
+          //this.setWEb()
         } else if ($target.parents("LI") != undefined) {
           $target.parents("LI").before(liText)
+          //this.setWEb()
         }
       },
       dragLeave(ev){
@@ -1399,23 +1402,26 @@
             transform: 'rotate(0deg)'
           })
           //浏览器适配,低版本浏览器中，当
-          this.$nextTick(()=>{
-            var ul = $('.shishi-right-up-unit>ul.card-list')
-            ul.each((index,item)=>{
-              if(item.children.length ==0){
-                return;
-              }else{
-                $(item).css('min-height',192*item.children.length+20+'px')
-              }
-            })
-            $('.shishi-right-up').css('min-height',this.getMaxHeight($('.shishi-right-up ul.card-list'))+'px')
-            $('.shishi-right-down').css('min-height',this.getMaxHeight($('.shishi-right-down ul.card-list'))+'px')
-            $('.shishi-right-a').css('min-height',this.getMaxHeight($('.shishi-right-a ul.card-list'))+'px')
-            $('.shishi-right-b').css('min-height',this.getMaxHeight($('.shishi-right-b ul.card-list'))+'px')
-            $('.shishi-right-c').css('min-height',this.getMaxHeight($('.shishi-right-c ul.card-list'))+'px')
-            $('.shishi-right-d').css('min-height',this.getMaxHeight($('.shishi-right-d ul.card-list'))+'px')
-          })
+         this.setWEb()
         }, 1)
+      },
+      setWEb(){
+        this.$nextTick(()=>{
+          var ul = $('.shishi-right-up-unit>ul.card-list')
+          ul.each((index,item)=>{
+            if(item.children.length ==0){
+              return;
+            }else{
+              $(item).css('min-height',192*item.children.length+20+'px')
+            }
+          })
+          $('.shishi-right-up').css('min-height',this.getMaxHeight($('.shishi-right-up ul.card-list'))+'px')
+          $('.shishi-right-down').css('min-height',this.getMaxHeight($('.shishi-right-down ul.card-list'))+'px')
+          $('.shishi-right-a').css('min-height',this.getMaxHeight($('.shishi-right-a ul.card-list'))+'px')
+          $('.shishi-right-b').css('min-height',this.getMaxHeight($('.shishi-right-b ul.card-list'))+'px')
+          $('.shishi-right-c').css('min-height',this.getMaxHeight($('.shishi-right-c ul.card-list'))+'px')
+          $('.shishi-right-d').css('min-height',this.getMaxHeight($('.shishi-right-d ul.card-list'))+'px')
+        })
       },
       getMaxHeight(list){
         var arr = [];
