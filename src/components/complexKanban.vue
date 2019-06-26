@@ -1346,14 +1346,12 @@
         $("#templateli").remove();
         if ($target[0].tagName == 'UL') {
           $target.append(liText)
-          //this.setWEb()
         } else if ($target[0].tagName == 'LI') {
           $target.after(liText)
-          //this.setWEb()
         } else if ($target.parents("LI") != undefined) {
           $target.parents("LI").before(liText)
-          //this.setWEb()
         }
+        //this.setWEb()
       },
       dragLeave(ev){
       },
