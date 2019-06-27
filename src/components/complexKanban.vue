@@ -1416,7 +1416,7 @@
       getMaxHeight(list){
         var arr = [];
         list.each((index,item)=>{
-            if(item.children.length ==0){
+            if(item.children.length <=2){
               arr.push(400)
             }else{
               arr.push(192*item.children.length+20)
