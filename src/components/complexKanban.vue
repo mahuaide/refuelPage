@@ -1405,14 +1405,6 @@
       },
       setWEb(){
         this.$nextTick(()=>{
-          var ul = $('.shishi-right-up-unit>ul.card-list')
-          ul.each((index,item)=>{
-            if(item.children.length ==0){
-              return;
-            }else{
-              $(item).css('min-height',192*item.children.length+20+'px')
-            }
-          })
           $('.shishi-right-up').css('min-height',this.getMaxHeight($('.shishi-right-up ul.card-list'))+'px')
           $('.shishi-right-down').css('min-height',this.getMaxHeight($('.shishi-right-down ul.card-list'))+'px')
           $('.shishi-right-a').css('min-height',this.getMaxHeight($('.shishi-right-a ul.card-list'))+'px')
@@ -1424,7 +1416,11 @@
       getMaxHeight(list){
         var arr = [];
         list.each((index,item)=>{
-            arr.push($(item).height())
+            if(item.children.length ==0){
+              arr.push(400)
+            }else{
+              arr.push(192*item.children.length+20)
+            }
         })
         return Math.max.apply(Math,arr);
       },
