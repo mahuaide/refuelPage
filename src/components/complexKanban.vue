@@ -25,7 +25,7 @@
                     @dragover="dragOver($event)"
                     @dragenter="dragEnter"
                     @dragleave="dragLeave"
-                    data-x=0        data-y="0" data-yy=""
+                    data-x=0         data-y="0" data-yy=""
                 >
                   <li class="card" draggable="true" v-for="card in datas" v-if="card.x==0 && card.y==0"
                       @dragstart="dragStart($event)"
@@ -47,7 +47,7 @@
                     @dragover="dragOver($event)"
                     @dragenter="dragEnter"
                     @dragleave="dragLeave"
-                    data-x=1        data-y="0" data-yy=""
+                    data-x=1         data-y="0" data-yy=""
                 >
                   <li class="card" draggable="true" v-for="card in datas" v-if="card.x==1 && card.y==0"
                       @dragstart="dragStart($event)"
@@ -69,7 +69,7 @@
                     @dragover="dragOver($event)"
                     @dragenter="dragEnter"
                     @dragleave="dragLeave"
-                    data-x=2        data-y="0" data-yy=""
+                    data-x=2         data-y="0" data-yy=""
                 >
                   <li class="card" draggable="true" v-for="card in datas" v-if="card.x==2 && card.y==0"
                       @dragstart="dragStart($event)"
@@ -89,7 +89,7 @@
                     @dragover="dragOver($event)"
                     @dragenter="dragEnter"
                     @dragleave="dragLeave"
-                    data-x=3       data-y="0" data-yy=""
+                    data-x=3        data-y="0" data-yy=""
                 >
                   <li class="card" draggable="true" v-for="card in datas" v-if="card.x==3 && card.y==0"
                       @dragstart="dragStart($event)"
@@ -109,7 +109,7 @@
                     @dragover="dragOver($event)"
                     @dragenter="dragEnter"
                     @dragleave="dragLeave"
-                    data-x=4        data-y="0" data-yy=""
+                    data-x=4         data-y="0" data-yy=""
                 >
                   <li class="card" draggable="true" v-for="card in datas" v-if="card.x==4 && card.y==0"
                       @dragstart="dragStart($event)"
@@ -129,7 +129,7 @@
                     @dragover="dragOver($event)"
                     @dragenter="dragEnter"
                     @dragleave="dragLeave"
-                    data-x=5        data-y="0" data-yy=""
+                    data-x=5         data-y="0" data-yy=""
                 >
                   <li class="card" draggable="true" v-for="card in datas" v-if="card.x==5 && card.y==0"
                       @dragstart="dragStart($event)"
@@ -149,7 +149,7 @@
                     @dragover="dragOver($event)"
                     @dragenter="dragEnter"
                     @dragleave="dragLeave"
-                    data-x=6        data-y="0" data-yy=""
+                    data-x=6         data-y="0" data-yy=""
                 >
                   <li class="card" draggable="true" v-for="card in datas" v-if="card.x==6 && card.y==0"
                       @dragstart="dragStart($event)"
@@ -171,7 +171,7 @@
                     @dragover="dragOver($event)"
                     @dragenter="dragEnter"
                     @dragleave="dragLeave"
-                    data-x=7        data-y="0" data-yy=""
+                    data-x=7         data-y="0" data-yy=""
                 >
                   <li class="card" draggable="true" v-for="card in datas" v-if="card.x==7 && card.y==0"
                       @dragstart="dragStart($event)"
@@ -194,9 +194,10 @@
                         @dragover="dragOver($event)"
                         @dragenter="dragEnter"
                         @dragleave="dragLeave"
-                        data-x=8        data-y="0" data-yy="0"
+                        data-x=8         data-y="0" data-yy="0"
                     >
-                      <li class="card" draggable="true" v-for="card in datas" v-if="card.x==8 && card.y==0 && card.yy==0"
+                      <li class="card" draggable="true" v-for="card in datas"
+                          v-if="card.x==8 && card.y==0 && card.yy==0"
                           @dragstart="dragStart($event)"
                           :id="card.id"
                           @dragend="dragEnd"
@@ -214,9 +215,10 @@
                         @dragover="dragOver($event)"
                         @dragenter="dragEnter"
                         @dragleave="dragLeave"
-                        data-x=9        data-y="0" data-yy="0"
+                        data-x=9         data-y="0" data-yy="0"
                     >
-                      <li class="card" draggable="true" v-for="card in datas" v-if="card.x==9 && card.y==0 && card.yy==0"
+                      <li class="card" draggable="true" v-for="card in datas"
+                          v-if="card.x==9 && card.y==0 && card.yy==0"
                           @dragstart="dragStart($event)"
                           :id="card.id"
                           @dragend="dragEnd"
@@ -234,9 +236,10 @@
                         @dragover="dragOver($event)"
                         @dragenter="dragEnter"
                         @dragleave="dragLeave"
-                        data-x=10        data-y="0" data-yy="0"
+                        data-x=10         data-y="0" data-yy="0"
                     >
-                      <li class="card" draggable="true" v-for="card in datas" v-if="card.x==10 && card.y==0 && card.yy==0"
+                      <li class="card" draggable="true" v-for="card in datas"
+                          v-if="card.x==10 && card.y==0 && card.yy==0"
                           @dragstart="dragStart($event)"
                           :id="card.id"
                           @dragend="dragEnd"
@@ -254,9 +257,10 @@
                         @dragover="dragOver($event)"
                         @dragenter="dragEnter"
                         @dragleave="dragLeave"
-                        data-x=11       data-y="0" data-yy="0"
+                        data-x=11        data-y="0" data-yy="0"
                     >
-                      <li class="card" draggable="true" v-for="card in datas" v-if="card.x==11 && card.y==0 && card.yy==0"
+                      <li class="card" draggable="true" v-for="card in datas"
+                          v-if="card.x==11 && card.y==0 && card.yy==0"
                           @dragstart="dragStart($event)"
                           :id="card.id"
                           @dragend="dragEnd"
@@ -274,9 +278,10 @@
                         @dragover="dragOver($event)"
                         @dragenter="dragEnter"
                         @dragleave="dragLeave"
-                        data-x=12        data-y="0" data-yy="0"
+                        data-x=12         data-y="0" data-yy="0"
                     >
-                      <li class="card" draggable="true" v-for="card in datas" v-if="card.x==12 && card.y==0 && card.yy==0"
+                      <li class="card" draggable="true" v-for="card in datas"
+                          v-if="card.x==12 && card.y==0 && card.yy==0"
                           @dragstart="dragStart($event)"
                           :id="card.id"
                           @dragend="dragEnd"
@@ -294,9 +299,10 @@
                         @dragover="dragOver($event)"
                         @dragenter="dragEnter"
                         @dragleave="dragLeave"
-                        data-x=13        data-y="0" data-yy="0"
+                        data-x=13         data-y="0" data-yy="0"
                     >
-                      <li class="card" draggable="true" v-for="card in datas" v-if="card.x==13 && card.y==0 && card.yy==0"
+                      <li class="card" draggable="true" v-for="card in datas"
+                          v-if="card.x==13 && card.y==0 && card.yy==0"
                           @dragstart="dragStart($event)"
                           :id="card.id"
                           @dragend="dragEnd"
@@ -316,9 +322,10 @@
                         @dragover="dragOver($event)"
                         @dragenter="dragEnter"
                         @dragleave="dragLeave"
-                        data-x=8        data-y="0" data-yy="1"
+                        data-x=8         data-y="0" data-yy="1"
                     >
-                      <li class="card" draggable="true" v-for="card in datas" v-if="card.x==8 && card.y==0 && card.yy==1"
+                      <li class="card" draggable="true" v-for="card in datas"
+                          v-if="card.x==8 && card.y==0 && card.yy==1"
                           @dragstart="dragStart($event)"
                           :id="card.id"
                           @dragend="dragEnd"
@@ -336,9 +343,10 @@
                         @dragover="dragOver($event)"
                         @dragenter="dragEnter"
                         @dragleave="dragLeave"
-                        data-x=9        data-y="0" data-yy="1"
+                        data-x=9         data-y="0" data-yy="1"
                     >
-                      <li class="card" draggable="true" v-for="card in datas" v-if="card.x==9 && card.y==0 && card.yy==1"
+                      <li class="card" draggable="true" v-for="card in datas"
+                          v-if="card.x==9 && card.y==0 && card.yy==1"
                           @dragstart="dragStart($event)"
                           :id="card.id"
                           @dragend="dragEnd"
@@ -356,9 +364,10 @@
                         @dragover="dragOver($event)"
                         @dragenter="dragEnter"
                         @dragleave="dragLeave"
-                        data-x=10        data-y="0" data-yy="1"
+                        data-x=10         data-y="0" data-yy="1"
                     >
-                      <li class="card" draggable="true" v-for="card in datas" v-if="card.x==10 && card.y==0 && card.yy==1"
+                      <li class="card" draggable="true" v-for="card in datas"
+                          v-if="card.x==10 && card.y==0 && card.yy==1"
                           @dragstart="dragStart($event)"
                           :id="card.id"
                           @dragend="dragEnd"
@@ -376,9 +385,10 @@
                         @dragover="dragOver($event)"
                         @dragenter="dragEnter"
                         @dragleave="dragLeave"
-                        data-x=11        data-y="0" data-yy="1"
+                        data-x=11         data-y="0" data-yy="1"
                     >
-                      <li class="card" draggable="true" v-for="card in datas" v-if="card.x==11 && card.y==0 && card.yy==1"
+                      <li class="card" draggable="true" v-for="card in datas"
+                          v-if="card.x==11 && card.y==0 && card.yy==1"
                           @dragstart="dragStart($event)"
                           :id="card.id"
                           @dragend="dragEnd"
@@ -396,9 +406,10 @@
                         @dragover="dragOver($event)"
                         @dragenter="dragEnter"
                         @dragleave="dragLeave"
-                        data-x=12        data-y="0" data-yy="1"
+                        data-x=12         data-y="0" data-yy="1"
                     >
-                      <li class="card" draggable="true" v-for="card in datas" v-if="card.x==12 && card.y==0 && card.yy==1"
+                      <li class="card" draggable="true" v-for="card in datas"
+                          v-if="card.x==12 && card.y==0 && card.yy==1"
                           @dragstart="dragStart($event)"
                           :id="card.id"
                           @dragend="dragEnd"
@@ -416,9 +427,10 @@
                         @dragover="dragOver($event)"
                         @dragenter="dragEnter"
                         @dragleave="dragLeave"
-                        data-x=13        data-y="0" data-yy="1"
+                        data-x=13         data-y="0" data-yy="1"
                     >
-                      <li class="card" draggable="true" v-for="card in datas" v-if="card.x==13 && card.y==0 && card.yy==1"
+                      <li class="card" draggable="true" v-for="card in datas"
+                          v-if="card.x==13 && card.y==0 && card.yy==1"
                           @dragstart="dragStart($event)"
                           :id="card.id"
                           @dragend="dragEnd"
@@ -443,7 +455,7 @@
                     @dragover="dragOver($event)"
                     @dragenter="dragEnter"
                     @dragleave="dragLeave"
-                    data-x=14        data-y="0" data-yy=""
+                    data-x=14         data-y="0" data-yy=""
                 >
                   <li class="card" draggable="true" v-for="card in datas" v-if="card.x==14 && card.y==0"
                       @dragstart="dragStart($event)"
@@ -463,7 +475,7 @@
                     @dragover="dragOver($event)"
                     @dragenter="dragEnter"
                     @dragleave="dragLeave"
-                    data-x=15        data-y="0" data-yy=""
+                    data-x=15         data-y="0" data-yy=""
                 >
                   <li class="card" draggable="true" v-for="card in datas" v-if="card.x==15 && card.y==0"
                       @dragstart="dragStart($event)"
@@ -483,7 +495,7 @@
                     @dragover="dragOver($event)"
                     @dragenter="dragEnter"
                     @dragleave="dragLeave"
-                    data-x=16        data-y="0" data-yy=""
+                    data-x=16         data-y="0" data-yy=""
                 >
                   <li class="card" draggable="true" v-for="card in datas" v-if="card.x==16 && card.y==0"
                       @dragstart="dragStart($event)"
@@ -508,7 +520,7 @@
                     @dragover="dragOver($event)"
                     @dragenter="dragEnter"
                     @dragleave="dragLeave"
-                    data-x=0        data-y="1" data-yy=""
+                    data-x=0         data-y="1" data-yy=""
                 >
                   <li class="card" draggable="true" v-for="card in datas" v-if="card.x==0 && card.y==1"
                       @dragstart="dragStart($event)"
@@ -529,7 +541,7 @@
                     @dragover="dragOver($event)"
                     @dragenter="dragEnter"
                     @dragleave="dragLeave"
-                    data-x=1        data-y="1" data-yy=""
+                    data-x=1         data-y="1" data-yy=""
                 >
                   <li class="card" draggable="true" v-for="card in datas" v-if="card.x==1 && card.y==1"
                       @dragstart="dragStart($event)"
@@ -551,7 +563,7 @@
                     @dragover="dragOver($event)"
                     @dragenter="dragEnter"
                     @dragleave="dragLeave"
-                    data-x=2        data-y="1" data-yy=""
+                    data-x=2         data-y="1" data-yy=""
                 >
                   <li class="card" draggable="true" v-for="card in datas" v-if="card.x==2 && card.y==1"
                       @dragstart="dragStart($event)"
@@ -571,7 +583,7 @@
                     @dragover="dragOver($event)"
                     @dragenter="dragEnter"
                     @dragleave="dragLeave"
-                    data-x=3        data-y="1" data-yy=""
+                    data-x=3         data-y="1" data-yy=""
                 >
                   <li class="card" draggable="true" v-for="card in datas" v-if="card.x==3 && card.y==1"
                       @dragstart="dragStart($event)"
@@ -591,7 +603,7 @@
                     @dragover="dragOver($event)"
                     @dragenter="dragEnter"
                     @dragleave="dragLeave"
-                    data-x=4        data-y="1" data-yy=""
+                    data-x=4         data-y="1" data-yy=""
                 >
                   <li class="card" draggable="true" v-for="card in datas" v-if="card.x==4 && card.y==1"
                       @dragstart="dragStart($event)"
@@ -611,7 +623,7 @@
                     @dragover="dragOver($event)"
                     @dragenter="dragEnter"
                     @dragleave="dragLeave"
-                    data-x=5        data-y="1" data-yy=""
+                    data-x=5         data-y="1" data-yy=""
                 >
                   <li class="card" draggable="true" v-for="card in datas" v-if="card.x==5 && card.y==1"
                       @dragstart="dragStart($event)"
@@ -631,7 +643,7 @@
                     @dragover="dragOver($event)"
                     @dragenter="dragEnter"
                     @dragleave="dragLeave"
-                    data-x=6        data-y="1" data-yy=""
+                    data-x=6         data-y="1" data-yy=""
                 >
                   <li class="card" draggable="true" v-for="card in datas" v-if="card.x==6 && card.y==1"
                       @dragstart="dragStart($event)"
@@ -653,7 +665,7 @@
                     @dragover="dragOver($event)"
                     @dragenter="dragEnter"
                     @dragleave="dragLeave"
-                    data-x=7        data-y="1" data-yy=""
+                    data-x=7         data-y="1" data-yy=""
                 >
                   <li class="card" draggable="true" v-for="card in datas" v-if="card.x==7 && card.y==1"
                       @dragstart="dragStart($event)"
@@ -676,9 +688,10 @@
                         @dragover="dragOver($event)"
                         @dragenter="dragEnter"
                         @dragleave="dragLeave"
-                        data-x=8        data-y="1" data-yy="0"
+                        data-x=8         data-y="1" data-yy="0"
                     >
-                      <li class="card" draggable="true" v-for="card in datas" v-if="card.x==8 && card.y==1 && card.yy==0"
+                      <li class="card" draggable="true" v-for="card in datas"
+                          v-if="card.x==8 && card.y==1 && card.yy==0"
                           @dragstart="dragStart($event)"
                           :id="card.id"
                           @dragend="dragEnd"
@@ -696,9 +709,10 @@
                         @dragover="dragOver($event)"
                         @dragenter="dragEnter"
                         @dragleave="dragLeave"
-                        data-x=9        data-y="1" data-yy="0"
+                        data-x=9         data-y="1" data-yy="0"
                     >
-                      <li class="card" draggable="true" v-for="card in datas" v-if="card.x==9 && card.y==1 && card.yy==0"
+                      <li class="card" draggable="true" v-for="card in datas"
+                          v-if="card.x==9 && card.y==1 && card.yy==0"
                           @dragstart="dragStart($event)"
                           :id="card.id"
                           @dragend="dragEnd"
@@ -716,9 +730,10 @@
                         @dragover="dragOver($event)"
                         @dragenter="dragEnter"
                         @dragleave="dragLeave"
-                        data-x=10        data-y="1" data-yy="0"
+                        data-x=10         data-y="1" data-yy="0"
                     >
-                      <li class="card" draggable="true" v-for="card in datas" v-if="card.x==10 && card.y==1 && card.yy==0"
+                      <li class="card" draggable="true" v-for="card in datas"
+                          v-if="card.x==10 && card.y==1 && card.yy==0"
                           @dragstart="dragStart($event)"
                           :id="card.id"
                           @dragend="dragEnd"
@@ -736,9 +751,10 @@
                         @dragover="dragOver($event)"
                         @dragenter="dragEnter"
                         @dragleave="dragLeave"
-                        data-x=11        data-y="1" data-yy="0"
+                        data-x=11         data-y="1" data-yy="0"
                     >
-                      <li class="card" draggable="true" v-for="card in datas" v-if="card.x==11 && card.y==1 && card.yy==0"
+                      <li class="card" draggable="true" v-for="card in datas"
+                          v-if="card.x==11 && card.y==1 && card.yy==0"
                           @dragstart="dragStart($event)"
                           :id="card.id"
                           @dragend="dragEnd"
@@ -756,9 +772,10 @@
                         @dragover="dragOver($event)"
                         @dragenter="dragEnter"
                         @dragleave="dragLeave"
-                        data-x=12        data-y="1" data-yy="0"
+                        data-x=12         data-y="1" data-yy="0"
                     >
-                      <li class="card" draggable="true" v-for="card in datas" v-if="card.x==12 && card.y==1 && card.yy==0"
+                      <li class="card" draggable="true" v-for="card in datas"
+                          v-if="card.x==12 && card.y==1 && card.yy==0"
                           @dragstart="dragStart($event)"
                           :id="card.id"
                           @dragend="dragEnd"
@@ -776,9 +793,10 @@
                         @dragover="dragOver($event)"
                         @dragenter="dragEnter"
                         @dragleave="dragLeave"
-                        data-x=13        data-y="1" data-yy="0"
+                        data-x=13         data-y="1" data-yy="0"
                     >
-                      <li class="card" draggable="true" v-for="card in datas" v-if="card.x==13 && card.y==1 && card.yy==0"
+                      <li class="card" draggable="true" v-for="card in datas"
+                          v-if="card.x==13 && card.y==1 && card.yy==0"
                           @dragstart="dragStart($event)"
                           :id="card.id"
                           @dragend="dragEnd"
@@ -798,9 +816,10 @@
                         @dragover="dragOver($event)"
                         @dragenter="dragEnter"
                         @dragleave="dragLeave"
-                        data-x=8    data-y="1" data-yy="1"
+                        data-x=8     data-y="1" data-yy="1"
                     >
-                      <li class="card" draggable="true" v-for="card in datas" v-if="card.x==8 && card.y==1 && card.yy==1"
+                      <li class="card" draggable="true" v-for="card in datas"
+                          v-if="card.x==8 && card.y==1 && card.yy==1"
                           @dragstart="dragStart($event)"
                           :id="card.id"
                           @dragend="dragEnd"
@@ -818,9 +837,10 @@
                         @dragover="dragOver($event)"
                         @dragenter="dragEnter"
                         @dragleave="dragLeave"
-                        data-x=9        data-y="1" data-yy="1"
+                        data-x=9         data-y="1" data-yy="1"
                     >
-                      <li class="card" draggable="true" v-for="card in datas" v-if="card.x==9 && card.y==1 && card.yy==1"
+                      <li class="card" draggable="true" v-for="card in datas"
+                          v-if="card.x==9 && card.y==1 && card.yy==1"
                           @dragstart="dragStart($event)"
                           :id="card.id"
                           @dragend="dragEnd"
@@ -838,9 +858,10 @@
                         @dragover="dragOver($event)"
                         @dragenter="dragEnter"
                         @dragleave="dragLeave"
-                        data-x=10        data-y="1" data-yy="1"
+                        data-x=10         data-y="1" data-yy="1"
                     >
-                      <li class="card" draggable="true" v-for="card in datas" v-if="card.x==10 && card.y==1 && card.yy==1"
+                      <li class="card" draggable="true" v-for="card in datas"
+                          v-if="card.x==10 && card.y==1 && card.yy==1"
                           @dragstart="dragStart($event)"
                           :id="card.id"
                           @dragend="dragEnd"
@@ -858,9 +879,10 @@
                         @dragover="dragOver($event)"
                         @dragenter="dragEnter"
                         @dragleave="dragLeave"
-                        data-x=11        data-y="1" data-yy="1"
+                        data-x=11         data-y="1" data-yy="1"
                     >
-                      <li class="card" draggable="true" v-for="card in datas" v-if="card.x==11 && card.y==1 && card.yy==1"
+                      <li class="card" draggable="true" v-for="card in datas"
+                          v-if="card.x==11 && card.y==1 && card.yy==1"
                           @dragstart="dragStart($event)"
                           :id="card.id"
                           @dragend="dragEnd"
@@ -878,9 +900,10 @@
                         @dragover="dragOver($event)"
                         @dragenter="dragEnter"
                         @dragleave="dragLeave"
-                        data-x=12        data-y="1" data-yy="1"
+                        data-x=12         data-y="1" data-yy="1"
                     >
-                      <li class="card" draggable="true" v-for="card in datas" v-if="card.x==12 && card.y==1 && card.yy==1"
+                      <li class="card" draggable="true" v-for="card in datas"
+                          v-if="card.x==12 && card.y==1 && card.yy==1"
                           @dragstart="dragStart($event)"
                           :id="card.id"
                           @dragend="dragEnd"
@@ -898,9 +921,10 @@
                         @dragover="dragOver($event)"
                         @dragenter="dragEnter"
                         @dragleave="dragLeave"
-                        data-x=13        data-y="1" data-yy="1"
+                        data-x=13         data-y="1" data-yy="1"
                     >
-                      <li class="card" draggable="true" v-for="card in datas" v-if="card.x==13 && card.y==1 && card.yy==1"
+                      <li class="card" draggable="true" v-for="card in datas"
+                          v-if="card.x==13 && card.y==1 && card.yy==1"
                           @dragstart="dragStart($event)"
                           :id="card.id"
                           @dragend="dragEnd"
@@ -920,9 +944,10 @@
                         @dragover="dragOver($event)"
                         @dragenter="dragEnter"
                         @dragleave="dragLeave"
-                        data-x=8    data-y="1" data-yy="2"
+                        data-x=8     data-y="1" data-yy="2"
                     >
-                      <li class="card" draggable="true" v-for="card in datas" v-if="card.x==8 && card.y==1 && card.yy==2"
+                      <li class="card" draggable="true" v-for="card in datas"
+                          v-if="card.x==8 && card.y==1 && card.yy==2"
                           @dragstart="dragStart($event)"
                           :id="card.id"
                           @dragend="dragEnd"
@@ -940,9 +965,10 @@
                         @dragover="dragOver($event)"
                         @dragenter="dragEnter"
                         @dragleave="dragLeave"
-                        data-x=9    data-y="1" data-yy="2"
+                        data-x=9     data-y="1" data-yy="2"
                     >
-                      <li class="card" draggable="true" v-for="card in datas" v-if="card.x==9 && card.y==1 && card.yy==2"
+                      <li class="card" draggable="true" v-for="card in datas"
+                          v-if="card.x==9 && card.y==1 && card.yy==2"
                           @dragstart="dragStart($event)"
                           :id="card.id"
                           @dragend="dragEnd"
@@ -960,9 +986,10 @@
                         @dragover="dragOver($event)"
                         @dragenter="dragEnter"
                         @dragleave="dragLeave"
-                        data-x=10    data-y="1" data-yy="2"
+                        data-x=10     data-y="1" data-yy="2"
                     >
-                      <li class="card" draggable="true" v-for="card in datas" v-if="card.x==10 && card.y==1 && card.yy==2"
+                      <li class="card" draggable="true" v-for="card in datas"
+                          v-if="card.x==10 && card.y==1 && card.yy==2"
                           @dragstart="dragStart($event)"
                           :id="card.id"
                           @dragend="dragEnd"
@@ -980,9 +1007,10 @@
                         @dragover="dragOver($event)"
                         @dragenter="dragEnter"
                         @dragleave="dragLeave"
-                        data-x=11    data-y="1" data-yy="2"
+                        data-x=11     data-y="1" data-yy="2"
                     >
-                      <li class="card" draggable="true" v-for="card in datas" v-if="card.x==11 && card.y==1 && card.yy==2"
+                      <li class="card" draggable="true" v-for="card in datas"
+                          v-if="card.x==11 && card.y==1 && card.yy==2"
                           @dragstart="dragStart($event)"
                           :id="card.id"
                           @dragend="dragEnd"
@@ -1000,9 +1028,10 @@
                         @dragover="dragOver($event)"
                         @dragenter="dragEnter"
                         @dragleave="dragLeave"
-                        data-x=12    data-y="1" data-yy="2"
+                        data-x=12     data-y="1" data-yy="2"
                     >
-                      <li class="card" draggable="true" v-for="card in datas" v-if="card.x==12 && card.y==1 && card.yy==2"
+                      <li class="card" draggable="true" v-for="card in datas"
+                          v-if="card.x==12 && card.y==1 && card.yy==2"
                           @dragstart="dragStart($event)"
                           :id="card.id"
                           @dragend="dragEnd"
@@ -1020,9 +1049,10 @@
                         @dragover="dragOver($event)"
                         @dragenter="dragEnter"
                         @dragleave="dragLeave"
-                        data-x=13    data-y="1" data-yy="2"
+                        data-x=13     data-y="1" data-yy="2"
                     >
-                      <li class="card" draggable="true" v-for="card in datas" v-if="card.x==13 && card.y==1 && card.yy==2"
+                      <li class="card" draggable="true" v-for="card in datas"
+                          v-if="card.x==13 && card.y==1 && card.yy==2"
                           @dragstart="dragStart($event)"
                           :id="card.id"
                           @dragend="dragEnd"
@@ -1042,9 +1072,10 @@
                         @dragover="dragOver($event)"
                         @dragenter="dragEnter"
                         @dragleave="dragLeave"
-                        data-x=8    data-y="1" data-yy="3"
+                        data-x=8     data-y="1" data-yy="3"
                     >
-                      <li class="card" draggable="true" v-for="card in datas" v-if="card.x==8 && card.y==1 && card.yy==3"
+                      <li class="card" draggable="true" v-for="card in datas"
+                          v-if="card.x==8 && card.y==1 && card.yy==3"
                           @dragstart="dragStart($event)"
                           :id="card.id"
                           @dragend="dragEnd"
@@ -1062,9 +1093,10 @@
                         @dragover="dragOver($event)"
                         @dragenter="dragEnter"
                         @dragleave="dragLeave"
-                        data-x=9    data-y="1" data-yy="3"
+                        data-x=9     data-y="1" data-yy="3"
                     >
-                      <li class="card" draggable="true" v-for="card in datas" v-if="card.x==9 && card.y==1 && card.yy==3"
+                      <li class="card" draggable="true" v-for="card in datas"
+                          v-if="card.x==9 && card.y==1 && card.yy==3"
                           @dragstart="dragStart($event)"
                           :id="card.id"
                           @dragend="dragEnd"
@@ -1082,9 +1114,10 @@
                         @dragover="dragOver($event)"
                         @dragenter="dragEnter"
                         @dragleave="dragLeave"
-                        data-x=10    data-y="1" data-yy="3"
+                        data-x=10     data-y="1" data-yy="3"
                     >
-                      <li class="card" draggable="true" v-for="card in datas" v-if="card.x==10 && card.y==1 && card.yy==3"
+                      <li class="card" draggable="true" v-for="card in datas"
+                          v-if="card.x==10 && card.y==1 && card.yy==3"
                           @dragstart="dragStart($event)"
                           :id="card.id"
                           @dragend="dragEnd"
@@ -1102,9 +1135,10 @@
                         @dragover="dragOver($event)"
                         @dragenter="dragEnter"
                         @dragleave="dragLeave"
-                        data-x=11    data-y="1" data-yy="3"
+                        data-x=11     data-y="1" data-yy="3"
                     >
-                      <li class="card" draggable="true" v-for="card in datas" v-if="card.x==11 && card.y==1 && card.yy==3"
+                      <li class="card" draggable="true" v-for="card in datas"
+                          v-if="card.x==11 && card.y==1 && card.yy==3"
                           @dragstart="dragStart($event)"
                           :id="card.id"
                           @dragend="dragEnd"
@@ -1122,9 +1156,10 @@
                         @dragover="dragOver($event)"
                         @dragenter="dragEnter"
                         @dragleave="dragLeave"
-                        data-x=12    data-y="1" data-yy="3"
+                        data-x=12     data-y="1" data-yy="3"
                     >
-                      <li class="card" draggable="true" v-for="card in datas" v-if="card.x==12 && card.y==1 && card.yy==3"
+                      <li class="card" draggable="true" v-for="card in datas"
+                          v-if="card.x==12 && card.y==1 && card.yy==3"
                           @dragstart="dragStart($event)"
                           :id="card.id"
                           @dragend="dragEnd"
@@ -1142,9 +1177,10 @@
                         @dragover="dragOver($event)"
                         @dragenter="dragEnter"
                         @dragleave="dragLeave"
-                        data-x=13    data-y="1" data-yy="3"
+                        data-x=13     data-y="1" data-yy="3"
                     >
-                      <li class="card" draggable="true" v-for="card in datas" v-if="card.x==13 && card.y==1 && card.yy==3"
+                      <li class="card" draggable="true" v-for="card in datas"
+                          v-if="card.x==13 && card.y==1 && card.yy==3"
                           @dragstart="dragStart($event)"
                           :id="card.id"
                           @dragend="dragEnd"
@@ -1169,7 +1205,7 @@
                     @dragover="dragOver($event)"
                     @dragenter="dragEnter"
                     @dragleave="dragLeave"
-                    data-x=14        data-y="1" data-yy=""
+                    data-x=14         data-y="1" data-yy=""
                 >
                   <li class="card" draggable="true" v-for="card in datas" v-if="card.x==14 && card.y==1"
                       @dragstart="dragStart($event)"
@@ -1189,7 +1225,7 @@
                     @dragover="dragOver($event)"
                     @dragenter="dragEnter"
                     @dragleave="dragLeave"
-                    data-x=15        data-y="1" data-yy=""
+                    data-x=15         data-y="1" data-yy=""
                 >
                   <li class="card" draggable="true" v-for="card in datas" v-if="card.x==15 && card.y==1"
                       @dragstart="dragStart($event)"
@@ -1209,7 +1245,7 @@
                     @dragover="dragOver($event)"
                     @dragenter="dragEnter"
                     @dragleave="dragLeave"
-                    data-x=16        data-y="1" data-yy=""
+                    data-x=16         data-y="1" data-yy=""
                 >
                   <li class="card" draggable="true" v-for="card in datas" v-if="card.x==16 && card.y==1"
                       @dragstart="dragStart($event)"
@@ -1234,7 +1270,7 @@
                 @dragover="dragOver($event)"
                 @dragenter="dragEnter"
                 @dragleave="dragLeave"
-                data-x=17        data-y="" data-yy=""
+                data-x=17         data-y="" data-yy=""
             >
               <li class="card" draggable="true" v-for="card in datas" v-if="card.x==17 && card.y==''"
                   @dragstart="dragStart($event)"
@@ -1254,7 +1290,7 @@
                 @dragover="dragOver($event)"
                 @dragenter="dragEnter"
                 @dragleave="dragLeave"
-                data-x=18        data-y="" data-yy=""
+                data-x=18         data-y="" data-yy=""
             >
               <li class="card" draggable="true" v-for="card in datas" v-if="card.x==18 && card.y==''"
                   @dragstart="dragStart($event)"
@@ -1274,7 +1310,7 @@
                 @dragover="dragOver($event)"
                 @dragenter="dragEnter"
                 @dragleave="dragLeave"
-                data-x=19        data-y="" data-yy=""
+                data-x=19         data-y="" data-yy=""
             >
               <li class="card" draggable="true" v-for="card in datas" v-if="card.x==19 && card.y==''"
                   @dragstart="dragStart($event)"
@@ -1335,9 +1371,10 @@
         })
         if (!ev.target.id) return;
         ev.dataTransfer.setData("Text", ev.target.id);
-        this.from.x = $("#" + ev.target.id).parents("UL").data('x')
-        this.from.y = $("#" + ev.target.id).parents("UL").data('y')
-        this.from.yy = $("#" + ev.target.id).parents("UL").data('yy')
+        let Ul = $("#" + ev.target.id).parents("UL.card-list")
+        this.from.x = Ul.data('x');
+        this.from.y = Ul.data('y');
+        this.from.yy = Ul.data('yy');
       },
       dragEnd(ev){
         if (!this.dropping) {
@@ -1353,9 +1390,9 @@
         if ($target[0].id == 'templateli' || ($target.parents('LI')[0] && $target.parents('LI')[0].id == 'templateli')) {
           return;
         }
-        this.to.x = $target.parents("UL").data('x') == undefined ? $target.data('x') : $target.parents("UL").data('x');
-        this.to.y = $target.parents("UL").data('y') == undefined ? $target.data('y') : $target.parents("UL").data('y');
-        this.to.yy = $target.parents("UL").data('yy') == undefined ? $target.data('yy') : $target.parents("UL").data('yy');
+        this.to.x = $target.parents("UL.card-list").data('x') == undefined ? $target.data('x') : $target.parents("UL.card-list").data('x');
+        this.to.y = $target.parents("UL.card-list").data('y') == undefined ? $target.data('y') : $target.parents("UL.card-list").data('y');
+        this.to.yy = $target.parents("UL.card-list").data('yy') == undefined ? $target.data('yy') : $target.parents("UL.card-list").data('yy');
         $("#templateli").remove();
         if ($target[0].tagName == 'UL') {
           $target.append(liText)
@@ -1364,7 +1401,6 @@
         } else if ($target.parents("LI") != undefined) {
           $target.parents("LI").before(liText)
         }
-        //this.setWEb()
       },
       dragLeave(ev){
       },
@@ -1413,29 +1449,29 @@
             transform: 'rotate(0deg)'
           })
           //浏览器适配,低版本浏览器中，当
-         this.setWEb()
+          this.setWEb()
         }, 1)
       },
       setWEb(){
-        this.$nextTick(()=>{
-          $('.shishi-right-up').css('min-height',this.getMaxHeight($('.shishi-right-up ul.card-list'))+'px')
-          $('.shishi-right-down').css('min-height',this.getMaxHeight($('.shishi-right-down ul.card-list'))+'px')
-          $('.shishi-right-a').css('min-height',this.getMaxHeight($('.shishi-right-a ul.card-list'))+'px')
-          $('.shishi-right-b').css('min-height',this.getMaxHeight($('.shishi-right-b ul.card-list'))+'px')
-          $('.shishi-right-c').css('min-height',this.getMaxHeight($('.shishi-right-c ul.card-list'))+'px')
-          $('.shishi-right-d').css('min-height',this.getMaxHeight($('.shishi-right-d ul.card-list'))+'px')
+        this.$nextTick(() => {
+          $('.shishi-right-up').css('min-height', this.getMaxHeight($('.shishi-right-up ul.card-list')) + 'px')
+          $('.shishi-right-down').css('min-height', this.getMaxHeight($('.shishi-right-down ul.card-list')) + 'px')
+          $('.shishi-right-a').css('min-height', this.getMaxHeight($('.shishi-right-a ul.card-list')) + 'px')
+          $('.shishi-right-b').css('min-height', this.getMaxHeight($('.shishi-right-b ul.card-list')) + 'px')
+          $('.shishi-right-c').css('min-height', this.getMaxHeight($('.shishi-right-c ul.card-list')) + 'px')
+          $('.shishi-right-d').css('min-height', this.getMaxHeight($('.shishi-right-d ul.card-list')) + 'px')
         })
       },
       getMaxHeight(list){
         var arr = [];
-        list.each((index,item)=>{
-            if(item.children.length <=2){
-              arr.push(300)
-            }else{
-              arr.push(130*item.children.length+140)
-            }
+        list.each((index, item) => {
+          if (item.children.length <= 2) {
+            arr.push(300)
+          } else {
+            arr.push(130 * item.children.length + 140)
+          }
         })
-        return Math.max.apply(Math,arr);
+        return Math.max.apply(Math, arr);
       },
       getElementTop(element)
       {
@@ -1467,6 +1503,7 @@
       line-height 0
       clear both
       visibility hidden
+
   .tip
     position fixed
     right 0
@@ -1479,6 +1516,7 @@
     text-align left
     z-index 1000
     padding 2px
+
   .kanbanContainer
     @media screen and (max-width: 3200px) {
       width 3200px;
