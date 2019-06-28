@@ -105,7 +105,7 @@
             left: (-scrollLeft) + 'px',
             width: headerWidth + 'px',
             zIndex: 1000,
-            opacity:0.9
+            opacity:0.77
           }
         } else {
           that.headerStyle = {
@@ -126,7 +126,7 @@
 <style lang="stylus" rel="stylesheet/stylus" scoped>
   .topHeader
     width 100%;
-    height 120px;
+    height 80px;
     display flex;
     flex-direction row
     .base-header
@@ -135,12 +135,13 @@
 
       .top-base
         width 100%;
-        height 30px;
-        line-height 30px;
+        height 20px;
+        line-height 20px;
         text-align center;
         border-bottom 1px solid #ddd;
-        font-size 20px;
+        font-size 18px;
         font-weight bold;
+        box-sizing border-box
     .xuqiu-header
       flex 2
       font-size 16px;
@@ -149,7 +150,7 @@
         color #2D5174
       .xuqiu-header-bottom
         display flex
-        height 90px
+        height 60px
         text-align center
         background-color #E7EEF8
         color #2D5174
@@ -162,10 +163,10 @@
           flex 1
           border-bottom 1px solid #ddd;
           border-right 1px solid #ddd
-          line-height 90px
+          line-height 60px
         .xuqiu-chengqing
           flex 1
-          line-height 90px
+          line-height 60px
           border-bottom 1px solid #ddd;
 
     .sheji-header
@@ -176,7 +177,7 @@
         color #14612D
       .sheji-header-bottom
         display flex
-        height 90px
+        height 60px
         text-align center
         background-color #E9F5EB
         color #14612D
@@ -188,16 +189,16 @@
           .sheji-xqiufenxi-top
             flex 1
             border-bottom 1px solid #ddd
-            line-height 44px;
-            height 44px
+            line-height 29px;
+            height 29px
           .sheji-xqiufenxi-bottom
             flex 1
             display flex
             flex-direction row
             .todo, .doing
               flex 1
-              height 45px
-              line-height 45px;
+              height 29px
+              line-height 29px
               border-bottom 1px solid #ddd
             .todo
               border-right 1px solid #ddd
@@ -209,23 +210,23 @@
           .sheji-jishupinggu-top
             flex 1
             border-bottom 1px solid #ddd
-            line-height 44px;
-            height 44px
+            line-height 29px;
+            height 29px
           .sheji-jishupinggu-bottom
             flex 1
             display flex
             flex-direction row
             .todo, .doing
               flex 1
-              height 45px
-              line-height 45px;
+              height 29px
+              line-height 29px
               border-bottom 1px solid #ddd
             .todo
               border-right 1px solid #ddd
         .sheji-jiuxu
           flex 1
           text-align center
-          line-height 90px;
+          line-height 60px;
           border-bottom 1px solid #ddd
     .shishi-header
       flex 8
@@ -235,7 +236,7 @@
         color #246898;
       .shishi-header-bottom
         display flex;
-        height 90px
+        height 60px
         text-align center;
         background-color #EAF5F9;
         color #246898;
@@ -243,12 +244,12 @@
           flex 1
           border-right 1px solid #dddddd
           border-bottom 1px solid #ddd
-          line-height 90px;
+          line-height 60px;
         .shishi-team
           flex 1
           border-right 1px solid #dddddd
           border-bottom 1px solid #ddd
-          line-height 90px;
+          line-height 60px;
         .shishi-kaifa
           flex 2
           border-right 1px solid #dddddd
@@ -258,17 +259,17 @@
           .shishi-kaifa-top
             flex 1
             border-bottom 1px solid #ddd
-            line-height 44px
+            line-height 29px
           .shishi-kaifa-bottom
             flex 1
             display flex
             .shishi-kaifa-todo
               flex 1
-              line-height 44px
+              line-height 29px
               border-right 1px solid #ddd
             .shishi-kaifa-doing
               flex 1
-              line-height 44px
+              line-height 29px
         .shishi-liantiao
           flex 2
           border-right 1px solid #dddddd
@@ -278,26 +279,26 @@
           .shishi-liantiao-top
             flex 1
             border-bottom 1px solid #ddd
-            line-height 44px
+            line-height 29px
           .shishi-liantiao-bottom
             flex 1
             display flex
             .shishi-liantiao-todo
               flex 1
-              line-height 44px
+              line-height 29px
               border-right 1px solid #ddd
             .shishi-liantiao-doing
               flex 1
-              line-height 44px
+              line-height 29px
         .shishi-fengxian
           flex 1
           border-right 1px solid #dddddd
           border-bottom 1px solid #ddd
-          line-height 90px
+          line-height 60px
         .shishi-daijiaofu
           flex 1
           border-bottom 1px solid #ddd
-          line-height 90px
+          line-height 60px
           overflow hidden
     .yanshou-header
       flex 4
@@ -307,7 +308,7 @@
         color #6B4B1C
       .yanshou-header-bottom
         display flex;
-        height 90px
+        height 60px
         text-align center;
         background-color #FBF1E7;
         color #6B4B1C
@@ -315,7 +316,7 @@
           flex 1
           border-right 1px solid #dddddd
           border-bottom 1px solid #ddd
-          line-height 90px;
+          line-height 60px;
         .yanshou-ceshi
           flex 2
           border-right 1px solid #dddddd
@@ -325,21 +326,21 @@
           .yanshou-ceshi-top
             flex 1
             border-bottom 1px solid #ddd
-            line-height 44px
+            line-height 29px
           .yanshou-ceshi-bottom
             flex 1
             display flex
             .yanshou-ceshi-todo
               flex 1
-              line-height 44px
+              line-height 29px
               border-right 1px solid #ddd
             .yanshou-ceshi-doing
               flex 1
-              line-height 44px
+              line-height 29px
         .yanshou-daishangxian
           flex 1
           border-bottom 1px solid #ddd
-          line-height 90px;
+          line-height 60px;
           overflow hidden
     .shangxian-header
       flex 3
@@ -348,8 +349,8 @@
       color #9F2832;
       .shangxian-header-bottom
         display flex
-        height 90px;
-        line-height 90px
+        height 60px;
+        line-height 60px
         text-align center
         background-color #FAEBE6;
         .shangxian-huidu

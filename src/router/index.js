@@ -9,6 +9,7 @@ import login from '@/components/login'
 import demo from '@/components/demo'
 import store from '../store/store'
 import complexKanban from '@/components/complexKanban'
+import complexKanbanUserCustom from '@/components/complexKanbanUserCustom'
 import {lsWrite,lsRead} from '../common/js/ls'
 import * as types from '../store/type'
 
@@ -58,6 +59,11 @@ export default new Router({
       path: '/complexKanban',
       name: 'complexKanban',
       component: complexKanban
+    },
+    {
+      path: '/complexKanbanUserCustom',
+      name: 'complexKanbanUserCustom',
+      component: complexKanbanUserCustom
     },
     {
       path: '/demo',

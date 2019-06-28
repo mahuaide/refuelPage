@@ -11,7 +11,7 @@
       Y:{{to.y}}
       YY:{{to.yy}}
     </div>
-    <div class="kanbanContainer">
+    <div class="kanbanContainer" id="board">
       <cx-header></cx-header>
       <div class="content-body" id="cxBody">
         <div class="content-4">
@@ -1430,9 +1430,9 @@
         var arr = [];
         list.each((index,item)=>{
             if(item.children.length <=2){
-              arr.push(400)
+              arr.push(300)
             }else{
-              arr.push(192*item.children.length+20)
+              arr.push(130*item.children.length+140)
             }
         })
         return Math.max.apply(Math,arr);
@@ -1472,7 +1472,7 @@
     right 0
     bottom 0
     width 100px
-    height 30px;
+    height 32px;
     font-size 12px
     background-color #000000
     color #fff;
@@ -1480,10 +1480,10 @@
     z-index 1000
     padding 2px
   .kanbanContainer
-    @media screen and (max-width: 4400px) {
-      width 4400px;
+    @media screen and (max-width: 3200px) {
+      width 3200px;
     }
-    @media screen and (min-width: 4400px) {
+    @media screen and (min-width: 3200px) {
       width 100%;
     }
     background-color #fff
@@ -1499,7 +1499,7 @@
         display flex
         flex-direction column
         .content4-up
-          min-height 400px
+          min-height 200px
           display flex
           .xuqiu-gaojia
             flex 2
@@ -1789,7 +1789,7 @@
       height: 100%;
       padding 10px;
       .card
-        height 180px
+        height 120px
         width 100%;
         box-sizing border-box
         border 1px solid #ddd
@@ -1811,11 +1811,11 @@
 <style>
   .templateli {
     width: 100%;
-    height: 180px;
+    height: 120px;
     background-color: #ddd;
     border-radius: 8px;
     text-align: center;
-    line-height: 190px;
+    line-height: 120px;
     margin-top: 10px;
   }
 
