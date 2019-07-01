@@ -25,7 +25,7 @@
                     @dragover="dragOver($event)"
                     @dragenter="dragEnter"
                     @dragleave="dragLeave"
-                    data-x=0         data-y="0" data-yy=""
+                    data-x=0          data-y="0" data-yy=""
                 >
                   <li class="card" draggable="true" v-for="card in datas" v-if="card.x==0 && card.y==0"
                       @dragstart="dragStart($event)"
@@ -47,7 +47,7 @@
                     @dragover="dragOver($event)"
                     @dragenter="dragEnter"
                     @dragleave="dragLeave"
-                    data-x=1         data-y="0" data-yy=""
+                    data-x=1          data-y="0" data-yy=""
                 >
                   <li class="card" draggable="true" v-for="card in datas" v-if="card.x==1 && card.y==0"
                       @dragstart="dragStart($event)"
@@ -69,7 +69,7 @@
                     @dragover="dragOver($event)"
                     @dragenter="dragEnter"
                     @dragleave="dragLeave"
-                    data-x=2         data-y="0" data-yy=""
+                    data-x=2          data-y="0" data-yy=""
                 >
                   <li class="card" draggable="true" v-for="card in datas" v-if="card.x==2 && card.y==0"
                       @dragstart="dragStart($event)"
@@ -89,7 +89,7 @@
                     @dragover="dragOver($event)"
                     @dragenter="dragEnter"
                     @dragleave="dragLeave"
-                    data-x=3        data-y="0" data-yy=""
+                    data-x=3         data-y="0" data-yy=""
                 >
                   <li class="card" draggable="true" v-for="card in datas" v-if="card.x==3 && card.y==0"
                       @dragstart="dragStart($event)"
@@ -109,7 +109,7 @@
                     @dragover="dragOver($event)"
                     @dragenter="dragEnter"
                     @dragleave="dragLeave"
-                    data-x=4         data-y="0" data-yy=""
+                    data-x=4          data-y="0" data-yy=""
                 >
                   <li class="card" draggable="true" v-for="card in datas" v-if="card.x==4 && card.y==0"
                       @dragstart="dragStart($event)"
@@ -129,7 +129,7 @@
                     @dragover="dragOver($event)"
                     @dragenter="dragEnter"
                     @dragleave="dragLeave"
-                    data-x=5         data-y="0" data-yy=""
+                    data-x=5          data-y="0" data-yy=""
                 >
                   <li class="card" draggable="true" v-for="card in datas" v-if="card.x==5 && card.y==0"
                       @dragstart="dragStart($event)"
@@ -149,7 +149,7 @@
                     @dragover="dragOver($event)"
                     @dragenter="dragEnter"
                     @dragleave="dragLeave"
-                    data-x=6         data-y="0" data-yy=""
+                    data-x=6          data-y="0" data-yy=""
                 >
                   <li class="card" draggable="true" v-for="card in datas" v-if="card.x==6 && card.y==0"
                       @dragstart="dragStart($event)"
@@ -171,7 +171,7 @@
                     @dragover="dragOver($event)"
                     @dragenter="dragEnter"
                     @dragleave="dragLeave"
-                    data-x=7         data-y="0" data-yy=""
+                    data-x=7          data-y="0" data-yy=""
                 >
                   <li class="card" draggable="true" v-for="card in datas" v-if="card.x==7 && card.y==0"
                       @dragstart="dragStart($event)"
@@ -188,13 +188,14 @@
               <div class="shishi-team"><span class="qianduan">前端</span></div>
               <div class="shishi-right">
                 <div class="shishi-right-up">
+                  <spn class="team">APP</spn>
                   <div class="shishi-right-up-unit">
                     <ul class="card-list"
                         @drop="drop($event)"
                         @dragover="dragOver($event)"
                         @dragenter="dragEnter"
                         @dragleave="dragLeave"
-                        data-x=8         data-y="0" data-yy="0"
+                        data-x=8          data-y="0" data-yy="0"
                     >
                       <li class="card" draggable="true" v-for="card in datas"
                           v-if="card.x==8 && card.y==0 && card.yy==0"
@@ -215,7 +216,7 @@
                         @dragover="dragOver($event)"
                         @dragenter="dragEnter"
                         @dragleave="dragLeave"
-                        data-x=9         data-y="0" data-yy="0"
+                        data-x=9          data-y="0" data-yy="0"
                     >
                       <li class="card" draggable="true" v-for="card in datas"
                           v-if="card.x==9 && card.y==0 && card.yy==0"
@@ -236,7 +237,7 @@
                         @dragover="dragOver($event)"
                         @dragenter="dragEnter"
                         @dragleave="dragLeave"
-                        data-x=10         data-y="0" data-yy="0"
+                        data-x=10          data-y="0" data-yy="0"
                     >
                       <li class="card" draggable="true" v-for="card in datas"
                           v-if="card.x==10 && card.y==0 && card.yy==0"
@@ -257,7 +258,7 @@
                         @dragover="dragOver($event)"
                         @dragenter="dragEnter"
                         @dragleave="dragLeave"
-                        data-x=11        data-y="0" data-yy="0"
+                        data-x=11         data-y="0" data-yy="0"
                     >
                       <li class="card" draggable="true" v-for="card in datas"
                           v-if="card.x==11 && card.y==0 && card.yy==0"
@@ -278,7 +279,7 @@
                         @dragover="dragOver($event)"
                         @dragenter="dragEnter"
                         @dragleave="dragLeave"
-                        data-x=12         data-y="0" data-yy="0"
+                        data-x=12          data-y="0" data-yy="0"
                     >
                       <li class="card" draggable="true" v-for="card in datas"
                           v-if="card.x==12 && card.y==0 && card.yy==0"
@@ -299,7 +300,7 @@
                         @dragover="dragOver($event)"
                         @dragenter="dragEnter"
                         @dragleave="dragLeave"
-                        data-x=13         data-y="0" data-yy="0"
+                        data-x=13          data-y="0" data-yy="0"
                     >
                       <li class="card" draggable="true" v-for="card in datas"
                           v-if="card.x==13 && card.y==0 && card.yy==0"
@@ -316,13 +317,14 @@
                   </div>
                 </div>
                 <div class="shishi-right-down">
+                  <spn class="team">Web</spn>
                   <div class="shishi-right-up-unit">
                     <ul class="card-list"
                         @drop="drop($event)"
                         @dragover="dragOver($event)"
                         @dragenter="dragEnter"
                         @dragleave="dragLeave"
-                        data-x=8         data-y="0" data-yy="1"
+                        data-x=8          data-y="0" data-yy="1"
                     >
                       <li class="card" draggable="true" v-for="card in datas"
                           v-if="card.x==8 && card.y==0 && card.yy==1"
@@ -343,7 +345,7 @@
                         @dragover="dragOver($event)"
                         @dragenter="dragEnter"
                         @dragleave="dragLeave"
-                        data-x=9         data-y="0" data-yy="1"
+                        data-x=9          data-y="0" data-yy="1"
                     >
                       <li class="card" draggable="true" v-for="card in datas"
                           v-if="card.x==9 && card.y==0 && card.yy==1"
@@ -364,7 +366,7 @@
                         @dragover="dragOver($event)"
                         @dragenter="dragEnter"
                         @dragleave="dragLeave"
-                        data-x=10         data-y="0" data-yy="1"
+                        data-x=10          data-y="0" data-yy="1"
                     >
                       <li class="card" draggable="true" v-for="card in datas"
                           v-if="card.x==10 && card.y==0 && card.yy==1"
@@ -385,7 +387,7 @@
                         @dragover="dragOver($event)"
                         @dragenter="dragEnter"
                         @dragleave="dragLeave"
-                        data-x=11         data-y="0" data-yy="1"
+                        data-x=11          data-y="0" data-yy="1"
                     >
                       <li class="card" draggable="true" v-for="card in datas"
                           v-if="card.x==11 && card.y==0 && card.yy==1"
@@ -406,7 +408,7 @@
                         @dragover="dragOver($event)"
                         @dragenter="dragEnter"
                         @dragleave="dragLeave"
-                        data-x=12         data-y="0" data-yy="1"
+                        data-x=12          data-y="0" data-yy="1"
                     >
                       <li class="card" draggable="true" v-for="card in datas"
                           v-if="card.x==12 && card.y==0 && card.yy==1"
@@ -427,7 +429,7 @@
                         @dragover="dragOver($event)"
                         @dragenter="dragEnter"
                         @dragleave="dragLeave"
-                        data-x=13         data-y="0" data-yy="1"
+                        data-x=13          data-y="0" data-yy="1"
                     >
                       <li class="card" draggable="true" v-for="card in datas"
                           v-if="card.x==13 && card.y==0 && card.yy==1"
@@ -455,7 +457,7 @@
                     @dragover="dragOver($event)"
                     @dragenter="dragEnter"
                     @dragleave="dragLeave"
-                    data-x=14         data-y="0" data-yy=""
+                    data-x=14          data-y="0" data-yy=""
                 >
                   <li class="card" draggable="true" v-for="card in datas" v-if="card.x==14 && card.y==0"
                       @dragstart="dragStart($event)"
@@ -475,7 +477,7 @@
                     @dragover="dragOver($event)"
                     @dragenter="dragEnter"
                     @dragleave="dragLeave"
-                    data-x=15         data-y="0" data-yy=""
+                    data-x=15          data-y="0" data-yy=""
                 >
                   <li class="card" draggable="true" v-for="card in datas" v-if="card.x==15 && card.y==0"
                       @dragstart="dragStart($event)"
@@ -495,7 +497,7 @@
                     @dragover="dragOver($event)"
                     @dragenter="dragEnter"
                     @dragleave="dragLeave"
-                    data-x=16         data-y="0" data-yy=""
+                    data-x=16          data-y="0" data-yy=""
                 >
                   <li class="card" draggable="true" v-for="card in datas" v-if="card.x==16 && card.y==0"
                       @dragstart="dragStart($event)"
@@ -520,7 +522,7 @@
                     @dragover="dragOver($event)"
                     @dragenter="dragEnter"
                     @dragleave="dragLeave"
-                    data-x=0         data-y="1" data-yy=""
+                    data-x=0          data-y="1" data-yy=""
                 >
                   <li class="card" draggable="true" v-for="card in datas" v-if="card.x==0 && card.y==1"
                       @dragstart="dragStart($event)"
@@ -541,7 +543,7 @@
                     @dragover="dragOver($event)"
                     @dragenter="dragEnter"
                     @dragleave="dragLeave"
-                    data-x=1         data-y="1" data-yy=""
+                    data-x=1          data-y="1" data-yy=""
                 >
                   <li class="card" draggable="true" v-for="card in datas" v-if="card.x==1 && card.y==1"
                       @dragstart="dragStart($event)"
@@ -563,7 +565,7 @@
                     @dragover="dragOver($event)"
                     @dragenter="dragEnter"
                     @dragleave="dragLeave"
-                    data-x=2         data-y="1" data-yy=""
+                    data-x=2          data-y="1" data-yy=""
                 >
                   <li class="card" draggable="true" v-for="card in datas" v-if="card.x==2 && card.y==1"
                       @dragstart="dragStart($event)"
@@ -583,7 +585,7 @@
                     @dragover="dragOver($event)"
                     @dragenter="dragEnter"
                     @dragleave="dragLeave"
-                    data-x=3         data-y="1" data-yy=""
+                    data-x=3          data-y="1" data-yy=""
                 >
                   <li class="card" draggable="true" v-for="card in datas" v-if="card.x==3 && card.y==1"
                       @dragstart="dragStart($event)"
@@ -603,7 +605,7 @@
                     @dragover="dragOver($event)"
                     @dragenter="dragEnter"
                     @dragleave="dragLeave"
-                    data-x=4         data-y="1" data-yy=""
+                    data-x=4          data-y="1" data-yy=""
                 >
                   <li class="card" draggable="true" v-for="card in datas" v-if="card.x==4 && card.y==1"
                       @dragstart="dragStart($event)"
@@ -623,7 +625,7 @@
                     @dragover="dragOver($event)"
                     @dragenter="dragEnter"
                     @dragleave="dragLeave"
-                    data-x=5         data-y="1" data-yy=""
+                    data-x=5          data-y="1" data-yy=""
                 >
                   <li class="card" draggable="true" v-for="card in datas" v-if="card.x==5 && card.y==1"
                       @dragstart="dragStart($event)"
@@ -643,7 +645,7 @@
                     @dragover="dragOver($event)"
                     @dragenter="dragEnter"
                     @dragleave="dragLeave"
-                    data-x=6         data-y="1" data-yy=""
+                    data-x=6          data-y="1" data-yy=""
                 >
                   <li class="card" draggable="true" v-for="card in datas" v-if="card.x==6 && card.y==1"
                       @dragstart="dragStart($event)"
@@ -665,7 +667,7 @@
                     @dragover="dragOver($event)"
                     @dragenter="dragEnter"
                     @dragleave="dragLeave"
-                    data-x=7         data-y="1" data-yy=""
+                    data-x=7          data-y="1" data-yy=""
                 >
                   <li class="card" draggable="true" v-for="card in datas" v-if="card.x==7 && card.y==1"
                       @dragstart="dragStart($event)"
@@ -682,13 +684,14 @@
               <div class="shishi-team"><span class="fuwuduan">服务端</span></div>
               <div class="shishi-right">
                 <div class="shishi-right-a">
+                  <span class="team">A</span>
                   <div class="shishi-right-up-unit">
                     <ul class="card-list"
                         @drop="drop($event)"
                         @dragover="dragOver($event)"
                         @dragenter="dragEnter"
                         @dragleave="dragLeave"
-                        data-x=8         data-y="1" data-yy="0"
+                        data-x=8          data-y="1" data-yy="0"
                     >
                       <li class="card" draggable="true" v-for="card in datas"
                           v-if="card.x==8 && card.y==1 && card.yy==0"
@@ -709,7 +712,7 @@
                         @dragover="dragOver($event)"
                         @dragenter="dragEnter"
                         @dragleave="dragLeave"
-                        data-x=9         data-y="1" data-yy="0"
+                        data-x=9          data-y="1" data-yy="0"
                     >
                       <li class="card" draggable="true" v-for="card in datas"
                           v-if="card.x==9 && card.y==1 && card.yy==0"
@@ -730,7 +733,7 @@
                         @dragover="dragOver($event)"
                         @dragenter="dragEnter"
                         @dragleave="dragLeave"
-                        data-x=10         data-y="1" data-yy="0"
+                        data-x=10          data-y="1" data-yy="0"
                     >
                       <li class="card" draggable="true" v-for="card in datas"
                           v-if="card.x==10 && card.y==1 && card.yy==0"
@@ -751,7 +754,7 @@
                         @dragover="dragOver($event)"
                         @dragenter="dragEnter"
                         @dragleave="dragLeave"
-                        data-x=11         data-y="1" data-yy="0"
+                        data-x=11          data-y="1" data-yy="0"
                     >
                       <li class="card" draggable="true" v-for="card in datas"
                           v-if="card.x==11 && card.y==1 && card.yy==0"
@@ -772,7 +775,7 @@
                         @dragover="dragOver($event)"
                         @dragenter="dragEnter"
                         @dragleave="dragLeave"
-                        data-x=12         data-y="1" data-yy="0"
+                        data-x=12          data-y="1" data-yy="0"
                     >
                       <li class="card" draggable="true" v-for="card in datas"
                           v-if="card.x==12 && card.y==1 && card.yy==0"
@@ -793,7 +796,7 @@
                         @dragover="dragOver($event)"
                         @dragenter="dragEnter"
                         @dragleave="dragLeave"
-                        data-x=13         data-y="1" data-yy="0"
+                        data-x=13          data-y="1" data-yy="0"
                     >
                       <li class="card" draggable="true" v-for="card in datas"
                           v-if="card.x==13 && card.y==1 && card.yy==0"
@@ -810,13 +813,14 @@
                   </div>
                 </div>
                 <div class="shishi-right-b">
+                  <span class="team">B</span>
                   <div class="shishi-right-up-unit">
                     <ul class="card-list"
                         @drop="drop($event)"
                         @dragover="dragOver($event)"
                         @dragenter="dragEnter"
                         @dragleave="dragLeave"
-                        data-x=8     data-y="1" data-yy="1"
+                        data-x=8      data-y="1" data-yy="1"
                     >
                       <li class="card" draggable="true" v-for="card in datas"
                           v-if="card.x==8 && card.y==1 && card.yy==1"
@@ -837,7 +841,7 @@
                         @dragover="dragOver($event)"
                         @dragenter="dragEnter"
                         @dragleave="dragLeave"
-                        data-x=9         data-y="1" data-yy="1"
+                        data-x=9          data-y="1" data-yy="1"
                     >
                       <li class="card" draggable="true" v-for="card in datas"
                           v-if="card.x==9 && card.y==1 && card.yy==1"
@@ -858,7 +862,7 @@
                         @dragover="dragOver($event)"
                         @dragenter="dragEnter"
                         @dragleave="dragLeave"
-                        data-x=10         data-y="1" data-yy="1"
+                        data-x=10          data-y="1" data-yy="1"
                     >
                       <li class="card" draggable="true" v-for="card in datas"
                           v-if="card.x==10 && card.y==1 && card.yy==1"
@@ -879,7 +883,7 @@
                         @dragover="dragOver($event)"
                         @dragenter="dragEnter"
                         @dragleave="dragLeave"
-                        data-x=11         data-y="1" data-yy="1"
+                        data-x=11          data-y="1" data-yy="1"
                     >
                       <li class="card" draggable="true" v-for="card in datas"
                           v-if="card.x==11 && card.y==1 && card.yy==1"
@@ -900,7 +904,7 @@
                         @dragover="dragOver($event)"
                         @dragenter="dragEnter"
                         @dragleave="dragLeave"
-                        data-x=12         data-y="1" data-yy="1"
+                        data-x=12          data-y="1" data-yy="1"
                     >
                       <li class="card" draggable="true" v-for="card in datas"
                           v-if="card.x==12 && card.y==1 && card.yy==1"
@@ -921,7 +925,7 @@
                         @dragover="dragOver($event)"
                         @dragenter="dragEnter"
                         @dragleave="dragLeave"
-                        data-x=13         data-y="1" data-yy="1"
+                        data-x=13          data-y="1" data-yy="1"
                     >
                       <li class="card" draggable="true" v-for="card in datas"
                           v-if="card.x==13 && card.y==1 && card.yy==1"
@@ -938,13 +942,14 @@
                   </div>
                 </div>
                 <div class="shishi-right-c">
+                  <span class="team">C</span>
                   <div class="shishi-right-up-unit">
                     <ul class="card-list"
                         @drop="drop($event)"
                         @dragover="dragOver($event)"
                         @dragenter="dragEnter"
                         @dragleave="dragLeave"
-                        data-x=8     data-y="1" data-yy="2"
+                        data-x=8      data-y="1" data-yy="2"
                     >
                       <li class="card" draggable="true" v-for="card in datas"
                           v-if="card.x==8 && card.y==1 && card.yy==2"
@@ -965,7 +970,7 @@
                         @dragover="dragOver($event)"
                         @dragenter="dragEnter"
                         @dragleave="dragLeave"
-                        data-x=9     data-y="1" data-yy="2"
+                        data-x=9      data-y="1" data-yy="2"
                     >
                       <li class="card" draggable="true" v-for="card in datas"
                           v-if="card.x==9 && card.y==1 && card.yy==2"
@@ -986,7 +991,7 @@
                         @dragover="dragOver($event)"
                         @dragenter="dragEnter"
                         @dragleave="dragLeave"
-                        data-x=10     data-y="1" data-yy="2"
+                        data-x=10      data-y="1" data-yy="2"
                     >
                       <li class="card" draggable="true" v-for="card in datas"
                           v-if="card.x==10 && card.y==1 && card.yy==2"
@@ -1007,7 +1012,7 @@
                         @dragover="dragOver($event)"
                         @dragenter="dragEnter"
                         @dragleave="dragLeave"
-                        data-x=11     data-y="1" data-yy="2"
+                        data-x=11      data-y="1" data-yy="2"
                     >
                       <li class="card" draggable="true" v-for="card in datas"
                           v-if="card.x==11 && card.y==1 && card.yy==2"
@@ -1028,7 +1033,7 @@
                         @dragover="dragOver($event)"
                         @dragenter="dragEnter"
                         @dragleave="dragLeave"
-                        data-x=12     data-y="1" data-yy="2"
+                        data-x=12      data-y="1" data-yy="2"
                     >
                       <li class="card" draggable="true" v-for="card in datas"
                           v-if="card.x==12 && card.y==1 && card.yy==2"
@@ -1049,7 +1054,7 @@
                         @dragover="dragOver($event)"
                         @dragenter="dragEnter"
                         @dragleave="dragLeave"
-                        data-x=13     data-y="1" data-yy="2"
+                        data-x=13      data-y="1" data-yy="2"
                     >
                       <li class="card" draggable="true" v-for="card in datas"
                           v-if="card.x==13 && card.y==1 && card.yy==2"
@@ -1066,13 +1071,14 @@
                   </div>
                 </div>
                 <div class="shishi-right-d">
+                  <span class="team">D</span>
                   <div class="shishi-right-up-unit">
                     <ul class="card-list"
                         @drop="drop($event)"
                         @dragover="dragOver($event)"
                         @dragenter="dragEnter"
                         @dragleave="dragLeave"
-                        data-x=8     data-y="1" data-yy="3"
+                        data-x=8      data-y="1" data-yy="3"
                     >
                       <li class="card" draggable="true" v-for="card in datas"
                           v-if="card.x==8 && card.y==1 && card.yy==3"
@@ -1093,7 +1099,7 @@
                         @dragover="dragOver($event)"
                         @dragenter="dragEnter"
                         @dragleave="dragLeave"
-                        data-x=9     data-y="1" data-yy="3"
+                        data-x=9      data-y="1" data-yy="3"
                     >
                       <li class="card" draggable="true" v-for="card in datas"
                           v-if="card.x==9 && card.y==1 && card.yy==3"
@@ -1114,7 +1120,7 @@
                         @dragover="dragOver($event)"
                         @dragenter="dragEnter"
                         @dragleave="dragLeave"
-                        data-x=10     data-y="1" data-yy="3"
+                        data-x=10      data-y="1" data-yy="3"
                     >
                       <li class="card" draggable="true" v-for="card in datas"
                           v-if="card.x==10 && card.y==1 && card.yy==3"
@@ -1135,7 +1141,7 @@
                         @dragover="dragOver($event)"
                         @dragenter="dragEnter"
                         @dragleave="dragLeave"
-                        data-x=11     data-y="1" data-yy="3"
+                        data-x=11      data-y="1" data-yy="3"
                     >
                       <li class="card" draggable="true" v-for="card in datas"
                           v-if="card.x==11 && card.y==1 && card.yy==3"
@@ -1156,7 +1162,7 @@
                         @dragover="dragOver($event)"
                         @dragenter="dragEnter"
                         @dragleave="dragLeave"
-                        data-x=12     data-y="1" data-yy="3"
+                        data-x=12      data-y="1" data-yy="3"
                     >
                       <li class="card" draggable="true" v-for="card in datas"
                           v-if="card.x==12 && card.y==1 && card.yy==3"
@@ -1177,7 +1183,7 @@
                         @dragover="dragOver($event)"
                         @dragenter="dragEnter"
                         @dragleave="dragLeave"
-                        data-x=13     data-y="1" data-yy="3"
+                        data-x=13      data-y="1" data-yy="3"
                     >
                       <li class="card" draggable="true" v-for="card in datas"
                           v-if="card.x==13 && card.y==1 && card.yy==3"
@@ -1197,7 +1203,7 @@
             </div>
             <div class="yanshou-changgui">
               <div class="yanshouleixing-changgui">
-                <span class="text">功能测试</span>
+                <span class="text">体验测试</span>
               </div>
               <div class="ceshi-todo-changgui">
                 <ul class="card-list"
@@ -1205,7 +1211,7 @@
                     @dragover="dragOver($event)"
                     @dragenter="dragEnter"
                     @dragleave="dragLeave"
-                    data-x=14         data-y="1" data-yy=""
+                    data-x=14          data-y="1" data-yy=""
                 >
                   <li class="card" draggable="true" v-for="card in datas" v-if="card.x==14 && card.y==1"
                       @dragstart="dragStart($event)"
@@ -1225,7 +1231,7 @@
                     @dragover="dragOver($event)"
                     @dragenter="dragEnter"
                     @dragleave="dragLeave"
-                    data-x=15         data-y="1" data-yy=""
+                    data-x=15          data-y="1" data-yy=""
                 >
                   <li class="card" draggable="true" v-for="card in datas" v-if="card.x==15 && card.y==1"
                       @dragstart="dragStart($event)"
@@ -1245,7 +1251,7 @@
                     @dragover="dragOver($event)"
                     @dragenter="dragEnter"
                     @dragleave="dragLeave"
-                    data-x=16         data-y="1" data-yy=""
+                    data-x=16          data-y="1" data-yy=""
                 >
                   <li class="card" draggable="true" v-for="card in datas" v-if="card.x==16 && card.y==1"
                       @dragstart="dragStart($event)"
@@ -1270,7 +1276,7 @@
                 @dragover="dragOver($event)"
                 @dragenter="dragEnter"
                 @dragleave="dragLeave"
-                data-x=17         data-y="" data-yy=""
+                data-x=17          data-y="" data-yy=""
             >
               <li class="card" draggable="true" v-for="card in datas" v-if="card.x==17 && card.y==''"
                   @dragstart="dragStart($event)"
@@ -1290,7 +1296,7 @@
                 @dragover="dragOver($event)"
                 @dragenter="dragEnter"
                 @dragleave="dragLeave"
-                data-x=18         data-y="" data-yy=""
+                data-x=18          data-y="" data-yy=""
             >
               <li class="card" draggable="true" v-for="card in datas" v-if="card.x==18 && card.y==''"
                   @dragstart="dragStart($event)"
@@ -1310,7 +1316,7 @@
                 @dragover="dragOver($event)"
                 @dragenter="dragEnter"
                 @dragleave="dragLeave"
-                data-x=19         data-y="" data-yy=""
+                data-x=19          data-y="" data-yy=""
             >
               <li class="card" draggable="true" v-for="card in datas" v-if="card.x==19 && card.y==''"
                   @dragstart="dragStart($event)"
@@ -1623,6 +1629,18 @@
                 flex 1
                 border-bottom 1px solid #ddd
                 display flex
+                position relative
+                .team
+                  display block
+                  width 60px;
+                  text-align center
+                  position absolute
+                  height 20px;
+                  line-height 20px;
+                  left -60px
+                  top 50%
+                  margin-top -10px;
+                  font-weight bold
                 .shishi-right-up-unit
                   flex 1
                   border-right 1px solid #ddd
@@ -1632,6 +1650,18 @@
               .shishi-right-down
                 flex 1
                 display flex
+                position relative
+                .team
+                  display block
+                  width 60px;
+                  text-align center
+                  position absolute
+                  height 20px;
+                  line-height 20px;
+                  left -60px
+                  top 50%
+                  margin-top -10px;
+                  font-weight bold
                 .shishi-right-up-unit
                   flex 1
                   border-right 1px solid #ddd
@@ -1736,9 +1766,20 @@
               flex-direction column
               .shishi-right-a
                 flex 1
-
                 border-bottom 1px solid #ddd
                 display flex
+                position relative
+                .team
+                  display block
+                  width 60px;
+                  text-align center
+                  position absolute
+                  height 20px;
+                  line-height 20px;
+                  left -60px
+                  top 50%
+                  margin-top -10px;
+                  font-weight bold
                 .shishi-right-up-unit
                   flex 1
                   min-height 200px
@@ -1749,6 +1790,18 @@
                 flex 1
                 display flex
                 border-bottom 1px solid #ddd
+                position relative
+                .team
+                  display block
+                  width 60px;
+                  text-align center
+                  position absolute
+                  height 20px;
+                  line-height 20px;
+                  left -60px
+                  top 50%
+                  margin-top -10px;
+                  font-weight bold
                 .shishi-right-up-unit
                   flex 1
                   border-right 1px solid #ddd
@@ -1759,6 +1812,18 @@
                 flex 1
                 display flex
                 border-bottom 1px solid #ddd
+                position relative
+                .team
+                  display block
+                  width 60px;
+                  text-align center
+                  position absolute
+                  height 20px;
+                  line-height 20px;
+                  left -60px
+                  top 50%
+                  margin-top -10px;
+                  font-weight bold
                 .shishi-right-up-unit
                   flex 1
                   border-right 1px solid #ddd
@@ -1768,6 +1833,18 @@
               .shishi-right-d
                 flex 1
                 display flex
+                position relative
+                .team
+                  display block
+                  width 60px;
+                  text-align center
+                  position absolute
+                  height 20px;
+                  line-height 20px;
+                  left -60px
+                  top 50%
+                  margin-top -10px;
+                  font-weight bold
                 .shishi-right-up-unit
                   flex 1
                   border-right 1px solid #ddd
