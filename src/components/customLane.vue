@@ -77,9 +77,9 @@
     },
     methods: {
       //删除泳道
-      delLane(item,index){
-        delBoard({kanbanId:this.kanbanId,boardId:item.boardId}).then(res=>{
-          this.list.splice(index,1)
+      delLane(item, index){
+        delBoard({kanbanId: this.kanbanId, boardId: item.boardId}).then(res => {
+          this.list.splice(index, 1)
         })
       },
       //获取泳道信息
@@ -89,15 +89,15 @@
         })
       },
       //删除卡片
-      delCard(tasks,task, index){
-        delTask({kanbanId:this.kanbanId,taskId:task.taskId}).then(res=>{
-          tasks.splice(index,1)
+      delCard(tasks, task, index){
+        delTask({kanbanId: this.kanbanId, taskId: task.taskId}).then(res => {
+          tasks.splice(index, 1)
         })
       },
       //添加卡片
       addCard(lane){
         var id = Math.random();
-        createTask({kanbanId:this.kanbanId,boardId:lane.boardId,taskName:id}).then(res=>{
+        createTask({kanbanId: this.kanbanId, boardId: lane.boardId, taskName: id}).then(res => {
           lane.tasks.push(res.data)
         })
       },
@@ -339,7 +339,7 @@
         var lanes = this.list.map(item => {
           return item.boardId
         }).join(',')
-        moveBoard({kanbanId: this.kanbanId, currentIndexs: lanes}).then(res=>{
+        moveBoard({kanbanId: this.kanbanId, currentIndexs: lanes}).then(res => {
 
         })
       },
@@ -350,7 +350,12 @@
           return item.taskId
         })
         var dragCardId = this.list[laneIndex].tasks[cardIndex].taskId;
-        moveTask({kanbanId: this.kanbanId, boardId: laneId, taskId: dragCardId, taskIndexs: cardList.join(',')}).then(res=>{
+        moveTask({
+          kanbanId: this.kanbanId,
+          boardId: laneId,
+          taskId: dragCardId,
+          taskIndexs: cardList.join(',')
+        }).then(res => {
 
         })
       },
