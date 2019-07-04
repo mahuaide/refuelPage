@@ -10,7 +10,7 @@
                     :colspan="level_1.deepNum"
                     :rowspan="((level_1.children && level_1.children.length>0)?'':3)">
                     {{level_1.label}}
-                    <i class="el-icon-arrow-right" title="向右增一列"></i>
+                    <i class="el-icon-arrow-right" title="向右增一列" @click=""></i>
                     <i class="el-icon-arrow-down" title="向下增一列" v-show="level_1.children.length ==0 && index1 !=0"></i>
                   </td>
                 </tr>
