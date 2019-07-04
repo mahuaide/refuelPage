@@ -1,15 +1,21 @@
 <template>
   <div class="header">
     <table cellspacing="0" cellpadding="0">
-      <tbody>
+      <thead>
       <!-- 表头采用table单行模式 -->
       <tr>
         <!-- 按顶级节点循环，每个顶级节点作为一列 -->
         <template v-for="(level_1,index) in lane">
-          <td>
+          <th>
             <tr>
-              <!-- 一级表头的列合并，取决于有多少个最底层元素，具体算法在父组件watch里面 -->
-              <td :colspan="level_1.deepNum">{{level_1.label}}</td>
+              <!-- 一级表头的列合并，取决于有多少个最底层元素，具体算法在父组件watch里面
+                   一级表头的行合并，取决于是否有children元素，有则不合并，没有向下合并3行
+              -->
+              <td
+                :colspan="level_1.deepNum"
+                :rowspan="((level_1.children && level_1.children.length>0)?'':3)">
+                {{level_1.label}}
+              </td>
             </tr>
             <tr>
               <!-- 二级表头需要对列和行分别合并 -->
@@ -31,10 +37,10 @@
                   </template>
               </template>
             </tr>
-          </td>
+          </th>
         </template>
       </tr>
-      </tbody>
+      </thead>
     </table>
   </div>
 </template>
@@ -61,11 +67,11 @@
     table
       margin 0
       border-collapse: collapse
-      tbody tr
+      thead tr
         height 30px;
-      tbody tr td tr td
+      thead tr th tr td
         box-sizing border-box
-        width 140px !important
+        width 150px !important
         text-align center
         border-top 1px solid #ddd
         border-bottom: 1px solid #ddd

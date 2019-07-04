@@ -114,9 +114,7 @@
             opacity:1
           }
         }
-
       }
-
     },
     computed: {},
     components: {}
