@@ -3,31 +3,38 @@
     <table cellspacing="0" cellpadding="0">
         <thead id="cxHeader" :style="headerStyle">
           <tr>
-            <template v-for="(level_1,index) in lane">
+            <template v-for="(level_1,index1) in lane">
               <th>
                 <tr>
                   <td
                     :colspan="level_1.deepNum"
                     :rowspan="((level_1.children && level_1.children.length>0)?'':3)">
                     {{level_1.label}}
+                    <i class="el-icon-arrow-right" title="向右增一列"></i>
+                    <i class="el-icon-arrow-down" title="向下增一列" v-show="level_1.children.length ==0 && index1 !=0"></i>
                   </td>
                 </tr>
                 <tr>
-                  <template v-for="(level_2,index) in level_1.children">
+                  <template v-for="(level_2,index2) in level_1.children">
                   <!-- 如果二级表头无子节点，需要向下合并一行 -->
                   <template v-if="!level_2.children || level_2.children.length ==0">
-                    <td rowspan="2">{{level_2.label}}</td>
+                    <td rowspan="2">{{level_2.label}}
+                      <i class="el-icon-arrow-right" title="向右增一列" v-show="index1!=0"></i>
+                      <i class="el-icon-arrow-down" title="向下增一列" v-show="index1 !=0"></i>
+                    </td>
                   </template>
                   <!-- 如果二级表头有子节点，需要向右合并，有多少子节点合并多少列 -->
                   <template v-else>
-                    <td :colspan="level_2.children.length">{{level_2.label}}</td>
+                    <td :colspan="level_2.children.length">{{level_2.label}}
+                      <i class="el-icon-arrow-right" title="向右增一列" v-show="index1!=0"></i></td>
                   </template>
                 </template>
                 </tr>
                 <tr>
                   <template v-for="(level_2,index) in level_1.children">
                     <template v-for="(level_3,index) in level_2.children">
-                      <td>{{level_3.label}}</td>
+                      <td>{{level_3.label}}
+                        <i class="el-icon-arrow-right"></i></td>
                     </template>
                   </template>
                 </tr>
@@ -43,6 +50,7 @@
                 <td class="column">
                   <template v-if="index ==0">
                     {{backlog.backlogName}}
+                    <div class="addCard" @click="addCard(backlog)">加卡片</div>
                   </template>
                   <template v-else>
                   <ul class="card-list"
@@ -71,6 +79,7 @@
                 <td v-for="index_in_column in level1.deepNum" class="column">
                   <template v-if="index_in_column==1 && index ==0">
                     {{backlog.backlogName}}
+                    <div class="addCard" @click="addCard(backlog)">加卡片</div>
                   </template>
                   <template v-else="">
                   <ul class="card-list"
@@ -104,7 +113,6 @@
   </div>
 </template>
 <script type="text/ecmascript-6">
-  import header from './complexKanbanHeaderCustom.vue'
   export default{
     data(){
       return {
@@ -345,8 +353,22 @@
       }
     },
     methods: {
+      addCard(backlog){
+        this.backlogs.forEach((item,index)=>{
+          if(item.backlogId == backlog.backlogId){
+            item.cards.unshift({
+              cardId: Math.floor(Math.random()*(99999-10000+1)+10000),
+              cardName: Math.floor(Math.random()*(99999-10000+1)+10000),
+              state: 12,
+              type: 0,
+            })
+            this.computedHeight()
+          }
+        })
+      },
       computedHeight(){
-        $('tr.row').each((index,row)=>{
+        this.$nextTick(()=>{
+          $('tr.row').each((index,row)=>{
             var arr = [];
             $(row).find('td.column>ul').each((index,item)=>{
               if (item.children.length <= 2) {
@@ -355,9 +377,11 @@
                 arr.push(130 * item.children.length + 140)
               }
             })
-           $(row).find('td.column>ul').css('height',Math.max.apply(Math, arr)+'px')
-           $(row).find('td.column').css('height',Math.max.apply(Math, arr)+'px')
+            $(row).find('td.column>ul').css('height',Math.max.apply(Math, arr)+'px')
+            $(row).find('td.column').css('height',Math.max.apply(Math, arr)+'px')
+          })
         })
+
       },
       dragOver(ev){
         if (ev.preventDefault) {
@@ -511,9 +535,7 @@
           }
         }
       }
-      this.$nextTick(()=>{
-          this.computedHeight();
-      })
+      this.computedHeight();
     },
     computed: {
         findLineId(id,index){
@@ -523,7 +545,6 @@
         }
     },
     components: {
-      'cx-header': header
     },
     watch: {
       /**
@@ -583,6 +604,7 @@
       thead tr
         height 30px;
       thead tr th tr td
+        position relative
         box-sizing border-box
         width 150px
         overflow hidden
@@ -590,12 +612,29 @@
         border-right 1px solid #aaa
         border-top 1px solid #aaa
         border-bottom 1px solid #aaa
+        .el-icon-arrow-right
+          font-size 12px
+          position absolute
+          right 5px
+          top 50%
+          margin-top -6px;
+          &:hover
+            cursor pointer
+        .el-icon-arrow-down
+          font-size 12px
+          position absolute
+          left 5px
+          top 50%
+          margin-top -6px;
+          &:hover
+            cursor pointer
       tbody
         padding 0
         margin 0
       tbody>tr
         border-bottom 2px solid #aaa
       tbody>tr>td>tr>td
+        position relative
         padding 0
         margin 0
         box-sizing border-box
@@ -604,6 +643,20 @@
         overflow hidden
         word-break break-all
         border-right 1px solid #ddd
+        text-align center
+        .addCard
+          position absolute
+          bottom 50px;
+          left 50%;
+          width 80px;
+          height 40px;
+          line-height 40px
+          margin-left -40px
+          text-align center;
+          border 1px solid #ddd;
+          border-radius 5px;
+          &:hover
+            cursor:pointer
         .card-list
           margin 0;
           padding: 0
