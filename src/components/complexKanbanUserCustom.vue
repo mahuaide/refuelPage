@@ -1,5 +1,5 @@
 <template>
-  <div style="width: 3100px">
+  <div style="width: 10000px">
     <table cellspacing="0" cellpadding="0">
         <thead id="cxHeader" :style="headerStyle">
           <tr>
@@ -10,7 +10,7 @@
                     :colspan="level_1.deepNum"
                     :rowspan="((level_1.children && level_1.children.length>0)?'':3)">
                     {{level_1.label}}
-                    <i class="el-icon-arrow-right" title="向右增一列" @click=""></i>
+                    <i class="el-icon-arrow-right" title="向右增一列" @click="level1AddRight(index1)"></i>
                     <i class="el-icon-arrow-down" title="向下增一列" v-show="level_1.children.length ==0 && index1 !=0"></i>
                   </td>
                 </tr>
@@ -19,22 +19,22 @@
                   <!-- 如果二级表头无子节点，需要向下合并一行 -->
                   <template v-if="!level_2.children || level_2.children.length ==0">
                     <td rowspan="2">{{level_2.label}}
-                      <i class="el-icon-arrow-right" title="向右增一列" v-show="index1!=0"></i>
+                      <i class="el-icon-arrow-right" title="向右增一列" v-show="index1!=0" @click="level2AddRight(level_1.id,index2)"></i>
                       <i class="el-icon-arrow-down" title="向下增一列" v-show="index1 !=0"></i>
                     </td>
                   </template>
                   <!-- 如果二级表头有子节点，需要向右合并，有多少子节点合并多少列 -->
                   <template v-else>
                     <td :colspan="level_2.children.length">{{level_2.label}}
-                      <i class="el-icon-arrow-right" title="向右增一列" v-show="index1!=0"></i></td>
+                      <i class="el-icon-arrow-right" title="向右增一列" v-show="index1!=0" @click="level2AddRight(level_1.id,index2)"></i></td>
                   </template>
                 </template>
                 </tr>
                 <tr>
                   <template v-for="(level_2,index) in level_1.children">
-                    <template v-for="(level_3,index) in level_2.children">
+                    <template v-for="(level_3,index3) in level_2.children">
                       <td>{{level_3.label}}
-                        <i class="el-icon-arrow-right"></i></td>
+                        <i class="el-icon-arrow-right" title="向右增一列" @click="level3AddRight(level_1.id,level_2.id,index3)""></i></td>
                     </template>
                   </template>
                 </tr>
@@ -43,12 +43,12 @@
           </tr>
         </thead>
         <tbody>
-        <tr v-for="(backlog,index_line) in backlogs" class="row">
-          <td v-for="(level1,index) in lane" >
+        <tr v-for="backlog in backlogs" class="row">
+          <td v-for="(level1,indexLane) in lane" >
             <tr>
               <template v-if="level1.deepNum ==0">
                 <td class="column">
-                  <template v-if="index ==0">
+                  <template v-if="indexLane ==0">
                     {{backlog.backlogName}}
                     <div class="addCard" @click="addCard(backlog)">加卡片</div>
                   </template>
@@ -58,10 +58,10 @@
                       @dragover="dragOver($event)"
                       @dragenter="dragEnter"
                       @dragleave="dragLeave"
-                      :data-id="findLineId(level1.id,index_in_column-1)"
+                      :data-id="level1.id"
                       :data-line = 'backlog.backlogId'
                   >
-                    <li class="card" draggable="true" v-for="card in backlog.cards" v-if="card.state==findLineId(level1.id,index_in_column-1)"
+                    <li class="card" draggable="true" v-for="card in backlog.cards" v-if="card.state==level1.id"
                         @dragstart="dragStart($event)"
                         :id="card.cardId"
                         @dragend="dragEnd"
@@ -76,8 +76,8 @@
                 </td>
               </template>
               <template v-else>
-                <td v-for="index_in_column in level1.deepNum" class="column">
-                  <template v-if="index_in_column==1 && index ==0">
+                <td v-for="(id,indexInlane) in level1.childrenIds" class="column">
+                  <template v-if="indexLane ==0 && indexInlane ==0">
                     {{backlog.backlogName}}
                     <div class="addCard" @click="addCard(backlog)">加卡片</div>
                   </template>
@@ -87,10 +87,10 @@
                                                         @dragover="dragOver($event)"
                                                         @dragenter="dragEnter"
                                                         @dragleave="dragLeave"
-                                                        :data-id="findLineId(level1.id,index_in_column-1)"
+                                                        :data-id="id"
                                                         :data-line = 'backlog.backlogId'
                 >
-                  <li class="card" draggable="true" v-for="card in backlog.cards" v-if="card.state==findLineId(level1.id,index_in_column-1)"
+                  <li class="card" draggable="true" v-for="card in backlog.cards" v-if="card.state==id"
                       @dragstart="dragStart($event)"
                       :id="card.cardId"
                       @dragend="dragEnd"
@@ -353,6 +353,40 @@
       }
     },
     methods: {
+      findLineId(id,index){
+          this.$nextTick(()=>{
+            return this.cardLanes.get(id)[index];
+          })
+
+      },
+      //第一行向右加一列
+      level1AddRight(index){
+          this.lane.splice(index+1,0,{id:this.sequence(),label:'临时泳道',children:[]})
+      },
+      //第二行向右加一列
+      level2AddRight(level1_id,index){
+        this.lane.forEach(level1=>{
+            if(level1.id ==level1_id){
+              level1.children.splice(index+1,0,{id:this.sequence(),label:'临时泳道',children:[]})
+            }
+        })
+      },
+
+      //第三行向右加一列
+      level3AddRight(level1_id,level2_id,index){
+        this.lane.forEach(level1=>{
+          if(level1.id ==level1_id){
+            level1.children.forEach(level2=>{
+              if(level2.id ==level2_id){
+                level2.children.splice(index+1,0,{id:this.sequence(),label:'临时泳道',children:[]})
+              }
+            })
+          }
+        })
+      },
+      sequence(){
+        return `${new Date().getTime()}${Math.floor(Math.random()*(999999-100000+1)-100000)}`
+      },
       addCard(backlog){
         this.backlogs.forEach((item,index)=>{
           if(item.backlogId == backlog.backlogId){
@@ -538,11 +572,7 @@
       this.computedHeight();
     },
     computed: {
-        findLineId(id,index){
-            return function (id,index) {
-              return this.cardLanes.get(id)[index];
-            }
-        }
+
     },
     components: {
     },
@@ -557,8 +587,9 @@
         handler(newLane, oldLane){
           this.cardLanes = new Map()
           //先循环一级
-          this.lane.forEach((level1, index) => {
+          newLane.forEach((level1, index) => {
             level1.deepNum = 0;
+            level1.childrenIds = [];
             //如果一级有子元素
             if (level1.children && level1.children.length > 0) {
               let tempArr = [];
@@ -567,12 +598,12 @@
                 if (!level2.children || level2.children.length == 0) {
                   level1.deepNum++;
                   //如果二级没有子元素  将二级ID放入临时数组
-                  tempArr.push(level2.id);
+                  level1.childrenIds.push(level2.id);
                 } else {
                   level1.deepNum += level2.children.length;
                   level2.children.forEach((level3, index) => {
                     //如果二级有子元素  将三级ID放入临时数组
-                    tempArr.push(level3.id);
+                    level1.childrenIds.push(level3.id);
                   })
                 }
               })
@@ -580,10 +611,11 @@
               this.cardLanes.set(level1.id,tempArr)
             } else {
               //如果一级没有子元素，将一级ID，放入数组中
-              this.cardLanes.set(level1.id,[level1.id])
+              level1.childrenIds.push(level1.id);
             }
 
           })
+          this.computedHeight()
         },
         immediate: true,
         deep: true
