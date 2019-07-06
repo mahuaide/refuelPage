@@ -11,7 +11,7 @@
                     :rowspan="((level_1.children && level_1.children.length>0)?'':3)">
                     {{level_1.label}}
                     <i class="el-icon-arrow-right" title="向右增一列" @click="level1AddRight(index1)"></i>
-                    <i class="el-icon-arrow-down" title="向下增一列" v-show="level_1.children.length ==0 && index1 !=0"></i>
+                    <i class="el-icon-arrow-down" title="向下增一列" v-show="level_1.children.length ==0 && index1 !=0" @click="level1AddDown(index1)"></i>
                   </td>
                 </tr>
                 <tr>
@@ -20,7 +20,7 @@
                   <template v-if="!level_2.children || level_2.children.length ==0">
                     <td rowspan="2">{{level_2.label}}
                       <i class="el-icon-arrow-right" title="向右增一列" v-show="index1!=0" @click="level2AddRight(level_1.id,index2)"></i>
-                      <i class="el-icon-arrow-down" title="向下增一列" v-show="index1 !=0"></i>
+                      <i class="el-icon-arrow-down" title="向下增一列" v-show="index1 !=0" @click="level2AddDown(level_1.id,index2)"></i>
                     </td>
                   </template>
                   <!-- 如果二级表头有子节点，需要向右合并，有多少子节点合并多少列 -->
@@ -76,7 +76,8 @@
                 </td>
               </template>
               <template v-else>
-                <td v-for="(id,indexInlane) in level1.childrenIds" class="column">
+                <template  v-for="(id,indexInlane) in level1.childrenIds">
+                <td class="column">
                   <template v-if="indexLane ==0 && indexInlane ==0">
                     {{backlog.backlogName}}
                     <div class="addCard" @click="addCard(backlog)">加卡片</div>
@@ -85,7 +86,7 @@
                   <ul class="card-list"
                                                         @drop="drop($event)"
                                                         @dragover="dragOver($event)"
-                                                        @dragenter="dragEnter"
+                                                        @dragenter.stop="dragEnter"
                                                         @dragleave="dragLeave"
                                                         :data-s="id"
                                                         :data-line = 'backlog.backlogId'
@@ -104,6 +105,7 @@
                 </ul>
                   </template>
                 </td>
+                </template>
               </template>
             </tr>
           </td>
@@ -352,30 +354,90 @@
       }
     },
     methods: {
+      //第一行向下加两列
+      level1AddDown(index){
+        var obj = JSON.stringify(this.backlogs);
+        this.backlogs = {}
+        this.$nextTick(()=>{
+          this.lane[index].children.push({id:this.sequence(),label:'临时泳道',children:[]})
+          this.lane[index].children.push({id:this.sequence(),label:'临时泳道',children:[]})
+        })
+        this.$nextTick(()=>{
+          this.backlogs = JSON.parse(obj)
+        })
+      },
+      //第二行向下增加两列
+      level2AddDown(level1_id,index){
+        var obj = JSON.stringify(this.backlogs);
+        this.backlogs = {}
+        this.$nextTick(()=>{
+          this.lane.forEach(level1=>{
+            if(level1.id ==level1_id){
+              if(level1.children[index].children){
+                level1.children[index].children.push({id:this.sequence(),label:'临时泳道',children:[]})
+                level1.children[index].children.push({id:this.sequence(),label:'临时泳道',children:[]})
+              }else{
+                let arr = []
+                this.$set(level1.children[index],'children',arr)
+                level1.children[index].children.push({id:this.sequence(),label:'临时泳道',children:[]})
+                level1.children[index].children.push({id:this.sequence(),label:'临时泳道',children:[]})
+              }
+            }
+          })
+        })
+        this.$nextTick(()=>{
+          this.backlogs = JSON.parse(obj)
+        })
+      },
       //第一行向右加一列
       level1AddRight(index){
-          this.lane.splice(index+1,0,{id:this.sequence(),label:'临时泳道',children:[]})
+          var obj = JSON.stringify(this.backlogs);
+          this.backlogs = {}
+          this.$nextTick(()=>{
+            this.lane.splice(index+1,0,{id:this.sequence(),label:'临时泳道',children:[]})
+          })
+          this.$nextTick(()=>{
+            this.backlogs = JSON.parse(obj)
+          })
+
       },
       //第二行向右加一列
       level2AddRight(level1_id,index){
-        this.lane.forEach(level1=>{
+        var obj = JSON.stringify(this.backlogs);
+        this.backlogs = {}
+        this.$nextTick(()=>{
+          this.lane.forEach(level1=>{
             if(level1.id ==level1_id){
               level1.children.splice(index+1,0,{id:this.sequence(),label:'临时泳道',children:[]})
             }
+          })
         })
+        this.$nextTick(()=>{
+          this.backlogs = JSON.parse(obj)
+        })
+
       },
 
       //第三行向右加一列
       level3AddRight(level1_id,level2_id,index){
-        this.lane.forEach(level1=>{
-          if(level1.id ==level1_id){
-            level1.children.forEach(level2=>{
-              if(level2.id ==level2_id){
-                level2.children.splice(index+1,0,{id:this.sequence(),label:'临时泳道',children:[]})
-              }
-            })
-          }
+        var obj = JSON.stringify(this.backlogs);
+        this.backlogs = {}
+        this.$nextTick(()=>{
+          this.lane.forEach(level1=>{
+            if(level1.id ==level1_id){
+              level1.children.forEach(level2=>{
+                if(level2.id ==level2_id){
+                  level2.children.splice(index+1,0,{id:this.sequence(),label:'临时泳道',children:[]})
+                }
+              })
+            }
+          })
         })
+        this.$nextTick(()=>{
+          this.backlogs = JSON.parse(obj)
+        })
+
+
       },
       sequence(){
         return Math.floor(Math.random()*(99999-10000+1)+10000)
@@ -466,7 +528,7 @@
             return;
         }
         this.to = $target.parents("UL.card-list").data('s') == undefined ? $target.data('s') : $target.parents("UL.card-list").data('s');
-        console.log($target.parents("UL.card-list").data('s') == undefined ? $target.data('s') : $target.parents("UL.card-list").data('s'))
+        console.log(this.to)
         $("#templateli").remove();
         if ($target[0].tagName == 'UL') {
           $target.append(liText)
