@@ -1,6 +1,6 @@
 <template>
-  <div style="width: 10000px">
-    <table cellspacing="0" cellpadding="0">
+  <div style="width: 5000px">
+    <table cellspacing="0" cellpadding="0" id="table">
         <thead id="cxHeader" :style="headerStyle">
           <tr>
             <template v-for="(level_1,index1) in lane">
@@ -58,7 +58,7 @@
                       @dragover="dragOver($event)"
                       @dragenter="dragEnter"
                       @dragleave="dragLeave"
-                      :data-id="level1.id"
+                      :data-s="level1.id"
                       :data-line = 'backlog.backlogId'
                   >
                     <li class="card" draggable="true" v-for="card in backlog.cards" v-if="card.state==level1.id"
@@ -87,7 +87,7 @@
                                                         @dragover="dragOver($event)"
                                                         @dragenter="dragEnter"
                                                         @dragleave="dragLeave"
-                                                        :data-id="id"
+                                                        :data-s="id"
                                                         :data-line = 'backlog.backlogId'
                 >
                   <li class="card" draggable="true" v-for="card in backlog.cards" v-if="card.state==id"
@@ -269,7 +269,6 @@
             ]
           }
         ],//泳道头的树形结构
-        cardLanes: '',//可拖拽区域泳道，由泳道头树形结构中各自的最底层节点组成
         backlogs: [
           {
             backlogId: 1,
@@ -296,7 +295,7 @@
               {
                 cardId: '1023',
                 cardName: '子需求-个人缴费',
-                state: 221,
+                state: 12,
                 type: 0,
               }
             ]
@@ -353,12 +352,6 @@
       }
     },
     methods: {
-      findLineId(id,index){
-          this.$nextTick(()=>{
-            return this.cardLanes.get(id)[index];
-          })
-
-      },
       //第一行向右加一列
       level1AddRight(index){
           this.lane.splice(index+1,0,{id:this.sequence(),label:'临时泳道',children:[]})
@@ -385,7 +378,7 @@
         })
       },
       sequence(){
-        return `${new Date().getTime()}${Math.floor(Math.random()*(999999-100000+1)-100000)}`
+        return Math.floor(Math.random()*(99999-10000+1)+10000)
       },
       addCard(backlog){
         this.backlogs.forEach((item,index)=>{
@@ -399,23 +392,6 @@
             this.computedHeight()
           }
         })
-      },
-      computedHeight(){
-        this.$nextTick(()=>{
-          $('tr.row').each((index,row)=>{
-            var arr = [];
-            $(row).find('td.column>ul').each((index,item)=>{
-              if (item.children.length <= 2) {
-                arr.push(300)
-              } else {
-                arr.push(130 * item.children.length + 140)
-              }
-            })
-            $(row).find('td.column>ul').css('height',Math.max.apply(Math, arr)+'px')
-            $(row).find('td.column').css('height',Math.max.apply(Math, arr)+'px')
-          })
-        })
-
       },
       dragOver(ev){
         if (ev.preventDefault) {
@@ -450,11 +426,28 @@
         }
         this.computedHeight();
       },
+      computedHeight(){
+        this.$nextTick(()=>{
+          $('tr.row').each((index,row)=>{
+            var arr = [];
+            $(row).find('td.column>ul').each((index,item)=>{
+              if (item.children.length <= 2) {
+                arr.push(300)
+              } else {
+                arr.push(130 * item.children.length + 140)
+              }
+            })
+            $(row).find('td.column>ul').css('height',Math.max.apply(Math, arr)+'px')
+            $(row).find('td.column').css('height',Math.max.apply(Math, arr)+'px')
+          })
+        })
+
+      },
       dragStart(ev) {
         if (!ev.target.id) return;
         ev.dataTransfer.setData("Text", ev.target.id);
         let Ul = $("#" + ev.target.id).parents("UL.card-list")
-        this.from = Ul.data('id');
+        this.from = Ul.data('s');
         this.formLine =Ul.data('line');
       },
       dragEnd(ev){
@@ -472,7 +465,8 @@
         if(this.formLine != this.toLine){
             return;
         }
-        this.to = $target.parents("UL.card-list").data('id') == undefined ? $target.data('id') : $target.parents("UL.card-list").data('id');
+        this.to = $target.parents("UL.card-list").data('s') == undefined ? $target.data('s') : $target.parents("UL.card-list").data('s');
+        console.log($target.parents("UL.card-list").data('s') == undefined ? $target.data('s') : $target.parents("UL.card-list").data('s'))
         $("#templateli").remove();
         if ($target[0].tagName == 'UL') {
           $target.append(liText)
@@ -535,14 +529,11 @@
           $("#templateli").remove();
           this.dropping = false;
         }, 200)
-        this.$nextTick(()=>{
-          this.computedHeight();
-        })
+        this.computedHeight();
       },
     },
     mounted(){
       let that = this;
-      let headerWidth = document.getElementById('cxHeader').offsetWidth;
       window.onscroll = function () {
         //屏幕滚动高度
         let scrollTop = document.documentElement.scrollTop;
@@ -550,6 +541,7 @@
         let scrollLeft = document.documentElement.scrollLeft;
         //hedaer本身高度
         let headerHeight = document.getElementById('cxHeader').offsetHeight;
+        let headerWidth = document.getElementById('cxHeader').offsetWidth;
         //其他元素偏移量
         let offSet = 0;
         if (scrollTop >= headerHeight + offSet) {
@@ -564,6 +556,7 @@
         } else {
           that.headerStyle = {
             position: 'static',
+            width: headerWidth + 'px',
             zIndex: 0,
             opacity:1
           }
@@ -579,20 +572,16 @@
     watch: {
       /**
        * 列合并需要知道下层元素有几个，一级猎头，拖拽区域泳道向右合并时，需要知道最底层节点个数
-       * 方法实时监控lane变化，将最底层节点个数汇总到最上层的deepNum上
-       * cardLanes是为了展示拖拽泳道的，需要将每列的最底层节点汇总到一个Map里面
-       * [id:[1,2,3,4,5]] id是顶层泳道id，后面的数组是最底层列的id
+       * 方法实时监控lane变化，将最底层节点个数汇总到最上层的deepNum上,将最底层节点ID汇总到childrenIds
        * */
-      lane: {
+      'lane': {
         handler(newLane, oldLane){
-          this.cardLanes = new Map()
           //先循环一级
-          newLane.forEach((level1, index) => {
+          this.lane.forEach((level1, index) => {
             level1.deepNum = 0;
             level1.childrenIds = [];
             //如果一级有子元素
             if (level1.children && level1.children.length > 0) {
-              let tempArr = [];
               level1.children.forEach((level2, index) => {
                 //如果二级没有子元素
                 if (!level2.children || level2.children.length == 0) {
@@ -607,13 +596,10 @@
                   })
                 }
               })
-              //将一级ID，作为key，临时数组作为值，放入map中
-              this.cardLanes.set(level1.id,tempArr)
             } else {
               //如果一级没有子元素，将一级ID，放入数组中
               level1.childrenIds.push(level1.id);
             }
-
           })
           this.computedHeight()
         },
