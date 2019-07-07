@@ -3,8 +3,9 @@
     <router-link to="/dndEcharts" tag="li">可拖拽式仪表盘</router-link>
     <!--<router-link to="/customLane" tag="li">自定义泳道（单屏）</router-link>-->
     <router-link to="/customLanelong" tag="li">自定义泳道（多屏）</router-link>
-    <router-link to="/complexKanban" tag="li">复合型看板</router-link>
-    <router-link to="/complexKanbanUserCustom" tag="li">复合型看板（用户自定义泳道）</router-link>
+    <router-link to="/complexKanban" tag="li">复合型看板（固定格式）</router-link>
+    <router-link to="/complexKanbanUserCustom" tag="li">需求复合型看板（用户自定义泳道）</router-link>
+    <router-link to="/complexKanbanUserCustomPerson" tag="li">人员复合型看板（用户自定义泳道）</router-link>
   </div>
 </template>
 

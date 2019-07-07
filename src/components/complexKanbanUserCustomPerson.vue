@@ -2,19 +2,19 @@
   <div style="width: 5000px">
     <table cellspacing="0" cellpadding="0">
       <thead id="cxHeader" :style="headerStyle">
-        <tr>
-          <template v-for="(level_1,index1) in lane">
-            <th>
-        <tr>
-          <td
-            :colspan="level_1.deepNum"
-            :rowspan="((level_1.children && level_1.children.length>0)?'':3)">
-            {{level_1.label}}
-            <i class="el-icon-delete" v-show="index1 !=0" @click="del(level_1.id)"></i>
-            <i class="el-icon-arrow-right" title="向右增一列" @click="showDialog('1right',index1)"></i>
-            <i class="el-icon-arrow-down" title="向下增两列" v-show="level_1.children.length ==0 && index1 !=0"
-               @click="showDialog('1donw',index1)"></i>
-          </td>
+      <tr>
+        <template v-for="(level_1,index1) in lane">
+          <th>
+      <tr>
+        <td
+          :colspan="level_1.deepNum"
+          :rowspan="((level_1.children && level_1.children.length>0)?'':3)">
+          {{level_1.label}}
+          <i class="el-icon-delete" v-show="index1 !=0" @click="del(level_1.id)"></i>
+          <i class="el-icon-arrow-right" title="向右增一列" @click="showDialog('1right',index1)"></i>
+          <i class="el-icon-arrow-down" title="向下增两列" v-show="level_1.children.length ==0 && index1 !=0"
+             @click="showDialog('1donw',index1)"></i>
+        </td>
       </tr>
       <tr>
         <template v-for="(level_2,index2) in level_1.children">
@@ -168,151 +168,62 @@
         lane: [
           {
             id: 1,
-            label: '需求规划阶段',
+            label: '成员',
             children: [
               {
                 id: 11,
-                label: "需求POOL"
+                label: "成员姓名"
               },
               {
                 id: 12,
-                label: '需求澄清'
+                label: '工作项'
               }
             ]
           },
           {
             id: 2,
-            label: '设计阶段',
-            children: [
-              {
-                id: 21,
-                label: '需求分析',
-                children: [
-                  {
-                    id: 211,
-                    label: "todo"
-                  },
-                  {
-                    id: 212,
-                    label: "doing"
-                  }
-                ]
-              },
-              {
-                id: 22,
-                label: '技术评估',
-                children: [
-                  {
-                    id: 221,
-                    label: "todo"
-                  },
-                  {
-                    id: 222,
-                    label: "doing"
-                  }
-                ]
-              },
-              {
-                id: 23,
-                label: '就绪',
-              }
-            ]
+            label: '需求',
+            children: []
           },
           {
             id: 3,
-            label: '实施阶段',
-            children: [
-              {
-                id: 31,
-                label: '在制品队列'
-              },
-              {
-                id: 32,
-                label: '单元测试',
-                children: [
-                  {
-                    id: 321,
-                    label: "todo"
-                  },
-                  {
-                    id: 322,
-                    label: "doing"
-                  }
-                ]
-              },
-              {
-                id: 33,
-                label: '联调',
-                children: [
-                  {
-                    id: 331,
-                    label: "todo"
-                  },
-                  {
-                    id: 332,
-                    label: "doing"
-                  }
-                ]
-              },
-              {
-                id: 34,
-                label: '风险',
-                children: []
-              },
-              {
-                id: 35,
-                label: '交付',
-                children: []
-              }
-            ]
+            label: '开发',
+            children: []
           },
           {
             id: 4,
-            label: '验收阶段',
-            children: [
-              {
-                id: 41,
-                label: '测试验收',
-                children: [
-                  {
-                    id: 411,
-                    label: 'todo'
-                  },
-                  {
-                    id: 412,
-                    label: 'doing'
-                  }
-                ]
-              },
-              {
-                id: 42,
-                label: "待上线"
-              }
-            ]
+            label: '依赖',
+            children: []
           },
           {
             id: 5,
-            label: "上线及运营阶段",
-            children: [
-              {
-                id: 51,
-                label: '灰度发布'
-              },
-              {
-                id: 52,
-                label: '正式上线'
-              },
-              {
-                id: 53,
-                label: '反馈及价值'
-              }
+            label: "联调",
+            children:[
+            ]
+          },
+          {
+            id: 6,
+            label: "测试",
+            children:[
+            ]
+          },
+          {
+            id: 7,
+            label: "风险",
+            children:[
+            ]
+          },
+          {
+            id:8,
+            label: "完成",
+            children:[
             ]
           }
         ],//泳道头的树形结构
         backlogs: [
           {
             backlogId: 1,
-            backlogName: '需求-个客网银',
+            backlogName: '张三',
             cards: [
               {
                 cardId: '1001',
@@ -342,7 +253,7 @@
           },
           {
             backlogId: 2,
-            backlogName: '需求-企业网银',
+            backlogName: '李四',
             cards: [
               {
                 cardId: '2004',
@@ -366,7 +277,7 @@
           },
           {
             backlogId: 3,
-            backlogName: '需求-手机银行',
+            backlogName: '王五',
             cards: [
               {
                 cardId: '3005',
@@ -395,7 +306,7 @@
       /**
        * 所有列头编辑的方法，都需要先将卡片在看板上备份移除，列头修改好后，在恢复回来
        *  var obj = JSON.stringify(this.backlogs);
-          this.backlogs = {}
+       this.backlogs = {}
        *  this.$nextTick(() => {
           this.backlogs = JSON.parse(obj)
         })
