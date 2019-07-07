@@ -1,151 +1,159 @@
 <template>
   <div style="width: 5000px">
     <table cellspacing="0" cellpadding="0" id="table">
-        <thead id="cxHeader" :style="headerStyle">
-          <tr>
-            <template v-for="(level_1,index1) in lane">
-              <th>
-                <tr>
-                  <td
-                    :colspan="level_1.deepNum"
-                    :rowspan="((level_1.children && level_1.children.length>0)?'':3)">
-                    {{level_1.label}}
-                    <i class="el-icon-arrow-right" title="向右增一列" @click="showDialog('1right',index1)"></i>
-                    <i class="el-icon-arrow-down" title="向下增一列" v-show="level_1.children.length ==0 && index1 !=0" @click="showDialog('1donw',index1)"></i>
-                  </td>
-                </tr>
-                <tr>
-                  <template v-for="(level_2,index2) in level_1.children">
-                  <!-- 如果二级表头无子节点，需要向下合并一行 -->
-                  <template v-if="!level_2.children || level_2.children.length ==0">
-                    <td rowspan="2">{{level_2.label}}
-                      <i class="el-icon-arrow-right" title="向右增一列" v-show="index1!=0" @click="showDialog('2right',level_1.id,index2)"></i>
-                      <i class="el-icon-arrow-down" title="向下增一列" v-show="index1 !=0" @click="showDialog('2down',level_1.id,index2)"></i>
-                    </td>
-                  </template>
-                  <!-- 如果二级表头有子节点，需要向右合并，有多少子节点合并多少列 -->
-                  <template v-else>
-                    <td :colspan="level_2.children.length">{{level_2.label}}
-                      <i class="el-icon-arrow-right" title="向右增一列" v-show="index1!=0" @click="showDialog('2right',level_1.id,index2)"></i></td>
-                  </template>
-                </template>
-                </tr>
-                <tr>
-                  <template v-for="(level_2,index) in level_1.children">
-                    <template v-for="(level_3,index3) in level_2.children">
-                      <td>{{level_3.label}}
-                        <i class="el-icon-arrow-right" title="向右增一列" @click="showDialog('3right',level_1.id,level_2.id,index3)""></i></td>
-                    </template>
-                  </template>
-                </tr>
-              </th>
-            </template>
-          </tr>
-        </thead>
-        <tbody>
-        <tr v-for="backlog in backlogs" class="row">
-          <td v-for="(level1,indexLane) in lane" >
-            <tr>
-              <template v-if="level1.deepNum ==0">
-                <td class="column">
-                  <template v-if="indexLane ==0">
-                    {{backlog.backlogName}}
-                    <div class="addCard" @click="addCard(backlog)">加卡片</div>
-                  </template>
-                  <template v-else>
-                  <ul class="card-list"
-                      @drop="drop($event)"
-                      @dragover="dragOver($event)"
-                      @dragenter="dragEnter"
-                      @dragleave="dragLeave"
-                      :data-s="level1.id"
-                      :data-line = 'backlog.backlogId'
-                  >
-                    <li class="card" draggable="true" v-for="card in backlog.cards" v-if="card.state==level1.id"
-                        @dragstart="dragStart($event)"
-                        :id="card.cardId"
-                        @dragend="dragEnd"
-                    >
-                      <div>
-                        ID:{{card.cardId}}<br>
-                        state:{{card.state}}
-                      </div>
-                    </li>
-                  </ul>
-                  </template>
-                </td>
-              </template>
-              <template v-else>
-                <template  v-for="(id,indexInlane) in level1.childrenIds">
-                <td class="column">
-                  <template v-if="indexLane ==0 && indexInlane ==0">
-                    {{backlog.backlogName}}
-                    <div class="addCard" @click="addCard(backlog)">加卡片</div>
-                  </template>
-                  <template v-else="">
-                  <ul class="card-list"
-                                                        @drop="drop($event)"
-                                                        @dragover="dragOver($event)"
-                                                        @dragenter.stop="dragEnter"
-                                                        @dragleave="dragLeave"
-                                                        :data-s="id"
-                                                        :data-line = 'backlog.backlogId'
-                >
-                  <li class="card" draggable="true" v-for="card in backlog.cards" v-if="card.state==id"
-                      @dragstart="dragStart($event)"
-                      :id="card.cardId"
-                      @dragend="dragEnd"
-                  >
-                    <div>
-                      ID:{{card.cardId}}<br>
-                      state:{{card.state}}<br>
-                      req:{{card.cardName}}
-                    </div>
-                  </li>
-                </ul>
-                  </template>
-                </td>
-                </template>
-              </template>
-            </tr>
-          </td>
-        </tr>
-        </tbody>
-      </table>
-    <el-dialog title="列定义" :visible.sync="dialogFormVisible" :close-on-click-modal="false">
-      <el-form :model="form" label-position="left" style="width: 70%" ref="form">
-        <el-form-item label="列名称1" label-width="80px" prop="name1">
-          <el-input v-model="form.name1" auto-complete="off"></el-input>
-        </el-form-item>
-        <el-form-item label="列名称2" label-width="80px" prop="name2" v-show="down">
-          <el-input v-model="form.name2" auto-complete="off"></el-input>
-        </el-form-item>
-      </el-form>
-      <div slot="footer" class="dialog-footer">
-        <el-button @click="dialogFormVisible = false">取 消</el-button>
-        <el-button type="primary" @click="addcolumn()">确 定</el-button>
-      </div>
-    </el-dialog>
+      <thead id="cxHeader" :style="headerStyle">
+      <tr>
+        <template v-for="(level_1,index1) in lane">
+          <th>
+      <tr>
+        <td
+          :colspan="level_1.deepNum"
+          :rowspan="((level_1.children && level_1.children.length>0)?'':3)">
+          {{level_1.label}}
+          <i class="el-icon-delete" v-show="index1 !=0" @click="del(level_1.id)"></i>
+          <i class="el-icon-arrow-right" title="向右增一列" @click="showDialog('1right',index1)"></i>
+          <i class="el-icon-arrow-down" title="向下增一列" v-show="level_1.children.length ==0 && index1 !=0"
+             @click="showDialog('1donw',index1)"></i>
+        </td>
+      </tr>
+      <tr>
+        <template v-for="(level_2,index2) in level_1.children">
+          <!-- 如果二级表头无子节点，需要向下合并一行 -->
+          <template v-if="!level_2.children || level_2.children.length ==0">
+            <td rowspan="2">{{level_2.label}}
+              <i class="el-icon-delete" v-show="index1 !=0" @click="del(level_2.id)"></i>
+              <i class="el-icon-arrow-right" title="向右增一列" v-show="index1!=0"
+                 @click="showDialog('2right',level_1.id,index2)"></i>
+              <i class="el-icon-arrow-down" title="向下增一列" v-show="index1 !=0"
+                 @click="showDialog('2down',level_1.id,index2)"></i>
+            </td>
+          </template>
+          <!-- 如果二级表头有子节点，需要向右合并，有多少子节点合并多少列 -->
+          <template v-else>
+            <td :colspan="level_2.children.length">{{level_2.label}}
+              <i class="el-icon-delete" @click="del(level_2.id)"></i>
+              <i class="el-icon-arrow-right" title="向右增一列" v-show="index1!=0"
+                 @click="showDialog('2right',level_1.id,index2)"></i></td>
+          </template>
+        </template>
+      </tr>
+      <tr>
+        <template v-for="(level_2,index) in level_1.children">
+          <template v-for="(level_3,index3) in level_2.children">
+            <td>{{level_3.label}}
+              <i class="el-icon-delete" v-show="index1 !=0" @click="del(level_3.id)"></i>
+              <i class="el-icon-arrow-right" title="向右增一列"
+                 @click="showDialog('3right',level_1.id,level_2.id,index3)""></i></td>
+          </template>
+        </template>
+      </tr>
+      </th>
+</template>
+</tr>
+</thead>
+<tbody>
+<tr v-for="backlog in backlogs" class="row">
+  <td v-for="(level1,indexLane) in lane">
+<tr>
+  <template v-if="level1.deepNum ==0">
+    <td class="column">
+      <template v-if="indexLane ==0">
+        {{backlog.backlogName}}
+        <div class="addCard" @click="addCard(backlog)">加卡片</div>
+      </template>
+      <template v-else>
+        <ul class="card-list"
+            @drop="drop($event)"
+            @dragover="dragOver($event)"
+            @dragenter="dragEnter"
+            @dragleave="dragLeave"
+            :data-s="level1.id"
+            :data-line='backlog.backlogId'
+        >
+          <li class="card" draggable="true" v-for="card in backlog.cards" v-if="card.state==level1.id"
+              @dragstart="dragStart($event)"
+              :id="card.cardId"
+              @dragend="dragEnd"
+          >
+            <div>
+              ID:{{card.cardId}}<br>
+              state:{{card.state}}
+            </div>
+          </li>
+        </ul>
+      </template>
+    </td>
+  </template>
+  <template v-else>
+    <template v-for="(id,indexInlane) in level1.childrenIds">
+      <td class="column">
+        <template v-if="indexLane ==0 && indexInlane ==0">
+          {{backlog.backlogName}}
+          <div class="addCard" @click="addCard(backlog)">加卡片</div>
+        </template>
+        <template v-else="">
+          <ul class="card-list"
+              @drop="drop($event)"
+              @dragover="dragOver($event)"
+              @dragenter.stop="dragEnter"
+              @dragleave="dragLeave"
+              :data-s="id"
+              :data-line='backlog.backlogId'
+          >
+            <li class="card" draggable="true" v-for="card in backlog.cards" v-if="card.state==id"
+                @dragstart="dragStart($event)"
+                :id="card.cardId"
+                @dragend="dragEnd"
+            >
+              <div>
+                ID:{{card.cardId}}<br>
+                state:{{card.state}}<br>
+                req:{{card.cardName}}
+              </div>
+            </li>
+          </ul>
+        </template>
+      </td>
+    </template>
+  </template>
+</tr>
+</td>
+</tr>
+</tbody>
+</table>
+<el-dialog title="列定义" :visible.sync="dialogFormVisible" :close-on-click-modal="false">
+  <el-form :model="form" label-position="left" style="width: 70%" ref="form">
+    <el-form-item label="列名称1" label-width="80px" prop="name1">
+      <el-input v-model="form.name1" auto-complete="off"></el-input>
+    </el-form-item>
+    <el-form-item label="列名称2" label-width="80px" prop="name2" v-show="down">
+      <el-input v-model="form.name2" auto-complete="off"></el-input>
+    </el-form-item>
+  </el-form>
+  <div slot="footer" class="dialog-footer">
+    <el-button @click="dialogFormVisible = false">取 消</el-button>
+    <el-button type="primary" @click="addcolumn()">确 定</el-button>
+  </div>
+</el-dialog>
 </div>
-
 </template>
 <script type="text/ecmascript-6">
   export default{
     data(){
       return {
-        dialogFormVisible:false,
-        down:false,
-        direction:'',
-        arg1:'',
-        arg2:'',
-        arg3:'',
-        form:{
-          name1:'',
-          name2:'',
-          color:{
-              r:0,
-              g:0,
-              b:0
+        dialogFormVisible: false,
+        down: false,
+        direction: '',
+        arg1: '',
+        arg2: '',
+        arg3: '',
+        form: {
+          name1: '',
+          name2: '',
+          color: {
+            r: 0,
+            g: 0,
+            b: 0
           }
         },
         headerStyle: {
@@ -153,8 +161,8 @@
         },
         from: '',
         to: '',
-        formLine:'',
-        toLine:'',
+        formLine: '',
+        toLine: '',
         dragCard: null,
         dragIndex: 0,
         lane: [
@@ -384,28 +392,64 @@
       }
     },
     methods: {
-      close(){
-
+      //删除列
+      del(id){
+        var obj = JSON.stringify(this.backlogs);
+        this.backlogs = {}
+        this.$nextTick(() => {
+          this.lane.forEach((level1, index1) => {
+            if (id == level1.id) {
+              this.lane.splice(index1, 1)
+            } else if (level1.children) {
+              level1.children.forEach((level2, index2) => {
+                if (id == level2.id) {
+                  level1.children.splice(index2, 1)
+                } else if (level2.children) {
+                  level2.children.forEach((level3, index3) => {
+                    if (id == level3.id) {
+                      level2.children.splice(index3, 1)
+                    }
+                  })
+                }
+              })
+            }
+          })
+        })
+        this.$nextTick(() => {
+          this.backlogs = JSON.parse(obj)
+        })
       },
+      //增加列点确定
       addcolumn(){
         this.dialogFormVisible = false;
         switch (this.direction) {
-          case '1right':this.level1AddRight(this.arg1);break;
-          case '1donw':this.level1AddDown(this.arg1);break;
-          case '2right':this.level2AddRight(this.arg1,this.arg2);break;
-          case '2down':this.level2AddDown(this.arg1,this.arg2);break;
-          case '3right':this.level3AddRight(this.arg1,this.arg2,this.arg3);break;
+          case '1right':
+            this.level1AddRight(this.arg1);
+            break;
+          case '1donw':
+            this.level1AddDown(this.arg1);
+            break;
+          case '2right':
+            this.level2AddRight(this.arg1, this.arg2);
+            break;
+          case '2down':
+            this.level2AddDown(this.arg1, this.arg2);
+            break;
+          case '3right':
+            this.level3AddRight(this.arg1, this.arg2, this.arg3);
+            break;
         }
       },
-      showDialog(direction,arg1,arg2,arg3){
+      //增加列弹窗输入列名称
+      showDialog(direction, arg1, arg2, arg3){
         this.dialogFormVisible = true;
         this.direction = direction;
         this.arg1 = arg1;
         this.arg2 = arg2;
         this.arg3 = arg3;
-        if(direction =='1right' || direction =='3right' || direction =='2right'){
-            this.down = false;
-        }else{
+        if (direction == '1right' || direction == '3right' || direction == '2right') {
+          this.down = false;
+        } else {
           this.down = true;
         }
       },
@@ -413,96 +457,96 @@
       level1AddDown(index){
         var obj = JSON.stringify(this.backlogs);
         this.backlogs = {}
-        this.$nextTick(()=>{
-          this.lane[index].children.push({id:this.sequence(),label:this.form.name1,children:[]})
-          this.lane[index].children.push({id:this.sequence(),label:this.form.name2,children:[]})
+        this.$nextTick(() => {
+          this.lane[index].children.push({id: this.sequence(), label: this.form.name1, children: []})
+          this.lane[index].children.push({id: this.sequence(), label: this.form.name2, children: []})
           this.$refs['form'].resetFields()
         })
-        this.$nextTick(()=>{
+        this.$nextTick(() => {
           this.backlogs = JSON.parse(obj)
         })
       },
       //第二行向下增加两列
-      level2AddDown(level1_id,index){
+      level2AddDown(level1_id, index){
         var obj = JSON.stringify(this.backlogs);
         this.backlogs = {}
-        this.$nextTick(()=>{
-          this.lane.forEach(level1=>{
-            if(level1.id ==level1_id){
-              if(level1.children[index].children){
-                level1.children[index].children.push({id:this.sequence(),label:this.form.name1,children:[]})
-                level1.children[index].children.push({id:this.sequence(),label:this.form.name2,children:[]})
+        this.$nextTick(() => {
+          this.lane.forEach(level1 => {
+            if (level1.id == level1_id) {
+              if (level1.children[index].children) {
+                level1.children[index].children.push({id: this.sequence(), label: this.form.name1, children: []})
+                level1.children[index].children.push({id: this.sequence(), label: this.form.name2, children: []})
                 this.$refs['form'].resetFields()
-              }else{
+              } else {
                 let arr = []
-                this.$set(level1.children[index],'children',arr)
-                level1.children[index].children.push({id:this.sequence(),label:this.form.name1,children:[]})
-                level1.children[index].children.push({id:this.sequence(),label:this.form.name2,children:[]})
+                this.$set(level1.children[index], 'children', arr)
+                level1.children[index].children.push({id: this.sequence(), label: this.form.name1, children: []})
+                level1.children[index].children.push({id: this.sequence(), label: this.form.name2, children: []})
                 this.$refs['form'].resetFields()
               }
             }
           })
         })
-        this.$nextTick(()=>{
+        this.$nextTick(() => {
           this.backlogs = JSON.parse(obj)
         })
       },
       //第一行向右加一列
       level1AddRight(index){
-          var obj = JSON.stringify(this.backlogs);
-          this.backlogs = {}
-          this.$nextTick(()=>{
-            this.lane.splice(index+1,0,{id:this.sequence(),label:this.form.name1,children:[]})
-            this.$refs['form'].resetFields()
-          })
-          this.$nextTick(()=>{
-            this.backlogs = JSON.parse(obj)
-          })
+        var obj = JSON.stringify(this.backlogs);
+        this.backlogs = {}
+        this.$nextTick(() => {
+          this.lane.splice(index + 1, 0, {id: this.sequence(), label: this.form.name1, children: []})
+          this.$refs['form'].resetFields()
+        })
+        this.$nextTick(() => {
+          this.backlogs = JSON.parse(obj)
+        })
 
       },
       //第二行向右加一列
-      level2AddRight(level1_id,index){
+      level2AddRight(level1_id, index){
         var obj = JSON.stringify(this.backlogs);
         this.backlogs = {}
-        this.$nextTick(()=>{
-          this.lane.forEach(level1=>{
-            if(level1.id ==level1_id){
-              level1.children.splice(index+1,0,{id:this.sequence(),label:this.form.name1,children:[]})
+        this.$nextTick(() => {
+          this.lane.forEach(level1 => {
+            if (level1.id == level1_id) {
+              level1.children.splice(index + 1, 0, {id: this.sequence(), label: this.form.name1, children: []})
               this.$refs['form'].resetFields()
             }
           })
         })
-        this.$nextTick(()=>{
+        this.$nextTick(() => {
           this.backlogs = JSON.parse(obj)
         })
       },
 
       //第三行向右加一列
-      level3AddRight(level1_id,level2_id,index){
+      level3AddRight(level1_id, level2_id, index){
         var obj = JSON.stringify(this.backlogs);
         this.backlogs = {}
-        this.$nextTick(()=>{
-          this.lane.forEach(level1=>{
-            if(level1.id ==level1_id){
-              level1.children.forEach(level2=>{
-                if(level2.id ==level2_id){
-                  level2.children.splice(index+1,0,{id:this.sequence(),label:this.form.name1,children:[]})
+        this.$nextTick(() => {
+          this.lane.forEach(level1 => {
+            if (level1.id == level1_id) {
+              level1.children.forEach(level2 => {
+                if (level2.id == level2_id) {
+                  level2.children.splice(index + 1, 0, {id: this.sequence(), label: this.form.name1, children: []})
                   this.$refs['form'].resetFields()
                 }
               })
             }
           })
         })
-        this.$nextTick(()=>{
+        this.$nextTick(() => {
           this.backlogs = JSON.parse(obj)
         })
       },
       sequence(){
-        return Math.floor(Math.random()*(999999-100000+1)+100000)
+        return Math.floor(Math.random() * (999999 - 100000 + 1) + 100000)
       },
       addCard(backlog){
-        this.backlogs.forEach((item,index)=>{
-          if(item.backlogId == backlog.backlogId){
+        this.backlogs.forEach((item, index) => {
+          if (item.backlogId == backlog.backlogId) {
             item.cards.unshift({
               cardId: this.sequence(),
               cardName: this.sequence(),
@@ -547,18 +591,18 @@
         this.computedHeight();
       },
       computedHeight(){
-        this.$nextTick(()=>{
-          $('tr.row').each((index,row)=>{
+        this.$nextTick(() => {
+          $('tr.row').each((index, row) => {
             var arr = [];
-            $(row).find('td.column>ul').each((index,item)=>{
+            $(row).find('td.column>ul').each((index, item) => {
               if (item.children.length <= 2) {
                 arr.push(300)
               } else {
                 arr.push(130 * item.children.length + 140)
               }
             })
-            $(row).find('td.column>ul').css('height',Math.max.apply(Math, arr)+'px')
-            $(row).find('td.column').css('height',Math.max.apply(Math, arr)+'px')
+            $(row).find('td.column>ul').css('height', Math.max.apply(Math, arr) + 'px')
+            $(row).find('td.column').css('height', Math.max.apply(Math, arr) + 'px')
           })
         })
 
@@ -568,7 +612,7 @@
         ev.dataTransfer.setData("Text", ev.target.id);
         let Ul = $("#" + ev.target.id).parents("UL.card-list")
         this.from = Ul.data('s');
-        this.formLine =Ul.data('line');
+        this.formLine = Ul.data('line');
       },
       dragEnd(ev){
         if (!this.dropping) {
@@ -582,8 +626,8 @@
           return;
         }
         this.toLine = $target.parents("UL.card-list").data('line') == undefined ? $target.data('line') : $target.parents("UL.card-list").data('line');
-        if(this.formLine != this.toLine){
-            return;
+        if (this.formLine != this.toLine) {
+          return;
         }
         this.to = $target.parents("UL.card-list").data('s') == undefined ? $target.data('s') : $target.parents("UL.card-list").data('s');
         console.log(this.to)
@@ -613,7 +657,7 @@
           var index = $("#templateli").index();
           var backlog_id = ''
           this.backlogs.forEach((backlog, index_backlog) => {
-            backlog.cards.forEach((card,index_card)=>{
+            backlog.cards.forEach((card, index_card) => {
               if (card.cardId == id) {
                 backlog_id = backlog.backlogId;
                 this.dragCard = backlog.cards.splice(index_card, 1)[0];
@@ -624,7 +668,7 @@
           this.dragCard.state = this.to;
           if (index == 0) {
             this.backlogs.forEach((backlog, index_backlog) => {
-              if(backlog.backlogId == backlog_id){
+              if (backlog.backlogId == backlog_id) {
                 backlog.cards.splice(index, 0, this.dragCard)
               }
             })
@@ -633,14 +677,14 @@
             var prvCardId = $("#templateli").prev()[0].id;
             if (id == prvCardId) {
               this.backlogs.forEach((backlog, index_backlog) => {
-                if(backlog.backlogId == backlog_id){
+                if (backlog.backlogId == backlog_id) {
                   backlog.cards.splice(this.dragIndex, 0, this.dragCard)
                 }
               })
             } else {
               this.backlogs.forEach((backlog, index_backlog) => {
-                if(backlog.backlogId == backlog_id){
-                  backlog. cards.splice(index + 1, 0, this.dragCard)
+                if (backlog.backlogId == backlog_id) {
+                  backlog.cards.splice(index + 1, 0, this.dragCard)
                 }
               })
             }
@@ -671,24 +715,21 @@
             left: (-scrollLeft) + 'px',
             width: headerWidth + 'px',
             zIndex: 1000,
-            opacity:0.9
+            opacity: 0.9
           }
         } else {
           that.headerStyle = {
             position: 'static',
             width: headerWidth + 'px',
             zIndex: 0,
-            opacity:1
+            opacity: 1
           }
         }
       }
       this.computedHeight();
     },
-    computed: {
-
-    },
-    components: {
-    },
+    computed: {},
+    components: {},
     watch: {
       /**
        * 列合并需要知道下层元素有几个，一级猎头，拖拽区域泳道向右合并时，需要知道最底层节点个数
@@ -732,98 +773,103 @@
 </script>
 
 <style lang="stylus" rel="stylesheet/stylus" scoped>
-    table
-      font-family "Helvetica Neue", Helvetica, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "微软雅黑", Arial, sans-serif
+  table
+    font-family "Helvetica Neue", Helvetica, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "微软雅黑", Arial, sans-serif
+    position relative
+    border-collapse: collapse
+    margin-bottom 30px
+    thead
+      background-color #fff
+    thead tr
+      height 30px;
+    thead tr th tr td
       position relative
-      border-collapse: collapse
-      margin-bottom 30px
-      thead
-        background-color #fff
-      thead tr
-        height 30px;
-      thead tr th tr td
-        position relative
+      box-sizing border-box
+      width 150px
+      overflow hidden
+      text-align center
+      border-right 1px solid #aaa
+      border-top 1px solid #aaa
+      border-bottom 1px solid #aaa
+      .el-icon-delete
+        font-size 12px
+        &:hover
+          color red
+          cursor pointer
+      .el-icon-arrow-right
+        font-size 12px
+        position absolute
+        right 5px
+        top 50%
+        margin-top -6px;
+        &:hover
+          cursor pointer
+      .el-icon-arrow-down
+        font-size 12px
+        position absolute
+        left 5px
+        top 50%
+        margin-top -6px;
+        &:hover
+          cursor pointer
+    tbody
+      padding 0
+      margin 0
+    tbody > tr
+      border-bottom 2px solid #aaa
+    tbody > tr > td > tr > td
+      position relative
+      padding 0
+      margin 0
+      box-sizing border-box
+      width 150px
+      min-height 35vh
+      overflow hidden
+      word-break break-all
+      border-right 1px solid #ddd
+      text-align center
+      .addCard
+        position absolute
+        bottom 50px;
+        left 50%;
+        width 80px;
+        height 40px;
+        line-height 40px
+        margin-left -40px
+        text-align center;
+        border 1px solid #ddd;
+        border-radius 5px;
+        &:hover
+          cursor: pointer
+      .card-list
+        margin 0;
+        padding: 0
         box-sizing border-box
-        width 150px
-        overflow hidden
-        text-align center
-        border-right 1px solid #aaa
-        border-top 1px solid #aaa
-        border-bottom 1px solid #aaa
-        .el-icon-arrow-right
-          font-size 12px
-          position absolute
-          right 5px
-          top 50%
-          margin-top -6px;
-          &:hover
-            cursor pointer
-        .el-icon-arrow-down
-          font-size 12px
-          position absolute
-          left 5px
-          top 50%
-          margin-top -6px;
-          &:hover
-            cursor pointer
-      tbody
-        padding 0
-        margin 0
-      tbody>tr
-        border-bottom 2px solid #aaa
-      tbody>tr>td>tr>td
-        position relative
-        padding 0
-        margin 0
-        box-sizing border-box
-        width 150px
-        min-height 35vh
-        overflow hidden
-        word-break break-all
-        border-right 1px solid #ddd
-        text-align center
-        .addCard
-          position absolute
-          bottom 50px;
-          left 50%;
-          width 80px;
-          height 40px;
-          line-height 40px
-          margin-left -40px
-          text-align center;
-          border 1px solid #ddd;
-          border-radius 5px;
-          &:hover
-            cursor:pointer
-        .card-list
-          margin 0;
-          padding: 0
-          box-sizing border-box
-          list-style none
+        list-style none
+        width 100%;
+        height 300px
+        height auto
+        padding 10px;
+        .card
+          height 120px
           width 100%;
-          height 300px
-          height auto
-          padding 10px;
-          .card
-            height 120px
+          box-sizing border-box;
+          border 1px solid #ddd;
+          border-radius 10px;
+          margin-top 10px;
+          text-align center;
+          background-color #fff;
+          overflow hidden
+          &:hover
+            cursor move
+          > div
+            padding 8px
             width 100%;
-            box-sizing border-box;
-            border 1px solid #ddd;
-            border-radius 10px;
-            margin-top 10px;
-            text-align center;
-            background-color #fff;
-            overflow hidden
-            &:hover
-              cursor move
-            > div
-              padding 8px
-              width 100%;
-              height 100%;
-              border-radius 10px
-              box-sizing border-box
-          .card:first-child
-            margin-top 0px
+            height 100%;
+            border-radius 10px
+            box-sizing border-box
+        .card:first-child
+          margin-top 0px
 </style>
 <style>
   .templateli {
