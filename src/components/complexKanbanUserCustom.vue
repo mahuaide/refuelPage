@@ -10,8 +10,8 @@
                     :colspan="level_1.deepNum"
                     :rowspan="((level_1.children && level_1.children.length>0)?'':3)">
                     {{level_1.label}}
-                    <i class="el-icon-arrow-right" title="向右增一列" @click="level1AddRight(index1)"></i>
-                    <i class="el-icon-arrow-down" title="向下增一列" v-show="level_1.children.length ==0 && index1 !=0" @click="level1AddDown(index1)"></i>
+                    <i class="el-icon-arrow-right" title="向右增一列" @click="showDialog('1right',index1)"></i>
+                    <i class="el-icon-arrow-down" title="向下增一列" v-show="level_1.children.length ==0 && index1 !=0" @click="showDialog('1donw',index1)"></i>
                   </td>
                 </tr>
                 <tr>
@@ -19,14 +19,14 @@
                   <!-- 如果二级表头无子节点，需要向下合并一行 -->
                   <template v-if="!level_2.children || level_2.children.length ==0">
                     <td rowspan="2">{{level_2.label}}
-                      <i class="el-icon-arrow-right" title="向右增一列" v-show="index1!=0" @click="level2AddRight(level_1.id,index2)"></i>
-                      <i class="el-icon-arrow-down" title="向下增一列" v-show="index1 !=0" @click="level2AddDown(level_1.id,index2)"></i>
+                      <i class="el-icon-arrow-right" title="向右增一列" v-show="index1!=0" @click="showDialog('2right',level_1.id,index2)"></i>
+                      <i class="el-icon-arrow-down" title="向下增一列" v-show="index1 !=0" @click="showDialog('2down',level_1.id,index2)"></i>
                     </td>
                   </template>
                   <!-- 如果二级表头有子节点，需要向右合并，有多少子节点合并多少列 -->
                   <template v-else>
                     <td :colspan="level_2.children.length">{{level_2.label}}
-                      <i class="el-icon-arrow-right" title="向右增一列" v-show="index1!=0" @click="level2AddRight(level_1.id,index2)"></i></td>
+                      <i class="el-icon-arrow-right" title="向右增一列" v-show="index1!=0" @click="showDialog('2right',level_1.id,index2)"></i></td>
                   </template>
                 </template>
                 </tr>
@@ -34,7 +34,7 @@
                   <template v-for="(level_2,index) in level_1.children">
                     <template v-for="(level_3,index3) in level_2.children">
                       <td>{{level_3.label}}
-                        <i class="el-icon-arrow-right" title="向右增一列" @click="level3AddRight(level_1.id,level_2.id,index3)""></i></td>
+                        <i class="el-icon-arrow-right" title="向右增一列" @click="showDialog('3right',level_1.id,level_2.id,index3)""></i></td>
                     </template>
                   </template>
                 </tr>
@@ -112,12 +112,42 @@
         </tr>
         </tbody>
       </table>
-  </div>
+    <el-dialog title="列定义" :visible.sync="dialogFormVisible" :close-on-click-modal="false">
+      <el-form :model="form" label-position="left" style="width: 70%" ref="form">
+        <el-form-item label="列名称1" label-width="80px" prop="name1">
+          <el-input v-model="form.name1" auto-complete="off"></el-input>
+        </el-form-item>
+        <el-form-item label="列名称2" label-width="80px" prop="name2" v-show="down">
+          <el-input v-model="form.name2" auto-complete="off"></el-input>
+        </el-form-item>
+      </el-form>
+      <div slot="footer" class="dialog-footer">
+        <el-button @click="dialogFormVisible = false">取 消</el-button>
+        <el-button type="primary" @click="addcolumn()">确 定</el-button>
+      </div>
+    </el-dialog>
+</div>
+
 </template>
 <script type="text/ecmascript-6">
   export default{
     data(){
       return {
+        dialogFormVisible:false,
+        down:false,
+        direction:'',
+        arg1:'',
+        arg2:'',
+        arg3:'',
+        form:{
+          name1:'',
+          name2:'',
+          color:{
+              r:0,
+              g:0,
+              b:0
+          }
+        },
         headerStyle: {
           position: 'static'
         },
@@ -354,13 +384,39 @@
       }
     },
     methods: {
+      close(){
+
+      },
+      addcolumn(){
+        this.dialogFormVisible = false;
+        switch (this.direction) {
+          case '1right':this.level1AddRight(this.arg1);break;
+          case '1donw':this.level1AddDown(this.arg1);break;
+          case '2right':this.level2AddRight(this.arg1,this.arg2);break;
+          case '2down':this.level2AddDown(this.arg1,this.arg2);break;
+          case '3right':this.level3AddRight(this.arg1,this.arg2,this.arg3);break;
+        }
+      },
+      showDialog(direction,arg1,arg2,arg3){
+        this.dialogFormVisible = true;
+        this.direction = direction;
+        this.arg1 = arg1;
+        this.arg2 = arg2;
+        this.arg3 = arg3;
+        if(direction =='1right' || direction =='3right' || direction =='2right'){
+            this.down = false;
+        }else{
+          this.down = true;
+        }
+      },
       //第一行向下加两列
       level1AddDown(index){
         var obj = JSON.stringify(this.backlogs);
         this.backlogs = {}
         this.$nextTick(()=>{
-          this.lane[index].children.push({id:this.sequence(),label:'临时泳道',children:[]})
-          this.lane[index].children.push({id:this.sequence(),label:'临时泳道',children:[]})
+          this.lane[index].children.push({id:this.sequence(),label:this.form.name1,children:[]})
+          this.lane[index].children.push({id:this.sequence(),label:this.form.name2,children:[]})
+          this.$refs['form'].resetFields()
         })
         this.$nextTick(()=>{
           this.backlogs = JSON.parse(obj)
@@ -374,13 +430,15 @@
           this.lane.forEach(level1=>{
             if(level1.id ==level1_id){
               if(level1.children[index].children){
-                level1.children[index].children.push({id:this.sequence(),label:'临时泳道',children:[]})
-                level1.children[index].children.push({id:this.sequence(),label:'临时泳道',children:[]})
+                level1.children[index].children.push({id:this.sequence(),label:this.form.name1,children:[]})
+                level1.children[index].children.push({id:this.sequence(),label:this.form.name2,children:[]})
+                this.$refs['form'].resetFields()
               }else{
                 let arr = []
                 this.$set(level1.children[index],'children',arr)
-                level1.children[index].children.push({id:this.sequence(),label:'临时泳道',children:[]})
-                level1.children[index].children.push({id:this.sequence(),label:'临时泳道',children:[]})
+                level1.children[index].children.push({id:this.sequence(),label:this.form.name1,children:[]})
+                level1.children[index].children.push({id:this.sequence(),label:this.form.name2,children:[]})
+                this.$refs['form'].resetFields()
               }
             }
           })
@@ -394,7 +452,8 @@
           var obj = JSON.stringify(this.backlogs);
           this.backlogs = {}
           this.$nextTick(()=>{
-            this.lane.splice(index+1,0,{id:this.sequence(),label:'临时泳道',children:[]})
+            this.lane.splice(index+1,0,{id:this.sequence(),label:this.form.name1,children:[]})
+            this.$refs['form'].resetFields()
           })
           this.$nextTick(()=>{
             this.backlogs = JSON.parse(obj)
@@ -408,14 +467,14 @@
         this.$nextTick(()=>{
           this.lane.forEach(level1=>{
             if(level1.id ==level1_id){
-              level1.children.splice(index+1,0,{id:this.sequence(),label:'临时泳道',children:[]})
+              level1.children.splice(index+1,0,{id:this.sequence(),label:this.form.name1,children:[]})
+              this.$refs['form'].resetFields()
             }
           })
         })
         this.$nextTick(()=>{
           this.backlogs = JSON.parse(obj)
         })
-
       },
 
       //第三行向右加一列
@@ -427,7 +486,8 @@
             if(level1.id ==level1_id){
               level1.children.forEach(level2=>{
                 if(level2.id ==level2_id){
-                  level2.children.splice(index+1,0,{id:this.sequence(),label:'临时泳道',children:[]})
+                  level2.children.splice(index+1,0,{id:this.sequence(),label:this.form.name1,children:[]})
+                  this.$refs['form'].resetFields()
                 }
               })
             }
@@ -436,18 +496,16 @@
         this.$nextTick(()=>{
           this.backlogs = JSON.parse(obj)
         })
-
-
       },
       sequence(){
-        return Math.floor(Math.random()*(99999-10000+1)+10000)
+        return Math.floor(Math.random()*(999999-100000+1)+100000)
       },
       addCard(backlog){
         this.backlogs.forEach((item,index)=>{
           if(item.backlogId == backlog.backlogId){
             item.cards.unshift({
-              cardId: Math.floor(Math.random()*(99999-10000+1)+10000),
-              cardName: Math.floor(Math.random()*(99999-10000+1)+10000),
+              cardId: this.sequence(),
+              cardName: this.sequence(),
               state: 12,
               type: 0,
             })
