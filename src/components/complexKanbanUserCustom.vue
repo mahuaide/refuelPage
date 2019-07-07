@@ -1,20 +1,20 @@
 <template>
   <div style="width: 5000px">
-    <table cellspacing="0" cellpadding="0" id="table">
+    <table cellspacing="0" cellpadding="0">
       <thead id="cxHeader" :style="headerStyle">
-      <tr>
-        <template v-for="(level_1,index1) in lane">
-          <th>
-      <tr>
-        <td
-          :colspan="level_1.deepNum"
-          :rowspan="((level_1.children && level_1.children.length>0)?'':3)">
-          {{level_1.label}}
-          <i class="el-icon-delete" v-show="index1 !=0" @click="del(level_1.id)"></i>
-          <i class="el-icon-arrow-right" title="向右增一列" @click="showDialog('1right',index1)"></i>
-          <i class="el-icon-arrow-down" title="向下增一列" v-show="level_1.children.length ==0 && index1 !=0"
-             @click="showDialog('1donw',index1)"></i>
-        </td>
+        <tr>
+          <template v-for="(level_1,index1) in lane">
+            <th>
+        <tr>
+          <td
+            :colspan="level_1.deepNum"
+            :rowspan="((level_1.children && level_1.children.length>0)?'':3)">
+            {{level_1.label}}
+            <i class="el-icon-delete" v-show="index1 !=0" @click="del(level_1.id)"></i>
+            <i class="el-icon-arrow-right" title="向右增一列" @click="showDialog('1right',index1)"></i>
+            <i class="el-icon-arrow-down" title="向下增一列" v-show="level_1.children.length ==0 && index1 !=0"
+               @click="showDialog('1donw',index1)"></i>
+          </td>
       </tr>
       <tr>
         <template v-for="(level_2,index2) in level_1.children">
@@ -392,6 +392,15 @@
       }
     },
     methods: {
+      /**
+       * 所有列头编辑的方法，都需要先将卡片在看板上备份移除，列头修改好后，在恢复回来
+       *  var obj = JSON.stringify(this.backlogs);
+          this.backlogs = {}
+       *  this.$nextTick(() => {
+          this.backlogs = JSON.parse(obj)
+        })
+       * 上述操作可以避免因为拖拽时操作的实际DOM，而改变泳道是异步DOM操作，所引起的卡片位置混乱
+       * */
       //删除列
       del(id){
         var obj = JSON.stringify(this.backlogs);
@@ -419,7 +428,7 @@
           this.backlogs = JSON.parse(obj)
         })
       },
-      //增加列点确定
+      //增加列点确定按钮时，根据direction确定调用那个方法
       addcolumn(){
         this.dialogFormVisible = false;
         switch (this.direction) {
@@ -544,6 +553,7 @@
       sequence(){
         return Math.floor(Math.random() * (999999 - 100000 + 1) + 100000)
       },
+      //添加一个卡片
       addCard(backlog){
         this.backlogs.forEach((item, index) => {
           if (item.backlogId == backlog.backlogId) {
