@@ -4,9 +4,10 @@
       <thead id="cxHeader" :style="headerStyle">
         <tr>
           <template v-for="(level_1,index1) in lane">
-            <th>
+            <th :style="{'backgroundColor':level_1.backgroundColor || 'rgb(255,255,255)'}">
         <tr>
           <td
+
             :colspan="level_1.deepNum"
             :rowspan="((level_1.children && level_1.children.length>0)?'':3)">
             {{level_1.label}}
@@ -129,6 +130,9 @@
     <el-form-item label="列名称2" label-width="80px" prop="name2" v-show="down">
       <el-input v-model="form.name2" auto-complete="off"></el-input>
     </el-form-item>
+    <el-form-item label="列背景色" label-width="80px" prop="backgroundColor" v-show="color">
+      <el-color-picker v-model="form.backgroundColor" show-alpha></el-color-picker>
+    </el-form-item>
   </el-form>
   <div slot="footer" class="dialog-footer">
     <el-button @click="dialogFormVisible = false">取 消</el-button>
@@ -141,34 +145,32 @@
   export default{
     data(){
       return {
-        dialogFormVisible: false,
-        down: false,
-        direction: '',
-        arg1: '',
-        arg2: '',
-        arg3: '',
-        form: {
+        dialogFormVisible: false,//列编辑时的弹窗
+        down: false,//列编辑时，是否需要拆分为两列，指向向下拆分时为true
+        color:false,//只有最外层列新增时，允许选择背景颜色
+        direction: '',//列拆分类型
+        arg1: '',//传参
+        arg2: '',//传参
+        arg3: '',//传参
+        form: {  //窗口表单
           name1: '',
           name2: '',
-          color: {
-            r: 0,
-            g: 0,
-            b: 0
-          }
+          backgroundColor:'rgba(255,255,255,1)'
         },
-        headerStyle: {
+        headerStyle: {  //表头thead样式
           position: 'static'
         },
-        from: '',
-        to: '',
-        formLine: '',
-        toLine: '',
-        dragCard: null,
-        dragIndex: 0,
+        from: '',//拖住卡片起始状态
+        to: '',  //拖住卡片目标状态
+        formLine: '',//拖住卡片，在tbody中的那一行开始拖拽
+        toLine: '',//拖住卡片，在tbody中的目标行，为了用来跨行不可拖拽
+        dragCard: null,//被拖拽卡片对象
+        dragIndex: 0,//被拖拽卡片落入新泳道的位置
         lane: [
           {
             id: 1,
             label: '需求规划阶段',
+            backgroundColor:'rgba(255,255,255,1)',
             children: [
               {
                 id: 11,
@@ -183,6 +185,7 @@
           {
             id: 2,
             label: '设计阶段',
+            backgroundColor:'rgba(255,255,255,1)',
             children: [
               {
                 id: 21,
@@ -221,6 +224,7 @@
           {
             id: 3,
             label: '实施阶段',
+            backgroundColor:'rgba(255,255,255,1)',
             children: [
               {
                 id: 31,
@@ -269,6 +273,7 @@
           {
             id: 4,
             label: '验收阶段',
+            backgroundColor:'rgba(255,255,255,1)',
             children: [
               {
                 id: 41,
@@ -293,6 +298,7 @@
           {
             id: 5,
             label: "上线及运营阶段",
+            backgroundColor:'rgba(255,255,255,1)',
             children: [
               {
                 id: 51,
@@ -388,7 +394,7 @@
               }
             ]
           },
-        ]
+        ] //数据
       }
     },
     methods: {
@@ -461,6 +467,11 @@
         } else {
           this.down = true;
         }
+        if(direction == '1right'){
+            this.color = true;
+        }else{
+          this.color = false;
+        }
       },
       //第一行向下加两列
       level1AddDown(index){
@@ -505,7 +516,7 @@
         var obj = JSON.stringify(this.backlogs);
         this.backlogs = {}
         this.$nextTick(() => {
-          this.lane.splice(index + 1, 0, {id: this.sequence(), label: this.form.name1, children: []})
+          this.lane.splice(index + 1, 0, {id: this.sequence(), label: this.form.name1,backgroundColor:this.form.backgroundColor, children: []})
           this.$refs['form'].resetFields()
         })
         this.$nextTick(() => {
