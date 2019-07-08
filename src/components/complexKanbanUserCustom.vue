@@ -78,7 +78,8 @@
           >
             <div>
               ID:{{card.cardId}}<br>
-              state:{{card.state}}
+              state:{{card.state}}<br>
+              req:{{card.cardName}}
             </div>
           </li>
         </ul>

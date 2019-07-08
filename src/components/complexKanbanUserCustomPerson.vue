@@ -4,7 +4,7 @@
       <thead id="cxHeader" :style="headerStyle">
       <tr>
         <template v-for="(level_1,index1) in lane">
-          <th>
+          <th :style="{'backgroundColor':level_1.backgroundColor || 'rgb(255,255,255)'}">
       <tr>
         <td
           :colspan="level_1.deepNum"
@@ -77,7 +77,8 @@
           >
             <div>
               ID:{{card.cardId}}<br>
-              state:{{card.state}}
+              state:{{card.state}}<br>
+              req:{{card.cardName}}
             </div>
           </li>
         </ul>
@@ -129,6 +130,9 @@
     <el-form-item label="列名称2" label-width="80px" prop="name2" v-show="down">
       <el-input v-model="form.name2" auto-complete="off"></el-input>
     </el-form-item>
+    <el-form-item label="列背景色" label-width="80px" prop="backgroundColor" v-show="color">
+      <el-color-picker v-model="form.backgroundColor" show-alpha></el-color-picker>
+    </el-form-item>
   </el-form>
   <div slot="footer" class="dialog-footer">
     <el-button @click="dialogFormVisible = false">取 消</el-button>
@@ -150,11 +154,7 @@
         form: {
           name1: '',
           name2: '',
-          color: {
-            r: 0,
-            g: 0,
-            b: 0
-          }
+          backgroundColor:'rgba(255,255,255,1)'
         },
         headerStyle: {
           position: 'static'
@@ -372,6 +372,11 @@
         } else {
           this.down = true;
         }
+        if(direction == '1right'){
+          this.color = true;
+        }else{
+          this.color = false;
+        }
       },
       //第一行向下加两列
       level1AddDown(index){
@@ -416,7 +421,7 @@
         var obj = JSON.stringify(this.backlogs);
         this.backlogs = {}
         this.$nextTick(() => {
-          this.lane.splice(index + 1, 0, {id: this.sequence(), label: this.form.name1, children: []})
+          this.lane.splice(index + 1, 0, {id: this.sequence(), label: this.form.name1,backgroundColor:this.form.backgroundColor, children: []})
           this.$refs['form'].resetFields()
         })
         this.$nextTick(() => {
