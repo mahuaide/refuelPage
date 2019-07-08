@@ -1,6 +1,19 @@
 <template>
   <div class="wrapper">
-    <div class="mask"></div>
+    <div class="mask">
+      <dl>
+        <dt>
+          <img src="./mobile.png" width="120px" height="120px" alt="">
+        </dt>
+        <dd>
+          <i class="iconfont icon-android"></i><span>Android 5.0+</span>
+        </dd>
+        <dd>
+          <i class="iconfont icon-ios"></i><span>IOS 9+</span>
+        </dd>
+      </dl>
+      <div class="right">&copy; Ayitubie.Inc</div>
+    </div>
     <div class="login" v-show="loginShow">
       <p class="sys-title">加油记录系统</p>
       <el-form ref="login" :model="form" label-width="80px">
@@ -199,7 +212,7 @@
 <style lang="stylus" rel="stylesheet/stylus" scoped>
   .wrapper
     position fixed
-    background url('./login.jpg') 50% 50% / cover no-repeat fixed
+    background url('./xtrail-1.jpeg') 50% 50% / cover no-repeat fixed
     width 100%
     height 100%
     z-index 0
@@ -207,13 +220,45 @@
       position fixed
       width 100%
       height 100%
-      background-color rgba(0, 0, 0, 0.4)
+      background-color rgba(0, 0, 0, 0.35)
       z-index 1
+      dl
+        text-align center
+        position absolute
+        left 20%
+        top 50%
+        margin-top -60px
+        dt
+          margin 0 0 5px 0
+        dd
+          text-align left
+          margin 0px 0 0 1px
+          span
+           color #fff
+          .icon-android
+            font-size 20px
+            margin-right 5px
+            color #fff
+          .icon-ios
+            font-size 20px
+            margin-right 5px
+            color #fff
+      .right
+        position absolute
+        left 50%
+        bottom 0px
+        width 100px
+        height 20px
+        text-align center
+        color #fff
+        margin-left -50px
+        font-size 12px
+        font-family: "Helvetica Neue", Helvetica, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "微软雅黑", Arial, sans-serif
     .login
       position fixed
       width 420px
       top 30%
-      right 15%
+      right 10%
       box-sizing border-box
       padding 20px 60px 20px 10px
       height 300px

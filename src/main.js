@@ -5,6 +5,7 @@ import App from './App'
 import router from './router'
 import store from './store/store'
 import ElementUI from 'element-ui'
+import './font/iconfont.css'
 import 'element-ui/lib/theme-chalk/index.css'
 import filters from './filters' //自定义过滤器，挂在到Vue全局
 
