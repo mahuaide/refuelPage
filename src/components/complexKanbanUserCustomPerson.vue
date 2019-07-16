@@ -75,7 +75,12 @@
               :id="card.cardId"
               @dragend="dragEnd"
           >
-            <div>
+            <div
+              :touchId='card.cardId'
+              @touchstart="touchstart($event)"
+              @touchmove="touchmove($event)"
+              @touchend="touchend($event)"
+            >
               ID:{{card.cardId}}<br>
               state:{{card.state}}<br>
               req:{{card.cardName}}
@@ -106,7 +111,11 @@
                 :id="card.cardId"
                 @dragend="dragEnd"
             >
-              <div>
+              <div :touchId='card.cardId'
+                   @touchstart="touchstart($event)"
+                   @touchmove="touchmove($event)"
+                   @touchend="touchend($event)"
+              >
                 ID:{{card.cardId}}<br>
                 state:{{card.state}}<br>
                 req:{{card.cardName}}
@@ -147,6 +156,7 @@
       return {
         dialogFormVisible: false,
         down: false,
+        color: false,
         direction: '',
         arg1: '',
         arg2: '',
@@ -154,7 +164,7 @@
         form: {
           name1: '',
           name2: '',
-          backgroundColor:'rgba(255,255,255,1)'
+          backgroundColor: 'rgba(255,255,255,1)'
         },
         headerStyle: {
           position: 'static'
@@ -198,26 +208,22 @@
           {
             id: 5,
             label: "联调",
-            children:[
-            ]
+            children: []
           },
           {
             id: 6,
             label: "测试",
-            children:[
-            ]
+            children: []
           },
           {
             id: 7,
             label: "风险",
-            children:[
-            ]
+            children: []
           },
           {
-            id:8,
+            id: 8,
             label: "完成",
-            children:[
-            ]
+            children: []
           }
         ],//泳道头的树形结构
         backlogs: [
@@ -303,6 +309,83 @@
       }
     },
     methods: {
+      touchstart(ev){
+        ev.stopPropagation();
+        var top = $(window).scrollTop();
+        var ele = document.elementFromPoint(ev.touches[0].pageX, ev.touches[0].pageY - top);
+        this.from = $(ele).parents("UL.card-list").data('s') == undefined ? $(ele).data('s') : $(ele).parents("UL.card-list").data('s');
+        this.formLine = $(ele).parents("UL.card-list").data('line') == undefined ? $(ele).data('line') : $(ele).parents("UL.card-list").data('line');
+      },
+      touchmove(ev){
+        ev.preventDefault();
+        var liText = '<li id="templateli" class="templateli"><div>放这里</div></li>'
+        var top = $(window).scrollTop();
+        var ele = document.elementFromPoint(ev.touches[0].pageX, ev.touches[0].pageY - top);
+        if ($(ele)[0].id == 'templateli' || ($(ele).parents('LI')[0] && $(ele).parents('LI')[0].id == 'templateli')) {
+          return;
+        }
+        $("#templateli").remove();
+        this.toLine = $(ele).parents("UL.card-list").data('line') == undefined ? $(ele).data('line') : $(ele).parents("UL.card-list").data('line');
+        if (this.formLine != this.toLine) {
+          return;
+        }
+        if ($(ele)[0].tagName == 'UL') {
+          $(ele).append(liText)
+        } else if ($(ele)[0].tagName == 'LI') {
+          $(ele).after(liText)
+        } else if ($(ele).parents("LI") != undefined) {
+          $(ele).parents("LI").before(liText)
+        }
+      },
+      touchend(ev){
+        if (!$("#templateli")[0])
+          return;
+        $("#templateli").text('同步中... ').append('<i class="el-icon-loading"></i>')
+        var top = $(window).scrollTop();
+        var ele = document.elementFromPoint(ev.changedTouches[0].pageX, ev.changedTouches[0].pageY - top);
+        this.to = $(ele).parents("UL.card-list").data('s') == undefined ? $(ele).data('s') : $(ele).parents("UL.card-list").data('s');
+        setTimeout(() => {
+          var index = $("#templateli").index();
+          var backlog_id = ''
+          var id = ev.changedTouches[0].target.getAttribute('touchid')
+          this.backlogs.forEach((backlog, index_backlog) => {
+            backlog.cards.forEach((card, index_card) => {
+              if (card.cardId == id) {
+                backlog_id = backlog.backlogId;
+                this.dragCard = backlog.cards.splice(index_card, 1)[0];
+                this.dragIndex = index_card;
+              }
+            })
+          })
+          this.dragCard.state = this.to
+          if (index == 0) {
+            this.backlogs.forEach((backlog, index_backlog) => {
+              if (backlog.backlogId == backlog_id) {
+                backlog.cards.splice(index, 0, this.dragCard)
+              }
+            })
+            //如果放到目标用到非首位，先找到上一元素ID和位置，再位置+1后插入
+          } else {
+            var prvCardId = $("#templateli").prev()[0].id;
+            if (id == prvCardId) {
+              this.backlogs.forEach((backlog, index_backlog) => {
+                if (backlog.backlogId == backlog_id) {
+                  backlog.cards.splice(this.dragIndex, 0, this.dragCard)
+                }
+              })
+            } else {
+              this.backlogs.forEach((backlog, index_backlog) => {
+                if (backlog.backlogId == backlog_id) {
+                  backlog.cards.splice(index + 1, 0, this.dragCard)
+                }
+              })
+            }
+          }
+
+          $("#templateli").remove();
+        }, 200)
+        this.computedHeight();
+      },
       /**
        * 所有列头编辑的方法，都需要先将卡片在看板上备份移除，列头修改好后，在恢复回来
        *  var obj = JSON.stringify(this.backlogs);
@@ -372,9 +455,9 @@
         } else {
           this.down = true;
         }
-        if(direction == '1right'){
+        if (direction == '1right') {
           this.color = true;
-        }else{
+        } else {
           this.color = false;
         }
       },
@@ -421,7 +504,12 @@
         var obj = JSON.stringify(this.backlogs);
         this.backlogs = {}
         this.$nextTick(() => {
-          this.lane.splice(index + 1, 0, {id: this.sequence(), label: this.form.name1,backgroundColor:this.form.backgroundColor, children: []})
+          this.lane.splice(index + 1, 0, {
+            id: this.sequence(),
+            label: this.form.name1,
+            backgroundColor: this.form.backgroundColor,
+            children: []
+          })
           this.$refs['form'].resetFields()
         })
         this.$nextTick(() => {

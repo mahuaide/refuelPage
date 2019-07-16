@@ -408,9 +408,11 @@
     },
     methods: {
       touchstart(ev){
-        $("#templateli").remove();
         ev.stopPropagation();
-        var touchid = ev.touches[0].target.getAttribute('touchid')
+        var top = $(window).scrollTop();
+        var ele = document.elementFromPoint(ev.touches[0].pageX, ev.touches[0].pageY - top);
+        this.from = $(ele).parents("UL.card-list").data('s') == undefined ? $(ele).data('s') : $(ele).parents("UL.card-list").data('s');
+        this.formLine = $(ele).parents("UL.card-list").data('line') == undefined ? $(ele).data('line') : $(ele).parents("UL.card-list").data('line');
       },
       touchmove(ev){
         ev.preventDefault();
@@ -420,19 +422,26 @@
         if ($(ele)[0].id == 'templateli' || ($(ele).parents('LI')[0] && $(ele).parents('LI')[0].id == 'templateli')) {
           return;
         }
-
         $("#templateli").remove();
         this.toLine = $(ele).parents("UL.card-list").data('line') == undefined ? $(ele).data('line') : $(ele).parents("UL.card-list").data('line');
+        if (this.formLine != this.toLine) {
+          return;
+        }
         if ($(ele)[0].tagName == 'UL') {
           $(ele).append(liText)
         } else if ($(ele)[0].tagName == 'LI') {
-          ele.after(liText)
+          $(ele).after(liText)
         } else if ($(ele).parents("LI") != undefined) {
           $(ele).parents("LI").before(liText)
         }
       },
       touchend(ev){
+        if(!$("#templateli")[0])
+            return;
         $("#templateli").text('同步中... ').append('<i class="el-icon-loading"></i>')
+        var top = $(window).scrollTop();
+        var ele = document.elementFromPoint(ev.changedTouches[0].pageX, ev.changedTouches[0].pageY - top);
+        this.to = $(ele).parents("UL.card-list").data('s') == undefined ? $(ele).data('s') : $(ele).parents("UL.card-list").data('s');
         setTimeout(() => {
           var index = $("#templateli").index();
           var backlog_id = ''
@@ -446,9 +455,7 @@
               }
             })
           })
-          var top = $(window).scrollTop();
-          var ele = document.elementFromPoint(ev.changedTouches[0].pageX, ev.changedTouches[0].pageY - top);
-          this.dragCard.state = $(ele).parents("UL.card-list").data('s') == undefined ? $(ele).data('s') : $(ele).parents("UL.card-list").data('s');
+          this.dragCard.state = this.to
           if (index == 0) {
             this.backlogs.forEach((backlog, index_backlog) => {
               if (backlog.backlogId == backlog_id) {
