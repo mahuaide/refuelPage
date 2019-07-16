@@ -2,20 +2,20 @@
   <div style="width: 5000px">
     <table cellspacing="0" cellpadding="0">
       <thead id="cxHeader" :style="headerStyle">
-        <tr>
-          <template v-for="(level_1,index1) in lane">
-            <th :style="{'backgroundColor':level_1.backgroundColor || 'rgb(255,255,255)'}">
-        <tr>
-          <td
+      <tr>
+        <template v-for="(level_1,index1) in lane">
+          <th :style="{'backgroundColor':level_1.backgroundColor || 'rgb(255,255,255)'}">
+      <tr>
+        <td
 
-            :colspan="level_1.deepNum"
-            :rowspan="((level_1.children && level_1.children.length>0)?'':3)">
-            {{level_1.label}}
-            <i class="el-icon-delete" v-show="index1 !=0" @click="del(level_1.id)"></i>
-            <i class="el-icon-arrow-right" title="向右增一列" @click="showDialog('1right',index1)"></i>
-            <i class="el-icon-arrow-down" title="向下增两列" v-show="level_1.children.length ==0 && index1 !=0"
-               @click="showDialog('1donw',index1)"></i>
-          </td>
+          :colspan="level_1.deepNum"
+          :rowspan="((level_1.children && level_1.children.length>0)?'':3)">
+          {{level_1.label}}
+          <i class="el-icon-delete" v-show="index1 !=0" @click="del(level_1.id)"></i>
+          <i class="el-icon-arrow-right" title="向右增一列" @click="showDialog('1right',index1)"></i>
+          <i class="el-icon-arrow-down" title="向下增两列" v-show="level_1.children.length ==0 && index1 !=0"
+             @click="showDialog('1donw',index1)"></i>
+        </td>
       </tr>
       <tr>
         <template v-for="(level_2,index2) in level_1.children">
@@ -76,7 +76,11 @@
               :id="card.cardId"
               @dragend="dragEnd"
           >
-            <div>
+            <div :touchId='card.cardId'
+              @touchstart="touchstart($event)"
+              @touchmove="touchmove($event)"
+              @touchend="touchend($event)"
+            >
               ID:{{card.cardId}}<br>
               state:{{card.state}}<br>
               req:{{card.cardName}}
@@ -107,7 +111,11 @@
                 :id="card.cardId"
                 @dragend="dragEnd"
             >
-              <div>
+              <div :touchId='card.cardId'
+                   @touchstart="touchstart($event)"
+                   @touchmove="touchmove($event)"
+                   @touchend="touchend($event)"
+              >
                 ID:{{card.cardId}}<br>
                 state:{{card.state}}<br>
                 req:{{card.cardName}}
@@ -148,7 +156,7 @@
       return {
         dialogFormVisible: false,//列编辑时的弹窗
         down: false,//列编辑时，是否需要拆分为两列，指向向下拆分时为true
-        color:false,//只有最外层列新增时，允许选择背景颜色
+        color: false,//只有最外层列新增时，允许选择背景颜色
         direction: '',//列拆分类型
         arg1: '',//传参
         arg2: '',//传参
@@ -156,7 +164,7 @@
         form: {  //窗口表单
           name1: '',
           name2: '',
-          backgroundColor:'rgba(255,255,255,1)'
+          backgroundColor: 'rgba(255,255,255,1)'
         },
         headerStyle: {  //表头thead样式
           position: 'static'
@@ -171,7 +179,7 @@
           {
             id: 1,
             label: '需求规划阶段',
-            backgroundColor:'rgba(255,255,255,1)',
+            backgroundColor: 'rgba(255,255,255,1)',
             children: [
               {
                 id: 11,
@@ -186,7 +194,7 @@
           {
             id: 2,
             label: '设计阶段',
-            backgroundColor:'rgba(255,255,255,1)',
+            backgroundColor: 'rgba(255,255,255,1)',
             children: [
               {
                 id: 21,
@@ -225,7 +233,7 @@
           {
             id: 3,
             label: '实施阶段',
-            backgroundColor:'rgba(255,255,255,1)',
+            backgroundColor: 'rgba(255,255,255,1)',
             children: [
               {
                 id: 31,
@@ -274,7 +282,7 @@
           {
             id: 4,
             label: '验收阶段',
-            backgroundColor:'rgba(255,255,255,1)',
+            backgroundColor: 'rgba(255,255,255,1)',
             children: [
               {
                 id: 41,
@@ -299,7 +307,7 @@
           {
             id: 5,
             label: "上线及运营阶段",
-            backgroundColor:'rgba(255,255,255,1)',
+            backgroundColor: 'rgba(255,255,255,1)',
             children: [
               {
                 id: 51,
@@ -399,10 +407,80 @@
       }
     },
     methods: {
+      touchstart(ev){
+        $("#templateli").remove();
+        ev.stopPropagation();
+        var touchid = ev.touches[0].target.getAttribute('touchid')
+      },
+      touchmove(ev){
+        ev.preventDefault();
+        var liText = '<li id="templateli" class="templateli"><div>放这里</div></li>'
+        var top = $(window).scrollTop();
+        var ele = document.elementFromPoint(ev.touches[0].pageX, ev.touches[0].pageY - top);
+        if ($(ele)[0].id == 'templateli' || ($(ele).parents('LI')[0] && $(ele).parents('LI')[0].id == 'templateli')) {
+          return;
+        }
+
+        $("#templateli").remove();
+        this.toLine = $(ele).parents("UL.card-list").data('line') == undefined ? $(ele).data('line') : $(ele).parents("UL.card-list").data('line');
+        if ($(ele)[0].tagName == 'UL') {
+          $(ele).append(liText)
+        } else if ($(ele)[0].tagName == 'LI') {
+          ele.after(liText)
+        } else if ($(ele).parents("LI") != undefined) {
+          $(ele).parents("LI").before(liText)
+        }
+      },
+      touchend(ev){
+        $("#templateli").text('同步中... ').append('<i class="el-icon-loading"></i>')
+        setTimeout(() => {
+          var index = $("#templateli").index();
+          var backlog_id = ''
+          var id = ev.changedTouches[0].target.getAttribute('touchid')
+          this.backlogs.forEach((backlog, index_backlog) => {
+            backlog.cards.forEach((card, index_card) => {
+              if (card.cardId == id) {
+                backlog_id = backlog.backlogId;
+                this.dragCard = backlog.cards.splice(index_card, 1)[0];
+                this.dragIndex = index_card;
+              }
+            })
+          })
+          var top = $(window).scrollTop();
+          var ele = document.elementFromPoint(ev.changedTouches[0].pageX, ev.changedTouches[0].pageY - top);
+          this.dragCard.state = $(ele).parents("UL.card-list").data('s') == undefined ? $(ele).data('s') : $(ele).parents("UL.card-list").data('s');
+          if (index == 0) {
+            this.backlogs.forEach((backlog, index_backlog) => {
+              if (backlog.backlogId == backlog_id) {
+                backlog.cards.splice(index, 0, this.dragCard)
+              }
+            })
+            //如果放到目标用到非首位，先找到上一元素ID和位置，再位置+1后插入
+          } else {
+            var prvCardId = $("#templateli").prev()[0].id;
+            if (id == prvCardId) {
+              this.backlogs.forEach((backlog, index_backlog) => {
+                if (backlog.backlogId == backlog_id) {
+                  backlog.cards.splice(this.dragIndex, 0, this.dragCard)
+                }
+              })
+            } else {
+              this.backlogs.forEach((backlog, index_backlog) => {
+                if (backlog.backlogId == backlog_id) {
+                  backlog.cards.splice(index + 1, 0, this.dragCard)
+                }
+              })
+            }
+          }
+
+          $("#templateli").remove();
+        }, 200)
+        this.computedHeight();
+      },
       /**
        * 所有列头编辑的方法，都需要先将卡片在看板上备份移除，列头修改好后，在恢复回来
        *  var obj = JSON.stringify(this.backlogs);
-          this.backlogs = {}
+       this.backlogs = {}
        *  this.$nextTick(() => {
           this.backlogs = JSON.parse(obj)
         })
@@ -468,9 +546,9 @@
         } else {
           this.down = true;
         }
-        if(direction == '1right'){
-            this.color = true;
-        }else{
+        if (direction == '1right') {
+          this.color = true;
+        } else {
           this.color = false;
         }
       },
@@ -517,7 +595,12 @@
         var obj = JSON.stringify(this.backlogs);
         this.backlogs = {}
         this.$nextTick(() => {
-          this.lane.splice(index + 1, 0, {id: this.sequence(), label: this.form.name1,backgroundColor:this.form.backgroundColor, children: []})
+          this.lane.splice(index + 1, 0, {
+            id: this.sequence(),
+            label: this.form.name1,
+            backgroundColor: this.form.backgroundColor,
+            children: []
+          })
           this.$refs['form'].resetFields()
         })
         this.$nextTick(() => {
@@ -652,7 +735,6 @@
           return;
         }
         this.to = $target.parents("UL.card-list").data('s') == undefined ? $target.data('s') : $target.parents("UL.card-list").data('s');
-        console.log(this.to)
         $("#templateli").remove();
         if ($target[0].tagName == 'UL') {
           $target.append(liText)
