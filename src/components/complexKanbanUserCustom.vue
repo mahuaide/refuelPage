@@ -7,7 +7,6 @@
           <th :style="{'backgroundColor':level_1.backgroundColor || 'rgb(255,255,255)'}">
       <tr>
         <td
-
           :colspan="level_1.deepNum"
           :rowspan="((level_1.children && level_1.children.length>0)?'':3)">
           {{level_1.label}}
