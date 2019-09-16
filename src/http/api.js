@@ -26,3 +26,9 @@ export const moveBoard = params=>{return axios.post(resfulParamsToUrl(Path.moveB
 export const createTask = params=>{return axios.post(resfulParamsToUrl(Path.createTask,params),params)}
 export const delTask = params=>{return axios.delete(resfulParamsToUrl(Path.delTask,params),{params})}
 export const moveTask = params=>{return axios.post(resfulParamsToUrl(Path.moveTask,params),params)}
+
+//getlab
+export const getGitProjects = params=>{return axios.get(resfulParamsToUrl(Path.getGitProjects,params),{params})}
+export const getGitDiff = params=>{return axios.get(resfulParamsToUrl(Path.getGitDiff,params),{params})}
+export const getCommits = params=>{return axios.get(resfulParamsToUrl(Path.getCommits,params),{params})}
+export const getBranches = params=>{return axios.get(resfulParamsToUrl(Path.getBranches,params),{params})}

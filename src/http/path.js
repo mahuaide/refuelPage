@@ -1,6 +1,7 @@
 const REFUEL = '/refuel';
 const STATION = '/station';
 const USER = '/user'
+const GITLAB = '/gitlab'
 export default {
   register:USER + '/register',
   getRefuelLogAll:REFUEL+'/query/all',
@@ -21,5 +22,11 @@ export default {
   delTask:'/deleteTask/{kanbanId}/{taskId}',//删除任务
   moveTask:'/changeTaskOrder',//移动任务
   /*********************看板 end ********************/
+  /*********************getlab start***************************/
+  getGitProjects:GITLAB+'/getProjects',
+  getGitDiff:GITLAB+'/getDiff/{project}/{sha}',
+  getCommits:GITLAB+'/getCommits/{project}/{branch}',
+  getBranches:GITLAB+'/getBranches/{project}',
+  /*********************getlab end***************************/
 }
 
