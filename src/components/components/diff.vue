@@ -1,5 +1,5 @@
 <template>
-  <div id="app">
+  <div>
     <div v-html="html" v-highlight></div>
   </div>
 </template>
@@ -37,12 +37,13 @@ export default {
   methods: {
     createdHtml(content, outputFormat) {
       function hljs(html) {
-        return html.replace(/<span class="d2h-code-line-ctn">(.+?)<\/span>/g, '<span class="d2h-code-line-ctn"><code>$1</code></span>')
+        // return html.replace(/<span class="d2h-code-line-ctn">(.+?)<\/span>/g, '<span class="d2h-code-line-ctn"><code>$1</code></span>')
+        return html
       }
-      console.log(content)
+      // console.log(content)
       let outStr = Diff2Html.getJsonFromDiff(content, { inputFormat: 'diff', outputFormat: outputFormat, showFiles: false, matching: 'lines' })
       let html = Diff2Html.getPrettyHtml(outStr, { inputFormat: 'json', outputFormat: outputFormat, showFiles: false, matching: 'lines' })
-      console.log(hljs(html))
+      // console.log(hljs(html))
       return hljs(html)
     }
   }
