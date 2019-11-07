@@ -927,6 +927,8 @@
     margin 0
 
   .wbsTree
+    border-collapse collapse;
+    border-spacing:0;
     margin-bottom 100px
     thead tr
       border-bottom 1px solid black
