@@ -1,0 +1,380 @@
+{
+  "id": "1016193",
+  "name": "refuel",
+  "font_family": "iconfont",
+  "css_prefix_text": "icon-",
+  "description": "",
+  "glyphs": [
+    {
+      "icon_id": "7456422",
+      "name": "tong",
+      "font_class": "jiyou-cuxiantiao-fill",
+      "unicode": "e602",
+      "unicode_decimal": 58882
+    },
+    {
+      "icon_id": "7456429",
+      "name": "信用卡",
+      "font_class": "xinyongqia",
+      "unicode": "e603",
+      "unicode_decimal": 58883
+    },
+    {
+      "icon_id": "7456431",
+      "name": "现金",
+      "font_class": "xianjin",
+      "unicode": "e604",
+      "unicode_decimal": 58884
+    },
+    {
+      "icon_id": "7456433",
+      "name": "油桶",
+      "font_class": "youtong",
+      "unicode": "e605",
+      "unicode_decimal": 58885
+    },
+    {
+      "icon_id": "7456437",
+      "name": "加油",
+      "font_class": "jiayou",
+      "unicode": "e606",
+      "unicode_decimal": 58886
+    },
+    {
+      "icon_id": "7456440",
+      "name": "支付宝",
+      "font_class": "zhifubao",
+      "unicode": "e607",
+      "unicode_decimal": 58887
+    },
+    {
+      "icon_id": "7456442",
+      "name": "加油卡",
+      "font_class": "jiayouqia",
+      "unicode": "e608",
+      "unicode_decimal": 58888
+    },
+    {
+      "icon_id": "7456453",
+      "name": "微信",
+      "font_class": "weixin",
+      "unicode": "e609",
+      "unicode_decimal": 58889
+    },
+    {
+      "icon_id": "7456454",
+      "name": "我的",
+      "font_class": "wode",
+      "unicode": "e60a",
+      "unicode_decimal": 58890
+    },
+    {
+      "icon_id": "7456455",
+      "name": "买车",
+      "font_class": "maiche",
+      "unicode": "e60b",
+      "unicode_decimal": 58891
+    },
+    {
+      "icon_id": "7456456",
+      "name": "首页",
+      "font_class": "shouye",
+      "unicode": "e60c",
+      "unicode_decimal": 58892
+    },
+    {
+      "icon_id": "7456457",
+      "name": "车巴巴-联系经销商",
+      "font_class": "chebaba-lianxijingxiaoshang",
+      "unicode": "e60d",
+      "unicode_decimal": 58893
+    },
+    {
+      "icon_id": "7456458",
+      "name": "车巴巴-基本参数",
+      "font_class": "chebaba-jibencanshu",
+      "unicode": "e60e",
+      "unicode_decimal": 58894
+    },
+    {
+      "icon_id": "7456460",
+      "name": "微信 (1)",
+      "font_class": "weixin1",
+      "unicode": "e60f",
+      "unicode_decimal": 58895
+    },
+    {
+      "icon_id": "7456461",
+      "name": "信用卡还款",
+      "font_class": "xinyongqiahuankuan",
+      "unicode": "e610",
+      "unicode_decimal": 58896
+    },
+    {
+      "icon_id": "7456463",
+      "name": "支付宝 (1)",
+      "font_class": "zhifubao1",
+      "unicode": "e611",
+      "unicode_decimal": 58897
+    },
+    {
+      "icon_id": "7456465",
+      "name": "现金 (1)",
+      "font_class": "xianjin1",
+      "unicode": "e612",
+      "unicode_decimal": 58898
+    },
+    {
+      "icon_id": "7456467",
+      "name": "现金余额",
+      "font_class": "xianjinyue",
+      "unicode": "e613",
+      "unicode_decimal": 58899
+    },
+    {
+      "icon_id": "7456476",
+      "name": "石油行业",
+      "font_class": "shiyouhangye",
+      "unicode": "e614",
+      "unicode_decimal": 58900
+    },
+    {
+      "icon_id": "7456477",
+      "name": "信用卡 (1)",
+      "font_class": "xinyongqia1",
+      "unicode": "e615",
+      "unicode_decimal": 58901
+    },
+    {
+      "icon_id": "7456479",
+      "name": "支付宝 (2)",
+      "font_class": "zhifubao2",
+      "unicode": "e616",
+      "unicode_decimal": 58902
+    },
+    {
+      "icon_id": "7456480",
+      "name": "加油站",
+      "font_class": "jiayouzhan",
+      "unicode": "e617",
+      "unicode_decimal": 58903
+    },
+    {
+      "icon_id": "7456483",
+      "name": "地图",
+      "font_class": "ditu",
+      "unicode": "e618",
+      "unicode_decimal": 58904
+    },
+    {
+      "icon_id": "7457049",
+      "name": "禁止",
+      "font_class": "jinzhi",
+      "unicode": "e619",
+      "unicode_decimal": 58905
+    },
+    {
+      "icon_id": "7457055",
+      "name": "成品油价格",
+      "font_class": "chengpinyoujiage",
+      "unicode": "e61a",
+      "unicode_decimal": 58906
+    },
+    {
+      "icon_id": "7457056",
+      "name": "中石油",
+      "font_class": "zhongshiyou",
+      "unicode": "e61b",
+      "unicode_decimal": 58907
+    },
+    {
+      "icon_id": "7457058",
+      "name": "阳光",
+      "font_class": "yangguang",
+      "unicode": "e61c",
+      "unicode_decimal": 58908
+    },
+    {
+      "icon_id": "7457059",
+      "name": "中石化",
+      "font_class": "zhongshihua",
+      "unicode": "e61d",
+      "unicode_decimal": 58909
+    },
+    {
+      "icon_id": "7457064",
+      "name": "油价管理",
+      "font_class": "youjiaguanli",
+      "unicode": "e61e",
+      "unicode_decimal": 58910
+    },
+    {
+      "icon_id": "7457066",
+      "name": "车牌",
+      "font_class": "chepai",
+      "unicode": "e61f",
+      "unicode_decimal": 58911
+    },
+    {
+      "icon_id": "7457074",
+      "name": "车牌 (1)",
+      "font_class": "chepai1",
+      "unicode": "e620",
+      "unicode_decimal": 58912
+    },
+    {
+      "icon_id": "7457078",
+      "name": "违章记录",
+      "font_class": "weizhangjilu",
+      "unicode": "e622",
+      "unicode_decimal": 58914
+    },
+    {
+      "icon_id": "7457190",
+      "name": "保养",
+      "font_class": "baoyang",
+      "unicode": "e623",
+      "unicode_decimal": 58915
+    },
+    {
+      "icon_id": "7465980",
+      "name": "后退",
+      "font_class": "houtui",
+      "unicode": "e624",
+      "unicode_decimal": 58916
+    },
+    {
+      "icon_id": "7493437",
+      "name": "定位 位置",
+      "font_class": "dingweiweizhi",
+      "unicode": "e625",
+      "unicode_decimal": 58917
+    },
+    {
+      "icon_id": "7524849",
+      "name": "汽车维修",
+      "font_class": "qicheweixiu",
+      "unicode": "e626",
+      "unicode_decimal": 58918
+    },
+    {
+      "icon_id": "7524854",
+      "name": "京东-加油卡-e01121",
+      "font_class": "jingdong-jiayouqia-e",
+      "unicode": "e627",
+      "unicode_decimal": 58919
+    },
+    {
+      "icon_id": "7524855",
+      "name": "加油记录",
+      "font_class": "jiayoujilu",
+      "unicode": "e628",
+      "unicode_decimal": 58920
+    },
+    {
+      "icon_id": "7531713",
+      "name": "公里数",
+      "font_class": "gonglishu",
+      "unicode": "e629",
+      "unicode_decimal": 58921
+    },
+    {
+      "icon_id": "7531743",
+      "name": "安全带",
+      "font_class": "anquandai",
+      "unicode": "e62a",
+      "unicode_decimal": 58922
+    },
+    {
+      "icon_id": "7608751",
+      "name": "loading (1)",
+      "font_class": "loading",
+      "unicode": "e62b",
+      "unicode_decimal": 58923
+    },
+    {
+      "icon_id": "7633997",
+      "name": "信用卡",
+      "font_class": "xinyongqia2",
+      "unicode": "e62c",
+      "unicode_decimal": 58924
+    },
+    {
+      "icon_id": "7634001",
+      "name": "现金",
+      "font_class": "xianjin2",
+      "unicode": "e62d",
+      "unicode_decimal": 58925
+    },
+    {
+      "icon_id": "7723979",
+      "name": "向右",
+      "font_class": "xiangyou",
+      "unicode": "e62e",
+      "unicode_decimal": 58926
+    },
+    {
+      "icon_id": "7728729",
+      "name": "壳牌_Shell",
+      "font_class": "kepai_Shell1",
+      "unicode": "e62f",
+      "unicode_decimal": 58927
+    },
+    {
+      "icon_id": "7986444",
+      "name": "camare",
+      "font_class": "camare",
+      "unicode": "e630",
+      "unicode_decimal": 58928
+    },
+    {
+      "icon_id": "9742881",
+      "name": "android (1)",
+      "font_class": "android",
+      "unicode": "e631",
+      "unicode_decimal": 58929
+    },
+    {
+      "icon_id": "9742882",
+      "name": "android",
+      "font_class": "android1",
+      "unicode": "e632",
+      "unicode_decimal": 58930
+    },
+    {
+      "icon_id": "9742883",
+      "name": "ios",
+      "font_class": "ios",
+      "unicode": "e633",
+      "unicode_decimal": 58931
+    },
+    {
+      "icon_id": "11663112",
+      "name": "加号",
+      "font_class": "jiahao",
+      "unicode": "e634",
+      "unicode_decimal": 58932
+    },
+    {
+      "icon_id": "11663128",
+      "name": "减号",
+      "font_class": "jianhao",
+      "unicode": "e635",
+      "unicode_decimal": 58933
+    },
+    {
+      "icon_id": "11663129",
+      "name": "more if",
+      "font_class": "moreif",
+      "unicode": "e636",
+      "unicode_decimal": 58934
+    },
+    {
+      "icon_id": "11663130",
+      "name": "子流程",
+      "font_class": "ziliucheng",
+      "unicode": "e637",
+      "unicode_decimal": 58935
+    }
+  ]
+}
