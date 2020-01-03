@@ -9,6 +9,8 @@
     <router-link to="/complexKanbanUserCustomPerson" tag="li">人员复合型看板（用户自定义泳道）</router-link>
     <router-link to="/gitlabdiff" tag="li">gitlab diff</router-link>
     <router-link to="/wbsTree" tag="li">wbsTree</router-link>
+    <router-link to="/complexKanbanManager" tag="li">经理看板</router-link>
+    <router-link to="/complexKanbanCEO" tag="li">公司看板</router-link>
   </div>
 </template>
 

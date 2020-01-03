@@ -59,7 +59,6 @@
     <td class="column">
       <template v-if="indexLane ==0">
         {{backlog.backlogName}}
-        <div class="addCard" @click="addCard(backlog)">加卡片</div>
       </template>
       <template v-else>
         <ul class="card-list"
@@ -76,11 +75,11 @@
               @dragend="dragEnd"
           >
             <div :touchId='card.cardId'
-              @touchstart="touchstart($event)"
-              @touchmove="touchmove($event)"
-              @touchend="touchend($event)"
+                 @touchstart="touchstart($event)"
+                 @touchmove="touchmove($event)"
+                 @touchend="touchend($event)"
             >
-              ID:{{card.cardId}}<br>
+              <br>
 
               {{card.cardName}}
             </div>
@@ -94,7 +93,6 @@
       <td class="column">
         <template v-if="indexLane ==0 && indexInlane ==0">
           {{backlog.backlogName}}
-          <div class="addCard" @click="addCard(backlog)">加卡片</div>
         </template>
         <template v-else="">
           <ul class="card-list"
@@ -115,7 +113,7 @@
                    @touchmove="touchmove($event)"
                    @touchend="touchend($event)"
               >
-                ID:{{card.cardId}}<br>
+                <br>
 
                 {{card.cardName}}
               </div>
@@ -182,11 +180,11 @@
             children: [
               {
                 id: 11,
-                label: "模块"
+                label: "项目"
               },
               {
                 id: 12,
-                label: '故事'
+                label: '需求'
               }
             ]
           },
@@ -195,20 +193,6 @@
             label: '需求分析',
             backgroundColor: 'rgba(255,255,255,1)',
             children: [
-              {
-                id: 21,
-                label: '梳理中',
-                children: [
-
-                ]
-              },
-              {
-                id: 22,
-                label: '评审中',
-                children: [
-
-                ]
-              }
             ]
           },
           {
@@ -224,46 +208,23 @@
             label: '实现中',
             backgroundColor: 'rgba(255,255,255,1)',
             children: [
-              {
-                id: 41,
-                label: '故事',
-                children: [
 
-                ]
-              },
-              {
-                id: 42,
-                label: "前端"
-              },
-              {
-                id: 43,
-                label: "后端"
-              },
-              {
-                id: 44,
-                label: "完成"
-              }
             ]
           },
           {
-            id: 10,
-            label: "待测试",
+            id: 41,
+            label: '待测试',
             backgroundColor: 'rgba(255,255,255,1)',
-            children:[]
+            children: [
+
+            ]
           },
           {
             id: 5,
             label: "系统测试",
             backgroundColor: 'rgba(255,255,255,1)',
             children: [
-              {
-                id: 51,
-                label: "测试中"
-              },
-              {
-                id: 52,
-                label: "已完成"
-              }
+
             ]
           },
           {
@@ -271,14 +232,7 @@
             label: "业务测试",
             backgroundColor: 'rgba(255,255,255,1)',
             children: [
-              {
-                id: 61,
-                label: "测试中"
-              },
-              {
-                id: 62,
-                label: "已完成"
-              }
+
             ]
           },
           {
@@ -301,29 +255,29 @@
         backlogs: [
           {
             backlogId: 1,
-            backlogName: '个客网银',
+            backlogName: '项目A',
             cards: [
               {
-                cardId: '1001',
-                cardName: '故事-个人理财业务',
+                cardId: '1',
+                cardName: '10个',
                 state: 12,
                 type: 0,
               },
               {
-                cardId: '1002',
-                cardName: '故事--个人基金业务',
+                cardId: '2',
+                cardName: '87个',
                 state: 12,
                 type: 0,
               },
               {
                 cardId: '1003',
-                cardName: '故事--个人缴费',
+                cardName: '12个',
                 state: 12,
                 type: 0,
               },
               {
                 cardId: '1023',
-                cardName: '故事--个人储蓄',
+                cardName: '5个',
                 state: 12,
                 type: 0,
               }
@@ -347,7 +301,7 @@
               },
               {
                 cardId: '2006',
-                cardName: '子需求-银企直联',
+                cardName: '需求-银企直联',
                 state: 12,
                 type: 0,
               }
@@ -359,19 +313,19 @@
             cards: [
               {
                 cardId: '3005',
-                cardName: '子需求-手机开户',
+                cardName: '需求-手机开户',
                 state: 12,
                 type: 0,
               },
               {
                 cardId: '3006',
-                cardName: '子需求-手机银行销户',
+                cardName: '需求-手机银行销户',
                 state: 12,
                 type: 0,
               },
               {
                 cardId: '2007',
-                cardName: '子需求-手机银行过户',
+                cardName: '需求-手机银行过户',
                 state: 12,
                 type: 0,
               }
@@ -411,7 +365,7 @@
       },
       touchend(ev){
         if(!$("#templateli")[0])
-            return;
+          return;
         $("#templateli").text('同步中... ').append('<i class="el-icon-loading"></i>')
         var top = $(window).scrollTop();
         var ele = document.elementFromPoint(ev.changedTouches[0].pageX, ev.changedTouches[0].pageY - top);

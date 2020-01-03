@@ -14,6 +14,8 @@ import complexKanbanUserCustomPerson from '@/components/complexKanbanUserCustomP
 import customLaneCitic from '@/components/customLaneCitic'
 import wbsTree from '@/components/wbsTree'
 import gitlabdiff from '@/components/gitlabdiff'
+import complexKanbanManager from '@/components/complexKanbanManager'
+import complexKanbanCEO from '@/components/complexKanbanCEO'
 import {lsWrite,lsRead} from '../common/js/ls'
 import * as types from '../store/type'
 
@@ -88,6 +90,16 @@ export default new Router({
       path: '/wbsTree',
       name: 'wbsTree',
       component: wbsTree
+    },
+    {
+      path: '/complexKanbanManager',
+      name: 'complexKanbanManager',
+      component: complexKanbanManager
+    },
+    {
+      path: '/complexKanbanCEO',
+      name: 'complexKanbanCEO',
+      component: complexKanbanCEO
     },
     {
       path: '/demo',

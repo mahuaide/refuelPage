@@ -76,9 +76,9 @@
               @dragend="dragEnd"
           >
             <div :touchId='card.cardId'
-              @touchstart="touchstart($event)"
-              @touchmove="touchmove($event)"
-              @touchend="touchend($event)"
+                 @touchstart="touchstart($event)"
+                 @touchmove="touchmove($event)"
+                 @touchend="touchend($event)"
             >
               ID:{{card.cardId}}<br>
 
@@ -246,12 +246,6 @@
             ]
           },
           {
-            id: 10,
-            label: "待测试",
-            backgroundColor: 'rgba(255,255,255,1)',
-            children:[]
-          },
-          {
             id: 5,
             label: "系统测试",
             backgroundColor: 'rgba(255,255,255,1)',
@@ -411,7 +405,7 @@
       },
       touchend(ev){
         if(!$("#templateli")[0])
-            return;
+          return;
         $("#templateli").text('同步中... ').append('<i class="el-icon-loading"></i>')
         var top = $(window).scrollTop();
         var ele = document.elementFromPoint(ev.changedTouches[0].pageX, ev.changedTouches[0].pageY - top);
