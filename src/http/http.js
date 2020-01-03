@@ -1,4 +1,4 @@
-/**
+﻿/**
  * Created by Administrator on 2017/3/20.
  */
 import axios from 'axios'
@@ -9,8 +9,8 @@ axios.defaults.timeout = 60000;
 // axios.defaults.baseURL = "http://refuel.applinzi.com";
 // axios.defaults.baseURL = "http://k2321512s9.imwork.net:16607";
 if (process.env.NODE_ENV === 'production') {
-  //axios.defaults.baseURL = "http://k2321512s9.imwork.net:16607";
-   axios.defaults.baseURL = "http://localhost:3000";
+  axios.defaults.baseURL = "http://2w30215129.goho.co:31152";
+   //axios.defaults.baseURL = "http://localhost:3000";
 }else{
   axios.defaults.baseURL = "http://localhost:3000";
 }
