@@ -79,7 +79,7 @@
                  @touchmove="touchmove($event)"
                  @touchend="touchend($event)"
             >
-              <br>
+              ID:{{card.cardId}}<br>
 
               {{card.cardName}}
             </div>
@@ -113,7 +113,7 @@
                    @touchmove="touchmove($event)"
                    @touchend="touchend($event)"
               >
-                <br>
+                ID:{{card.cardId}}<br>
 
                 {{card.cardName}}
               </div>
@@ -180,24 +180,38 @@
             children: [
               {
                 id: 11,
-                label: "项目"
+                label: "模块"
               },
               {
                 id: 12,
-                label: '需求'
+                label: '故事'
               }
             ]
           },
           {
             id: 2,
-            label: '需求分析',
+            label: '需求阶段',
             backgroundColor: 'rgba(255,255,255,1)',
             children: [
+              {
+                id: 21,
+                label: '梳理中',
+                children: [
+
+                ]
+              },
+              {
+                id: 22,
+                label: '评审中',
+                children: [
+
+                ]
+              }
             ]
           },
           {
             id: 3,
-            label: '就绪',
+            label: '需求就绪',
             backgroundColor: 'rgba(255,255,255,1)',
             children: [
 
@@ -205,34 +219,49 @@
           },
           {
             id: 4,
-            label: '实现中',
+            label: '实现阶段',
             backgroundColor: 'rgba(255,255,255,1)',
             children: [
+              {
+                id: 41,
+                label: '故事',
+                children: [
 
+                ]
+              },
+              {
+                id: 42,
+                label: "任务"
+              },
+              {
+                id: 44,
+                label: "完成"
+              }
             ]
           },
           {
-            id: 41,
-            label: '待测试',
+            id: 10,
+            label: "待测试",
             backgroundColor: 'rgba(255,255,255,1)',
-            children: [
-
-            ]
+            children:[]
           },
           {
             id: 5,
-            label: "系统测试",
+            label: "测试阶段",
             backgroundColor: 'rgba(255,255,255,1)',
             children: [
-
-            ]
-          },
-          {
-            id: 6,
-            label: "业务测试",
-            backgroundColor: 'rgba(255,255,255,1)',
-            children: [
-
+              {
+                id: 51,
+                label: "系统测试"
+              },
+              {
+                id: 52,
+                label: "UAT测试"
+              },
+              {
+                id: 53,
+                label: "已完成"
+              }
             ]
           },
           {
@@ -255,29 +284,29 @@
         backlogs: [
           {
             backlogId: 1,
-            backlogName: '项目A',
+            backlogName: '模块A',
             cards: [
               {
-                cardId: '1',
-                cardName: '10个',
+                cardId: '1001',
+                cardName: '故事-个人理财业务',
                 state: 12,
                 type: 0,
               },
               {
-                cardId: '2',
-                cardName: '87个',
+                cardId: '1002',
+                cardName: '故事--个人基金业务',
                 state: 12,
                 type: 0,
               },
               {
                 cardId: '1003',
-                cardName: '12个',
+                cardName: '故事--个人缴费',
                 state: 12,
                 type: 0,
               },
               {
                 cardId: '1023',
-                cardName: '5个',
+                cardName: '故事--个人储蓄',
                 state: 12,
                 type: 0,
               }
@@ -301,7 +330,7 @@
               },
               {
                 cardId: '2006',
-                cardName: '需求-银企直联',
+                cardName: '子需求-银企直联',
                 state: 12,
                 type: 0,
               }
@@ -313,19 +342,19 @@
             cards: [
               {
                 cardId: '3005',
-                cardName: '需求-手机开户',
+                cardName: '子需求-手机开户',
                 state: 12,
                 type: 0,
               },
               {
                 cardId: '3006',
-                cardName: '需求-手机银行销户',
+                cardName: '子需求-手机银行销户',
                 state: 12,
                 type: 0,
               },
               {
                 cardId: '2007',
-                cardName: '需求-手机银行过户',
+                cardName: '子需求-手机银行过户',
                 state: 12,
                 type: 0,
               }
@@ -824,7 +853,7 @@
     thead tr th tr td
       position relative
       box-sizing border-box
-      width 150px
+      width 140px
       overflow hidden
       text-align center
       border-right 1px solid #aaa
@@ -861,7 +890,7 @@
       padding 0
       margin 0
       box-sizing border-box
-      width 150px
+      width 140px
       min-height 35vh
       overflow hidden
       word-break break-all

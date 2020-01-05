@@ -5,12 +5,12 @@
     <router-link to="/customLanelong" tag="li">自定义泳道（多屏）</router-link>
     <router-link to="/customLaneCitic" tag="li">自定义泳道（citic）</router-link>
     <router-link to="/complexKanban" tag="li">复合型看板（固定格式）</router-link>
-    <router-link to="/complexKanbanUserCustom" tag="li">需求复合型看板（用户自定义泳道）</router-link>
     <router-link to="/complexKanbanUserCustomPerson" tag="li">人员复合型看板（用户自定义泳道）</router-link>
     <router-link to="/gitlabdiff" tag="li">gitlab diff</router-link>
     <router-link to="/wbsTree" tag="li">wbsTree</router-link>
-    <router-link to="/complexKanbanManager" tag="li">经理看板</router-link>
-    <router-link to="/complexKanbanCEO" tag="li">公司看板</router-link>
+    <router-link to="/complexKanbanUserCustom" tag="li">华融项目看板</router-link>
+    <router-link to="/complexKanbanManager" tag="li">华融系统看板</router-link>
+    <router-link to="/complexKanbanCEO" tag="li">华融公司看板</router-link>
   </div>
 </template>
 

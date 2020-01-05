@@ -59,7 +59,6 @@
     <td class="column">
       <template v-if="indexLane ==0">
         {{backlog.backlogName}}
-        <div class="addCard" @click="addCard(backlog)">加卡片</div>
       </template>
       <template v-else>
         <ul class="card-list"
@@ -80,7 +79,6 @@
                  @touchmove="touchmove($event)"
                  @touchend="touchend($event)"
             >
-              ID:{{card.cardId}}<br>
 
               {{card.cardName}}
             </div>
@@ -94,7 +92,6 @@
       <td class="column">
         <template v-if="indexLane ==0 && indexInlane ==0">
           {{backlog.backlogName}}
-          <div class="addCard" @click="addCard(backlog)">加卡片</div>
         </template>
         <template v-else="">
           <ul class="card-list"
@@ -115,7 +112,6 @@
                    @touchmove="touchmove($event)"
                    @touchend="touchend($event)"
               >
-                ID:{{card.cardId}}<br>
 
                 {{card.cardName}}
               </div>
@@ -182,38 +178,24 @@
             children: [
               {
                 id: 11,
-                label: "模块"
+                label: "项目"
               },
               {
                 id: 12,
-                label: '故事'
+                label: '未开始'
               }
             ]
           },
           {
             id: 2,
-            label: '需求分析',
+            label: '需求阶段',
             backgroundColor: 'rgba(255,255,255,1)',
             children: [
-              {
-                id: 21,
-                label: '梳理中',
-                children: [
-
-                ]
-              },
-              {
-                id: 22,
-                label: '评审中',
-                children: [
-
-                ]
-              }
             ]
           },
           {
             id: 3,
-            label: '就绪',
+            label: '需求就绪',
             backgroundColor: 'rgba(255,255,255,1)',
             children: [
 
@@ -221,58 +203,26 @@
           },
           {
             id: 4,
-            label: '实现中',
+            label: '实现阶段',
             backgroundColor: 'rgba(255,255,255,1)',
             children: [
-              {
-                id: 41,
-                label: '故事',
-                children: [
 
-                ]
-              },
-              {
-                id: 42,
-                label: "前端"
-              },
-              {
-                id: 43,
-                label: "后端"
-              },
-              {
-                id: 44,
-                label: "完成"
-              }
             ]
           },
           {
             id: 5,
-            label: "系统测试",
+            label: "待测试",
             backgroundColor: 'rgba(255,255,255,1)',
             children: [
-              {
-                id: 51,
-                label: "测试中"
-              },
-              {
-                id: 52,
-                label: "已完成"
-              }
+
             ]
           },
           {
             id: 6,
-            label: "业务测试",
+            label: "测试阶段",
             backgroundColor: 'rgba(255,255,255,1)',
             children: [
-              {
-                id: 61,
-                label: "测试中"
-              },
-              {
-                id: 62,
-                label: "已完成"
-              }
+
             ]
           },
           {
@@ -295,29 +245,29 @@
         backlogs: [
           {
             backlogId: 1,
-            backlogName: '个客网银',
+            backlogName: '项目A',
             cards: [
               {
                 cardId: '1001',
-                cardName: '故事-个人理财业务',
+                cardName: '33个',
                 state: 12,
                 type: 0,
               },
               {
                 cardId: '1002',
-                cardName: '故事--个人基金业务',
+                cardName: '33个',
                 state: 12,
                 type: 0,
               },
               {
                 cardId: '1003',
-                cardName: '故事--个人缴费',
+                cardName: '33个',
                 state: 12,
                 type: 0,
               },
               {
                 cardId: '1023',
-                cardName: '故事--个人储蓄',
+                cardName: '34个',
                 state: 12,
                 type: 0,
               }

@@ -59,7 +59,6 @@
     <td class="column">
       <template v-if="indexLane ==0">
         {{backlog.backlogName}}
-        <div class="addCard" @click="addCard(backlog)">加卡片</div>
       </template>
       <template v-else>
         <ul class="card-list"
@@ -94,7 +93,6 @@
       <td class="column">
         <template v-if="indexLane ==0 && indexInlane ==0">
           {{backlog.backlogName}}
-          <div class="addCard" @click="addCard(backlog)">加卡片</div>
         </template>
         <template v-else="">
           <ul class="card-list"
@@ -182,7 +180,7 @@
             children: [
               {
                 id: 11,
-                label: "模块"
+                label: "系统"
               },
               {
                 id: 12,
@@ -192,7 +190,7 @@
           },
           {
             id: 2,
-            label: '需求分析',
+            label: '需求阶段',
             backgroundColor: 'rgba(255,255,255,1)',
             children: [
               {
@@ -213,7 +211,7 @@
           },
           {
             id: 3,
-            label: '就绪',
+            label: '需求就绪',
             backgroundColor: 'rgba(255,255,255,1)',
             children: [
 
@@ -221,7 +219,7 @@
           },
           {
             id: 4,
-            label: '实现中',
+            label: '实现阶段',
             backgroundColor: 'rgba(255,255,255,1)',
             children: [
               {
@@ -233,11 +231,7 @@
               },
               {
                 id: 42,
-                label: "前端"
-              },
-              {
-                id: 43,
-                label: "后端"
+                label: "任务"
               },
               {
                 id: 44,
@@ -253,30 +247,19 @@
           },
           {
             id: 5,
-            label: "系统测试",
+            label: "测试阶段",
             backgroundColor: 'rgba(255,255,255,1)',
             children: [
               {
                 id: 51,
-                label: "测试中"
+                label: "系统测试"
               },
               {
                 id: 52,
-                label: "已完成"
-              }
-            ]
-          },
-          {
-            id: 6,
-            label: "业务测试",
-            backgroundColor: 'rgba(255,255,255,1)',
-            children: [
-              {
-                id: 61,
-                label: "测试中"
+                label: "UAT测试"
               },
               {
-                id: 62,
+                id: 53,
                 label: "已完成"
               }
             ]
@@ -301,7 +284,7 @@
         backlogs: [
           {
             backlogId: 1,
-            backlogName: '个客网银',
+            backlogName: '系统A',
             cards: [
               {
                 cardId: '1001',
@@ -870,7 +853,7 @@
     thead tr th tr td
       position relative
       box-sizing border-box
-      width 150px
+      width 140px
       overflow hidden
       text-align center
       border-right 1px solid #aaa
@@ -907,7 +890,7 @@
       padding 0
       margin 0
       box-sizing border-box
-      width 150px
+      width 140px
       min-height 35vh
       overflow hidden
       word-break break-all
