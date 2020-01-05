@@ -249,25 +249,31 @@
             cards: [
               {
                 cardId: '1001',
-                cardName: '33个',
+                cardName: '12个',
                 state: 12,
                 type: 0,
               },
               {
                 cardId: '1002',
-                cardName: '33个',
+                cardName: '24个',
                 state: 12,
                 type: 0,
               },
               {
                 cardId: '1003',
-                cardName: '33个',
+                cardName: '67个',
                 state: 12,
                 type: 0,
               },
               {
                 cardId: '1023',
-                cardName: '34个',
+                cardName: '19个',
+                state: 12,
+                type: 0,
+              },
+              {
+                cardId: '1024',
+                cardName: '2个',
                 state: 12,
                 type: 0,
               }
