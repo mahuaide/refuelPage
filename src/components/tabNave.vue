@@ -29,16 +29,17 @@
     },
     methods: {
       handleClick1(val){
+        this.activeName = val.name
         var nav1 = this.arr1.filter(item => {
           return item.path == val.name;
         })
         if (nav1[0].children && nav1[0].children.length > 0) {
           this.arr2 = nav1[0].children;
           this.activeSubName = this.arr2[0].path;
-          this.$router.push('/tabNave/' + val.name + '/' + this.activeSubName);
+          this.$router.push('/tabNave/' + this.activeName  + '/' + this.activeSubName);
         } else {
           this.arr2 = [];
-          this.$router.push('/tabNave/' + val.name);
+          this.$router.push('/tabNave/' + this.activeName );
         }
         this.setWidth();
       },
