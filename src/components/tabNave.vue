@@ -7,7 +7,7 @@
         </template>
       </el-tabs>
     </div>
-    <div id="nav2" >
+    <div id="nav2">
       <el-tabs v-model="activeSubName" @tab-click="handleClick2" v-if="arr2.length>0">
         <template v-for="link in arr2">
           <el-tab-pane :label="link.name" :name="link.path"></el-tab-pane>
@@ -36,28 +36,28 @@
         if (nav1[0].children && nav1[0].children.length > 0) {
           this.arr2 = nav1[0].children;
           this.activeSubName = this.arr2[0].path;
-          this.$router.push('/tabNave/' + this.activeName  + '/' + this.activeSubName);
+          this.$router.push('/tabNave/' + this.activeName + '/' + this.activeSubName);
         } else {
           this.arr2 = [];
-          this.$router.push('/tabNave/' + this.activeName );
+          this.$router.push('/tabNave/' + this.activeName);
         }
         this.setWidth();
       },
       handleClick2(val){
         this.activeSubName = val.name;
-        this.$router.push('/tabNave/' + this.activeName+ '/' + this.activeSubName);
+        this.$router.push('/tabNave/' + this.activeName + '/' + this.activeSubName);
         this.setWidth();
       },
       reresh(){
-          var obj = this.$router.currentRoute;
-          this.activeName = obj.matched[1].name;
-          var nav1 = this.arr1.filter(item => {
-            return item.path == this.activeName;
-          })
-          if (nav1[0].children && nav1[0].children.length > 0) {
-            this.arr2 = nav1[0].children;
-            this.activeSubName = obj.matched[2].name;
-          }
+        var obj = this.$router.currentRoute;
+        this.activeName = obj.matched[1].name;
+        var nav1 = this.arr1.filter(item => {
+          return item.path == this.activeName;
+        })
+        if (nav1[0].children && nav1[0].children.length > 0) {
+          this.arr2 = nav1[0].children;
+          this.activeSubName = obj.matched[2].name;
+        }
       },
       setWidth(){
         this.$nextTick(() => {
@@ -66,7 +66,7 @@
           var tabs1 = nav1.getElementsByClassName('el-tabs__nav')[0];
           var tabs2 = nav2.getElementsByClassName('el-tabs__nav')[0];
           nav1.style.width = window.getComputedStyle(tabs1, null).getPropertyValue('width')
-          if(tabs2){
+          if (tabs2) {
             nav2.style.width = window.getComputedStyle(tabs2, null).getPropertyValue('width')
           }
         })
@@ -97,6 +97,7 @@
 <style lang="stylus" rel="stylesheet/stylus">
   #nav1, #nav2
     margin 0 auto;
+
   .el-tabs--top
     .el-tabs__content {
       display none;
