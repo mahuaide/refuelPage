@@ -111,6 +111,17 @@ app.post('/changeTaskOrder', (req, res, next) => {
   })
 });
 
+//移动任务
+app.get('/getRounts', (req, res, next) => {
+  fs.readFile(path.join(FILEPATH, `getRounts.json`), 'utf-8', (err, data) => {
+    if (err) {
+      res.send(404)
+    } else {
+      res.send(data)
+    }
+  })
+});
+
 
 app.listen(PORT, IP, (err) => {
   if (err) {

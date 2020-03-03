@@ -1,29 +1,6 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import refuel from '@/components/refuel'
-import dndEcharts from '@/components/dndEcharts'
-import customLane from '@/components/customLane'
-import customLaneLong from '@/components/customLaneLong'
-import gasStation from '@/components/gasStation'
-import login from '@/components/login'
-import demo from '@/components/demo'
 import store from '../store/store'
-import complexKanban from '@/components/complexKanban'
-import complexKanbanUserCustom from '@/components/complexKanbanUserCustom'
-import complexKanbanUserCustomPerson from '@/components/complexKanbanUserCustomPerson'
-import customLaneCitic from '@/components/customLaneCitic'
-import wbsTree from '@/components/wbsTree'
-import gitlabdiff from '@/components/gitlabdiff'
-import complexKanbanManager from '@/components/complexKanbanManager'
-import complexKanbanCEO from '@/components/complexKanbanCEO'
-import tabNave from '@/components/tabNave'
-import vue0 from '@/components/nav/0.vue'
-import vue1 from '@/components/nav/1.vue'
-import vue2 from '@/components/nav/2.vue'
-import vue11 from '@/components/nav/11.vue'
-import vue12 from '@/components/nav/12.vue'
-import vue21 from '@/components/nav/21.vue'
-import vue22 from '@/components/nav/22.vue'
 import {lsWrite,lsRead} from '../common/js/ls'
 import * as types from '../store/type'
 
@@ -36,120 +13,120 @@ export default new Router({
   routes: [
     {
       path: '/',
-      component: login
+      component: () => import('@/components/login.vue')
     },
     {
       path: '/login',
       name: 'login',
-      component: login
+      component: () => import('@/components/login.vue')
     },
     {
       path: '/refuel',
       name: 'refuel',
-      component: refuel
+      component: () => import('@/components/refuel.vue')
     },
     {
       path: '/station',
       name: 'station',
-      component: gasStation
+      component: () => import('@/components/gasStation')
     },
 
     {
       path: '/dndEcharts',
       name: 'dndEcharts',
-      component: dndEcharts
+      component: () => import('@/components/dndEcharts')
     },
     {
       path: '/customLane',
       name: 'customLane',
-      component: customLane
+      component: () => import('@/components/customLane')
     },
     {
       path: '/customLaneLong',
       name: 'customLaneLong',
-      component: customLaneLong
+      component: () => import('@/components/customLaneLong')
     },
     {
       path: '/complexKanban',
       name: 'complexKanban',
-      component: complexKanban
+      component: () => import('@/components/complexKanban')
     },
     {
       path: '/complexKanbanUserCustom',
       name: 'complexKanbanUserCustom',
-      component: complexKanbanUserCustom
+      component: () => import('@/components/complexKanbanUserCustom')
     },
     {
       path: '/complexKanbanUserCustomPerson',
       name: 'complexKanbanUserCustomPerson',
-      component: complexKanbanUserCustomPerson
+      component: () => import('@/components/complexKanbanUserCustomPerson')
     },
     {
       path: '/customLaneCitic',
       name: 'customLaneCitic',
-      component: customLaneCitic
+      component: () => import('@/components/customLaneCitic')
     },
     {
       path: '/gitlabdiff',
       name: 'gitlabdiff',
-      component: gitlabdiff
+      component: () => import('@/components/gitlabdiff')
     },
     {
       path: '/wbsTree',
       name: 'wbsTree',
-      component: wbsTree
+      component: () => import('@/components/wbsTree')
     },
     {
       path: '/complexKanbanManager',
       name: 'complexKanbanManager',
-      component: complexKanbanManager
+      component: () => import('@/components/complexKanbanManager')
     },
     {
       path: '/complexKanbanCEO',
       name: 'complexKanbanCEO',
-      component: complexKanbanCEO
+      component: () => import('@/components/complexKanbanCEO')
     },
     {
       path: '/tabNave',
       name: 'tabNave',
-      component: tabNave,
+      component: () => import('@/components/tab/index.vue'),
       redirect:'/tabNave/vue0',
       children:[
         {
           path: 'vue0',
-          component: vue0,
+          component: () => import('@/components/nav/0.vue'),
           name: 'vue0'
         },
         {
           path: 'vue1',
-          component: vue1,
+          component: () => import('@/components/nav/1'),
           name: 'vue1',
           children:[
             {
               path: 'vue11',
-              component: vue11,
+              component: () => import('@/components/nav/11'),
               name: 'vue11'
             },
             {
               path: 'vue12',
-              component: vue12,
+              component: () => import('@/components/nav/12'),
               name: 'vue12'
             },
           ]
         },
         {
           path: 'vue2',
-          component: vue2,
+          component: () => import('@/components/nav/2'),
           name: 'vue2',
           children:[
             {
               path: 'vue21',
-              component: vue21,
+              component: () => import('@/components/nav/21'),
               name: 'vue21'
             },
             {
               path: 'vue22',
-              component: vue22,
+              component: () => import('@/components/nav/22'),
               name: 'vue22'
             },
           ]
@@ -159,7 +136,7 @@ export default new Router({
     {
       path: '/demo',
       name: 'demo',
-      component: demo
+      component: () => import('@/components/demo'),
     }
   ]
 })

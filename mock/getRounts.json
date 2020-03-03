@@ -1,0 +1,51 @@
+{
+  "code": 200,
+  "msg": "",
+  "data": [{
+    "path": "/tabNave",
+    "name": "tabNave",
+    "component": "tabNave",
+    "redirect":"/tabNave/vue0",
+    "children":[
+      {
+        "path": "vue0",
+        "component": "vue0",
+        "name": "vue0"
+      },
+      {
+        "path": "vue1",
+        "component": "vue1",
+        "name": "vue1",
+        "children":[
+          {
+            "path": "vue11",
+            "component": "vue11",
+            "name": "vue11"
+          },
+          {
+            "path": "vue12",
+            "component": "vue12",
+            "name": "vue12"
+          }
+        ]
+      },
+      {
+        "path": "vue2",
+        "component": "vue2",
+        "name": "vue2",
+        "children":[
+          {
+            "path": "vue21",
+            "component": "vue21",
+            "name": "vue21"
+          },
+          {
+            "path": "vue22",
+            "component": "vue22",
+            "name": "vue22"
+          }
+        ]
+      }
+    ]
+  }]
+}

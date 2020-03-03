@@ -32,3 +32,6 @@ export const getGitProjects = params=>{return axios.get(resfulParamsToUrl(Path.g
 export const getGitDiff = params=>{return axios.get(resfulParamsToUrl(Path.getGitDiff,params),{params})}
 export const getCommits = params=>{return axios.get(resfulParamsToUrl(Path.getCommits,params),{params})}
 export const getBranches = params=>{return axios.get(resfulParamsToUrl(Path.getBranches,params),{params})}
+
+//动态路由
+export const getRounts = params=>{return axios.get(resfulParamsToUrl(Path.getRounts,params),{params})}

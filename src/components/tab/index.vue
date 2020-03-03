@@ -18,6 +18,8 @@
   </div>
 </template>
 <script type="text/ecmascript-6">
+  import {getRounts} from '@http/api.js'
+  import Router from 'vue-router'
   export default{
     data(){
       return {
@@ -79,6 +81,12 @@
       }
     },
     mounted(){
+      //加载路由
+      getRounts().then(res=>{
+//        this.$router.addRoutes(res.data.data);
+//        this.$router.options.routes = res.data.data;
+      })
+      console.log(this.$router);
       //过滤出来tabNave的路由对象
       var temp = this.$router.options.routes.filter(item => {
         return item.name == 'tabNave';
