@@ -1,0 +1,91 @@
+<template>
+  <div class="nav">
+    <div id="nav1">
+      <el-tabs v-model="activeName" @tab-click="handleClick1">
+        <template v-for="link in arr1">
+          <el-tab-pane :label="link.name" :name="link.path"></el-tab-pane>
+        </template>
+      </el-tabs>
+    </div>
+    <div id="nav2" >
+      <el-tabs v-model="activeSubName" @tab-click="handleClick2" v-if="arr2.length>0">
+        <template v-for="link in arr2">
+          <el-tab-pane :label="link.name" :name="link.path"></el-tab-pane>
+        </template>
+      </el-tabs>
+    </div>
+    <router-view></router-view>
+  </div>
+</template>
+<script type="text/ecmascript-6">
+  export default{
+    data(){
+      return {
+        activeName: "",
+        activeSubName: "",
+        arr1: [],
+        arr2: [],
+      }
+    },
+    methods: {
+      handleClick1(val){
+        var nav1 = this.arr1.filter(item => {
+          return item.path == val.name;
+        })
+        if (nav1[0].children && nav1[0].children.length > 0) {
+          this.arr2 = nav1[0].children;
+          this.activeSubName = this.arr2[0].path;
+          this.$router.push('/tabNave/' + val.name + '/' + this.activeSubName);
+        } else {
+          this.arr2 = [];
+          this.$router.push('/tabNave/' + val.name);
+        }
+        this.setWidth();
+      },
+      handleClick2(val){
+        this.activeSubName = val.name;
+        this.$router.push('/tabNave/' + this.activeName+ '/' + this.activeSubName);
+        this.setWidth();
+      },
+      setWidth(){
+        this.$nextTick(() => {
+          var nav1 = document.getElementById('nav1');
+          var nav2 = document.getElementById('nav2');
+          var tabs1 = nav1.getElementsByClassName('el-tabs__nav')[0];
+          var tabs2 = nav2.getElementsByClassName('el-tabs__nav')[0];
+          nav1.style.width = window.getComputedStyle(tabs1, null).getPropertyValue('width')
+          if(tabs2){
+            nav2.style.width = window.getComputedStyle(tabs2, null).getPropertyValue('width')
+          }
+        })
+      }
+    },
+    mounted(){
+      var temp = this.$router.options.routes.filter(item => {
+        return item.name == 'tabNave';
+      })
+      this.arr1 = temp[0].children;
+      this.activeName = this.arr1[0].path;
+      if (this.arr1[0].children && this.arr1[0].children.length > 0) {
+        this.arr2 = this.arr1[0].children;
+        this.activeSubName = this.arr2[0].path;
+      }
+      this.setWidth();
+    },
+    computed: {},
+    components: {}
+  }
+</script>
+
+<style lang="stylus" rel="stylesheet/stylus">
+  #nav1, #nav2
+    margin 0 auto;
+  .el-tabs--top
+    .el-tabs__content {
+      display none;
+      .tablist {
+        display block
+        margin 0 auto;
+      }
+    }
+</style>
