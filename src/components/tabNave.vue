@@ -48,6 +48,17 @@
         this.$router.push('/tabNave/' + this.activeName+ '/' + this.activeSubName);
         this.setWidth();
       },
+      reresh(){
+          var obj = this.$router.currentRoute;
+          this.activeName = obj.matched[1].name;
+          var nav1 = this.arr1.filter(item => {
+            return item.path == this.activeName;
+          })
+          if (nav1[0].children && nav1[0].children.length > 0) {
+            this.arr2 = nav1[0].children;
+            this.activeSubName = obj.matched[2].name;
+          }
+      },
       setWidth(){
         this.$nextTick(() => {
           var nav1 = document.getElementById('nav1');
@@ -62,15 +73,20 @@
       }
     },
     mounted(){
+      //过滤出来tabNave的路由对象
       var temp = this.$router.options.routes.filter(item => {
         return item.name == 'tabNave';
       })
       this.arr1 = temp[0].children;
+      //默认第一个值
       this.activeName = this.arr1[0].path;
       if (this.arr1[0].children && this.arr1[0].children.length > 0) {
         this.arr2 = this.arr1[0].children;
         this.activeSubName = this.arr2[0].path;
       }
+      //刷新重新选择菜单
+      this.reresh();
+      //动态调整tab居中
       this.setWidth();
     },
     computed: {},
