@@ -113,6 +113,7 @@ export default new Router({
       path: '/tabNave',
       name: 'tabNave',
       component: tabNave,
+      redirect:'/tabNave/vue0',
       children:[
         {
           path: 'vue0',
