@@ -18,9 +18,7 @@
   </div>
 </template>
 <script type="text/ecmascript-6">
-
-  import Router from 'vue-router'
-  import { mapGetters } from "vuex";
+  import {mapGetters} from "vuex";
   export default{
     data(){
       return {
@@ -83,7 +81,7 @@
     },
     mounted(){
       //过滤出来tabNave的路由对象
-      var temp =this.router.filter(item => {
+      var temp = this.router.filter(item => {
         return item.name == 'tabNave';
       })
       this.arr1 = temp[0].children;
@@ -101,15 +99,12 @@
     computed: {
       ...mapGetters(["router"]),
     },
-    components: {
-    }
+    components: {}
   }
 </script>
-
 <style lang="stylus" rel="stylesheet/stylus">
   #nav1, #nav2
     margin 0 auto;
-
   .el-tabs--top
     .el-tabs__content {
       display none;
