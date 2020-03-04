@@ -11,7 +11,7 @@
     <router-link to="/complexKanbanUserCustom" tag="li">华融项目看板</router-link>
     <router-link to="/complexKanbanManager" tag="li">华融系统看板</router-link>
     <router-link to="/complexKanbanCEO" tag="li">华融公司看板</router-link>
-    <router-link to="/tabNave" tag="li">水平导航</router-link>
+    <router-link to="/tabNave/vue0" tag="li">水平导航</router-link>
   </div>
 </template>
 

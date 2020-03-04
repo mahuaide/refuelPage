@@ -1,22 +1,21 @@
 <template>
-  <div>1</div>
-  <!--<div class="nav">-->
-    <!--<div id="nav1">-->
-      <!--<el-tabs v-model="activeName" @tab-click="handleClick1">-->
-        <!--<template v-for="link in arr1">-->
-          <!--<el-tab-pane :label="link.name" :name="link.path"></el-tab-pane>-->
-        <!--</template>-->
-      <!--</el-tabs>-->
-    <!--</div>-->
-    <!--<div id="nav2">-->
-      <!--<el-tabs v-model="activeSubName" @tab-click="handleClick2" v-if="arr2.length>0">-->
-        <!--<template v-for="link in arr2">-->
-          <!--<el-tab-pane :label="link.name" :name="link.path"></el-tab-pane>-->
-        <!--</template>-->
-      <!--</el-tabs>-->
-    <!--</div>-->
-    <!--<router-view></router-view>-->
-  <!--</div>-->
+  <div class="nav">
+    <div id="nav1">
+      <el-tabs v-model="activeName" @tab-click="handleClick1">
+        <template v-for="link in arr1">
+          <el-tab-pane :label="link.name" :name="link.path"></el-tab-pane>
+        </template>
+      </el-tabs>
+    </div>
+    <div id="nav2">
+      <el-tabs v-model="activeSubName" @tab-click="handleClick2" v-if="arr2.length>0">
+        <template v-for="link in arr2">
+          <el-tab-pane :label="link.name" :name="link.path"></el-tab-pane>
+        </template>
+      </el-tabs>
+    </div>
+    <router-view></router-view>
+  </div>
 </template>
 <script type="text/ecmascript-6">
 
@@ -57,6 +56,7 @@
       //页面刷新
       reresh(){
         var obj = this.$router.currentRoute;
+        console.log(obj)
         //一级路由
         this.activeName = obj.matched[1].name;
         var nav1 = this.arr1.filter(item => {
@@ -83,24 +83,25 @@
       },
     },
     mounted(){
-//      //过滤出来tabNave的路由对象
-//      var temp = this.$router.options.routes.filter(item => {
-//        return item.name == 'tabNave';
-//      })
-//      this.arr1 = temp[0].children;
-//      //一级，二级都默认第一个选中
-//      this.activeName = this.arr1[0].path;
-//      if (this.arr1[0].children && this.arr1[0].children.length > 0) {
-//        this.arr2 = this.arr1[0].children;
-//        this.activeSubName = this.arr2[0].path;
-//      }
-//      //刷新重新选择菜单
-//      this.reresh();
-//      //动态调整tab居中
-//      this.setWidth();
+      //过滤出来tabNave的路由对象
+      var temp =this.$store.getters.getRouter.filter(item => {
+        return item.name == 'tabNave';
+      })
+      this.arr1 = temp[0].children;
+      //一级，二级都默认第一个选中
+      this.activeName = this.arr1[0].path;
+      if (this.arr1[0].children && this.arr1[0].children.length > 0) {
+        this.arr2 = this.arr1[0].children;
+        this.activeSubName = this.arr2[0].path;
+      }
+      //刷新重新选择菜单
+      this.reresh();
+      //动态调整tab居中
+      this.setWidth();
     },
     computed: {},
-    components: {}
+    components: {
+    }
   }
 </script>
 
