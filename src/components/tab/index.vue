@@ -20,7 +20,7 @@
 <script type="text/ecmascript-6">
 
   import Router from 'vue-router'
-
+  import { mapGetters } from "vuex";
   export default{
     data(){
       return {
@@ -56,7 +56,6 @@
       //页面刷新
       reresh(){
         var obj = this.$router.currentRoute;
-        console.log(obj)
         //一级路由
         this.activeName = obj.matched[1].name;
         var nav1 = this.arr1.filter(item => {
@@ -84,7 +83,7 @@
     },
     mounted(){
       //过滤出来tabNave的路由对象
-      var temp =this.$store.getters.getRouter.filter(item => {
+      var temp =this.router.filter(item => {
         return item.name == 'tabNave';
       })
       this.arr1 = temp[0].children;
@@ -99,7 +98,9 @@
       //动态调整tab居中
       this.setWidth();
     },
-    computed: {},
+    computed: {
+      ...mapGetters(["router"]),
+    },
     components: {
     }
   }
