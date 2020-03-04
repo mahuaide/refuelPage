@@ -10,6 +10,7 @@ import mutations from './mutations'
 Vue.use(Vuex);
 const state={
   user: {}, //当前登录的user信息
+  routes:[],
 }
 export default new Vuex.Store({
   state,

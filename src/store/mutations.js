@@ -11,4 +11,7 @@ export default {
   [types.LOGOUT]: (state) => {
     state.user={};
   },
+  [types.CREATEROUTES]: (state,data) => {
+    state.routes=data;
+  }
 }

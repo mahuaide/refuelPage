@@ -1,25 +1,27 @@
 <template>
-  <div class="nav">
-    <div id="nav1">
-      <el-tabs v-model="activeName" @tab-click="handleClick1">
-        <template v-for="link in arr1">
-          <el-tab-pane :label="link.name" :name="link.path"></el-tab-pane>
-        </template>
-      </el-tabs>
-    </div>
-    <div id="nav2">
-      <el-tabs v-model="activeSubName" @tab-click="handleClick2" v-if="arr2.length>0">
-        <template v-for="link in arr2">
-          <el-tab-pane :label="link.name" :name="link.path"></el-tab-pane>
-        </template>
-      </el-tabs>
-    </div>
-    <router-view></router-view>
-  </div>
+  <div>1</div>
+  <!--<div class="nav">-->
+    <!--<div id="nav1">-->
+      <!--<el-tabs v-model="activeName" @tab-click="handleClick1">-->
+        <!--<template v-for="link in arr1">-->
+          <!--<el-tab-pane :label="link.name" :name="link.path"></el-tab-pane>-->
+        <!--</template>-->
+      <!--</el-tabs>-->
+    <!--</div>-->
+    <!--<div id="nav2">-->
+      <!--<el-tabs v-model="activeSubName" @tab-click="handleClick2" v-if="arr2.length>0">-->
+        <!--<template v-for="link in arr2">-->
+          <!--<el-tab-pane :label="link.name" :name="link.path"></el-tab-pane>-->
+        <!--</template>-->
+      <!--</el-tabs>-->
+    <!--</div>-->
+    <!--<router-view></router-view>-->
+  <!--</div>-->
 </template>
 <script type="text/ecmascript-6">
-  import {getRounts} from '@http/api.js'
+
   import Router from 'vue-router'
+
   export default{
     data(){
       return {
@@ -78,30 +80,24 @@
             nav2.style.width = window.getComputedStyle(tabs2, null).getPropertyValue('width')
           }
         })
-      }
+      },
     },
     mounted(){
-      //加载路由
-      getRounts().then(res=>{
-//        this.$router.addRoutes(res.data.data);
-//        this.$router.options.routes = res.data.data;
-      })
-      console.log(this.$router);
-      //过滤出来tabNave的路由对象
-      var temp = this.$router.options.routes.filter(item => {
-        return item.name == 'tabNave';
-      })
-      this.arr1 = temp[0].children;
-      //一级，二级都默认第一个选中
-      this.activeName = this.arr1[0].path;
-      if (this.arr1[0].children && this.arr1[0].children.length > 0) {
-        this.arr2 = this.arr1[0].children;
-        this.activeSubName = this.arr2[0].path;
-      }
-      //刷新重新选择菜单
-      this.reresh();
-      //动态调整tab居中
-      this.setWidth();
+//      //过滤出来tabNave的路由对象
+//      var temp = this.$router.options.routes.filter(item => {
+//        return item.name == 'tabNave';
+//      })
+//      this.arr1 = temp[0].children;
+//      //一级，二级都默认第一个选中
+//      this.activeName = this.arr1[0].path;
+//      if (this.arr1[0].children && this.arr1[0].children.length > 0) {
+//        this.arr2 = this.arr1[0].children;
+//        this.activeSubName = this.arr2[0].path;
+//      }
+//      //刷新重新选择菜单
+//      this.reresh();
+//      //动态调整tab居中
+//      this.setWidth();
     },
     computed: {},
     components: {}
@@ -111,6 +107,7 @@
 <style lang="stylus" rel="stylesheet/stylus">
   #nav1, #nav2
     margin 0 auto;
+
   .el-tabs--top
     .el-tabs__content {
       display none;

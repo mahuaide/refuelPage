@@ -10,4 +10,7 @@ export default{
   [types.LOGOUT]: ({commit}) => {
     commit(types.LOGOUT)
   },
+  [types.CREATEROUTES]: ({commit}) => {
+    commit(types.CREATEROUTES)
+  },
 }

@@ -29,7 +29,7 @@ export default {
   getBranches:GITLAB+'/getBranches/{project}',
   /*********************getlab end***************************/
   /*********************动态路由加载***********************/
-  getRounts:'/getRounts',
+  getRounts:'/getRouter',
   /*********************动态路由加载***********************/
 }
 

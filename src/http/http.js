@@ -2,7 +2,7 @@
  * Created by Administrator on 2017/3/20.
  */
 import axios from 'axios'
-import router from '../router/index.js';
+import {router} from '../router/index.js';
 
 // axios 公共配置
 axios.defaults.timeout = 60000;
@@ -12,7 +12,7 @@ if (process.env.NODE_ENV === 'production') {
   axios.defaults.baseURL = "http://2w30215129.goho.co:31152";
    //axios.defaults.baseURL = "http://localhost:3000";
 }else{
-  axios.defaults.baseURL = "http://localhost:3000";
+  axios.defaults.baseURL = "http://localhost:3002";
 }
 axios.defaults.withCredentials = true;
 
