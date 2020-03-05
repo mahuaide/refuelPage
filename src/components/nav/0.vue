@@ -1,5 +1,5 @@
 <template>
-  <div>vue0</div>
+  <div  v-hasPermission="23">vue0</div>
 </template>
 
 <script type="text/ecmascript-6">

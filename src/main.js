@@ -13,6 +13,46 @@ Vue.config.productionTip = false
 Object.keys(filters).forEach(key => Vue.filter(key, filters[key]))
 Vue.use(ElementUI);
 
+Vue.directive('hasPermission', {
+  // bind: function (el, binding, vnode) {
+  //   let permissionCode = binding.value
+  //   // 判断是否有权限
+  //   if (!Vue.prototype.$_hasPermission(permissionCode, vnode.context.$route.meta.permissions)) {
+  //     // 没有权限，当前元素从页面上删除
+  //     el.parentNode.removeChild(el)
+  //   }
+  // },
+  inserted: function (el, binding, vnode) {
+    let permissionCode = binding.value
+    // 判断是否有权限
+    if (
+      !Vue.prototype.$_hasPermission(
+        permissionCode,
+        vnode.context.$route.meta.roles
+      )
+    ) {
+      // 没有权限，当前元素从页面上删除
+      if (el.parentNode) {
+        el.parentNode.removeChild(el)
+      }
+    }
+  }
+})
+
+// 权限检查方法
+Vue.prototype.$_hasPermission = function (val, permission) {
+  if (!val) {
+    return true
+  }
+  if (!permission) {
+    return false
+  }
+  if (permission.includes(val)) {
+    return true
+  }
+  return false
+}
+
 /* eslint-disable no-new */
 new Vue({
   el: '#app',

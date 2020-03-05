@@ -11,6 +11,14 @@ export const createRouter = (data) => {
     let route = {};
     route.path = item.path;
     route.name = item.name;
+    route.meta = {};
+    if (item.meta) {
+      let roles = []
+      item.meta.forEach(each => {
+        roles.push(each)
+      })
+      route.meta.roles = roles;
+    }
     try {
       route.component = _import(item.component);
     } catch (e) {
@@ -43,5 +51,7 @@ export const addRoutes = () => {
     }).catch(e => {
       reject("");
     })
-  }).catch((e) => { reject("");})
+  }).catch((e) => {
+    reject("");
+  })
 }
