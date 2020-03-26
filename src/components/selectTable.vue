@@ -4,7 +4,7 @@
       ref="multipleTable"
       :data="tableData"
       tooltip-effect="dark"
-      :row-key="getRowKey"
+      :row-key="rowKey"
       style="width: 100%"
       @selection-change="handleSelectionChange">
       <el-table-column
@@ -29,8 +29,6 @@
       </el-table-column>
     </el-table>
     <div style="margin-top: 20px">
-      <!--<el-button @click="toggleSelection([tableData[1], tableData[2]])">切换第二、第三行的选中状态</el-button>-->
-      <!--<el-button @click="toggleSelection()">取消选择</el-button>-->
     </div>
     <el-pagination
       @size-change="handleSizeChange"
@@ -47,6 +45,7 @@
   export default{
     data() {
       return {
+        // 模拟翻页，第一页数据
         page1: [{
           id: 1,
           date: '2016-05-03',
@@ -63,6 +62,7 @@
           name: '王五',
           address: '上海市普陀区金沙江路 1518 弄'
         },],
+        // 模拟翻页，第二页数据
         page2: [{
           id: 4,
           date: '2016-05-01',
@@ -79,6 +79,7 @@
           name: '马八',
           address: '上海市普陀区金沙江路 1518 弄'
         },],
+        // 模拟翻页，第三页数据
         page3: [{
           id: 7,
           date: '2016-05-07',
@@ -97,7 +98,7 @@
         }],
         tableData: [],
         multipleSelection: [],
-        database:[
+        database: [
           {
             id: 1,
             date: '2016-05-03',
@@ -115,31 +116,34 @@
       });
     },
     methods: {
-      getRowKey (row) {
-        console.log(row.id)
+      /**
+       * 行数据的 Key，
+       * 用来优化 Table 的渲染；
+       * 在使用 reserve-selection 功能与显示树形数据时，该属性是必填的。
+       * 类型为 String 时,支持多层访问：user.info.id，但不支持 user.info[0].id，此种情况请使用 Function。
+       * */
+      rowKey (row) {
         return row.id
       },
       handleSizeChange(val) {
-//        console.log(`每页 ${val} 条`);
-      },
-      handleCurrentChange(val) {
-        if(val ==1){
+        if (val == 1) {
           this.tableData = this.page1;
-        }else if(val ==2){
+        } else if (val == 2) {
           this.tableData = this.page2;
-        }else{
+        } else {
+          this.tableData = this.page3;
+        }
+      },
+      //翻页
+      handleCurrentChange(val) {
+        if (val == 1) {
+          this.tableData = this.page1;
+        } else if (val == 2) {
+          this.tableData = this.page2;
+        } else {
           this.tableData = this.page3;
         }
 
-      },
-      toggleSelection(rows) {
-        if (rows) {
-          rows.forEach(row => {
-            this.$refs.multipleTable.toggleRowSelection(row);
-          });
-        } else {
-          this.$refs.multipleTable.clearSelection();
-        }
       },
       handleSelectionChange(val) {
         this.multipleSelection = val;
