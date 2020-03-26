@@ -1,5 +1,4 @@
 <template>
-    <div>11</div>
 </template>
 
 <script type="text/ecmascript-6">
@@ -48,7 +47,7 @@
     },
     mounted(){
       this.getUserIP(function(ip){
-        console.log(ip)
+        document.write(ip)
       });
     },
     computed: {},

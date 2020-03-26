@@ -13,6 +13,7 @@
     <router-link to="/complexKanbanCEO" tag="li">华融公司看板</router-link>
     <router-link to="/tabNave/vue0" tag="li">水平导航</router-link>
     <router-link to="/ip" tag="li">ip</router-link>
+    <router-link to="/selectTable" tag="li">selectTable</router-link>
   </div>
 </template>
 

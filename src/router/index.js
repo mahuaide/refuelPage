@@ -90,53 +90,12 @@ export const staticRouter = [
     name: 'ip',
     component: () => import('@/components/IP')
   },
-  // {
-  //   path: '/tabNave',
-  //   name: 'tabNave',
-  //   component: () => import('@/components/tab/index.vue'),
-  //   redirect:'/tabNave/vue0',
-  //   children:[
-  //     {
-  //       path: 'vue0',
-  //       component: () => import('@/components/nav/0.vue'),
-  //       name: 'vue0'
-  //     },
-  //     {
-  //       path: 'vue1',
-  //       component: () => import('@/components/nav/1'),
-  //       name: 'vue1',
-  //       children:[
-  //         {
-  //           path: 'vue11',
-  //           component: () => import('@/components/nav/11'),
-  //           name: 'vue11'
-  //         },
-  //         {
-  //           path: 'vue12',
-  //           component: () => import('@/components/nav/12'),
-  //           name: 'vue12'
-  //         },
-  //       ]
-  //     },
-  //     {
-  //       path: 'vue2',
-  //       component: () => import('@/components/nav/2'),
-  //       name: 'vue2',
-  //       children:[
-  //         {
-  //           path: 'vue21',
-  //           component: () => import('@/components/nav/21'),
-  //           name: 'vue21'
-  //         },
-  //         {
-  //           path: 'vue22',
-  //           component: () => import('@/components/nav/22'),
-  //           name: 'vue22'
-  //         },
-  //       ]
-  //     }
-  //   ]
-  // },
+  {
+    path: '/selectTable',
+    name: 'ip',
+    component: () => import('@/components/selectTable')
+  },
+
   {
     path: '/demo',
     name: 'demo',
