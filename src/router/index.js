@@ -81,6 +81,11 @@ export const staticRouter = [
     component: () => import('@/components/complexKanbanManager')
   },
   {
+    path: '/tableTree',
+    name: 'tableTree',
+    component: () => import('@/components/treeDemo')
+  },
+  {
     path: '/complexKanbanCEO',
     name: 'complexKanbanCEO',
     component: () => import('@/components/complexKanbanCEO')
