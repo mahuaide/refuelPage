@@ -3,7 +3,7 @@
     <div class="refuel-log">
       <p class="title"><span class="license">{{$store.state.user.license}}</span><b style="font-size: 14px;color: #999">
         ({{$store.state.user.carType}})</b>
-        <span class="tip">车主：<b>{{$store.state.user.userName}}</b>，共 <b>{{count}}</b> 次，总计 <b>{{$store.state.user.payTotal || 0 }}</b> 元，总里程：<b>{{$store.state.user.mileage}}公里</b></span>
+        <span class="tip">车主：<b>{{$store.state.user.userName}}</b>，共 <b>{{count}}</b> 次，总计 <b>{{($store.state.user.payTotal).toFixed(2) || 0 }}</b> 元，总里程：<b>{{$store.state.user.mileage}}公里</b></span>
         <el-button type="primary" size="small" icon="el-icon-circle-plus" @click="add"
                    style="float: right;margin: 8px 20px 0 0">新增
         </el-button>
@@ -62,6 +62,14 @@
             label="里程"
             align="left"
           >
+          </el-table-column>
+          <el-table-column
+            label="平均油耗"
+            align="left"
+          >
+            <template slot-scope="scope">
+              {{scope.row.avg_kilo || "--"}}L/公里
+            </template>
           </el-table-column>
           <el-table-column
             label="操作"
