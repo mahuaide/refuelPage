@@ -68,7 +68,7 @@
             align="left"
           >
             <template slot-scope="scope">
-              {{scope.row.avg_kilo || "--"}}L/公里
+              {{scope.row.avg_kilo || "--"}}L/百公里
             </template>
           </el-table-column>
           <el-table-column
