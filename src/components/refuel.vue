@@ -380,7 +380,7 @@
   .warpper
     width 100%
     .refuel-log
-      width 80%
+      width 90%
       margin 0 auto
       .title
         text-align left
