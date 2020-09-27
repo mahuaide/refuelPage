@@ -4,6 +4,7 @@ import store from '../store/store'
 import {lsWrite, lsRead} from '../common/js/ls'
 import * as types from '../store/type'
 import {addRoutes} from './createRoutes'
+import Watermark from '@/common/js/watermark';
 
 
 Vue.use(Router)
@@ -13,10 +14,16 @@ if (lsRead("user").userId) {
 export const staticRouter = [
   {
     path: '/',
+    meta:{
+      watermark:false
+    },
     component: () => import('@/components/login.vue')
   },
   {
     path: '/login',
+    meta:{
+      watermark:false
+    },
     name: 'login',
     component: () => import('@/components/login.vue')
   },
@@ -120,3 +127,11 @@ router.beforeEach((to, from, next) => {
   })
   next();
 })
+router.afterEach((to) => {
+  if (store.state.user.license && to.meta.watermark != false) {
+    Watermark.set(store.state.user.license);
+  }else{
+    Watermark.set("");
+  }
+  
+});
