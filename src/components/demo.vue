@@ -16,6 +16,8 @@
     <router-link to="/selectTable" tag="li">表格翻页连选</router-link>
     <router-link to="/tableTree" tag="li">tableTree</router-link>
     <router-link to="/dmpTree" tag="li">dmpTree</router-link>
+    <router-link to="/beijingDMPTable" tag="li">beijingDMPTable</router-link>
+    <router-link to="/testTable" tag="li">testTable</router-link>
   </div>
 </template>
 

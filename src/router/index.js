@@ -112,12 +112,24 @@ export const staticRouter = [
     name: 'ip',
     component: () => import('@/components/dmpTree')
   },
+  {
+    path: '/beijingDMPTable',
+    name: 'beijingDMPTable',
+    component: () => import('@/components/beijingDMPTable'),
+  },
+  {
+    path: '/testTable',
+    name: 'testTable',
+    component: () => import('@/components/testTable'),
+  },
+
 
   {
     path: '/demo',
     name: 'demo',
     component: () => import('@/components/demo'),
-  }
+  },
+  
 ]
 export const router = new Router({
   scrollBehavior: () => ({

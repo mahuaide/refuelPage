@@ -1,0 +1,99 @@
+{
+    "issueId": 10000,
+    "bizNum": "CRM-BJ-REQ-11111111",
+    "title": "北京移动需求",
+    "handler": "殷总",
+    "epicSatus": "需求分析-进行中",
+    "release": "未发布",
+    "finish": "未完成",
+    "features": [
+      {
+        "issueId": 10001,
+        "systemName": "CRM",
+        "handler": "郭海卫",
+        "featureStatus": "需求分析-进行中",
+        "sysTester": "成铭",
+        "sysTestStatus": "进行中",
+        "stories": [
+          {
+            "issueId": 20001,
+            "title": "xxxx",
+            "moduleName": "呼叫中心",
+            "devTasks": [
+              {
+                "issueId": 30001,
+                "handler": "麻槐德",
+                "taskStatus": "已领取"
+              },
+              {
+                "issueId": 30002,
+                "handler": "赵前进",
+                "taskStatus": "进行中"
+              }
+            ],
+            "funTestTasks": [
+              {
+                "handler": "麻槐德",
+                "taskStatus": "已领取"
+              }
+            ]
+          },
+          {
+            "issueId": 20002,
+            "title": "xxxx",
+            "moduleName": "营业",
+            "devTasks": [
+              {
+                "issueId": 40001,
+                "handler": "庄强",
+                "taskStatus": "进行中"
+              },
+              {
+                "issueId": 40002,
+                "handler": "周志勇",
+                "taskStatus": "已完成"
+              }
+            ],
+            "funTestTasks": [
+              {
+                "handler": "刘星宝",
+                "taskStatus": "进行中"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "issueId": 10002,
+        "systemName": "BOSS",
+        "handler": "沈峰",
+        "featureStatus": "需求分析-已完成",
+        "sysTester": "成铭",
+        "sysTestStatus": "进行中",
+        "stories": [
+          {
+            "issueId": 50001,
+            "title": "xxxx",
+            "moduleName": "BOSS接口",
+           " devTasks": [
+            ],
+            "funTestTasks": [
+              {
+                "handler": "刘星宝",
+                "taskStatus": "进行中"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "issueId": 10003,
+        "systemName": "电商",
+        "handler": "王神话",
+        "featureStatus": "需求分析-进行中",
+        "sysTester": "成铭",
+        "sysTestStatus": "未开始",
+        "stories": []
+      }
+    ]
+  }
