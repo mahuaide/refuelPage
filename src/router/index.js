@@ -107,6 +107,11 @@ export const staticRouter = [
     name: 'ip',
     component: () => import('@/components/selectTable')
   },
+  {
+    path: '/dmpTree',
+    name: 'ip',
+    component: () => import('@/components/dmpTree')
+  },
 
   {
     path: '/demo',

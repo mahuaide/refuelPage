@@ -15,6 +15,7 @@
     <router-link to="/ip" tag="li">获取本机ip（chrome老版本）</router-link>
     <router-link to="/selectTable" tag="li">表格翻页连选</router-link>
     <router-link to="/tableTree" tag="li">tableTree</router-link>
+    <router-link to="/dmpTree" tag="li">dmpTree</router-link>
   </div>
 </template>
 
