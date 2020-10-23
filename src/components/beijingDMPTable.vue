@@ -6,31 +6,41 @@
       border
       style="width: 100%; margin-top: 20px"
     >
-      <el-table-column label="需求名称" prop="reqId" align="center">
+      <el-table-column label="需求名称" prop="bizNum" align="center">
         <template slot-scope="scope">
-          {{ scope.row.reqId }}<br />
-          {{ scope.row.reqName }}<br />
-          {{ scope.row.reqHandler }}<br />
-          {{ scope.row.reqStatus }}<br />
+          {{ scope.row.bizNum }}<br />
+          {{ scope.row.title }}<br />
+          {{ scope.row.epicHandler ? "(" + scope.row.epicHandler + ")" : ""
+          }}<br />
+          {{ scope.row.epicStatus ? "(" + scope.row.epicStatus + ")" : ""
+          }}<br />
         </template>
       </el-table-column>
       <el-table-column label="系统分支" align="center">
         <template slot-scope="scope">
           {{ scope.row.systemName }}<br />
-          ({{ scope.row.systemHandler }})<br />
-          ({{ scope.row.systemStatus }})<br />
+          {{
+            scope.row.featureHandler
+              ? "(" + scope.row.featureHandler + ")"
+              : ""
+          }}<br />
+          {{ scope.row.featureStatus ? "(" + scope.row.featureStatus + ")" : ""
+          }}<br />
         </template>
       </el-table-column>
-      <el-table-column prop="module" label="模块" align="center">
+      <el-table-column prop="module" label="故事/模块" align="center">
         <template slot-scope="scope">
-          {{ scope.row.moduleName }}<br />
+          {{ scope.row.sotryName }}<br />{{
+            scope.row.moduleName ? "(" + scope.row.moduleName + ")" : ""
+          }}<br />
         </template>
       </el-table-column>
-      <el-table-column prop="dev" label="需求开发" align="center">
+      <el-table-column prop="devTasks" label="需求开发" align="center">
         <template slot-scope="scope">
           <ul>
-            <li v-for="(item, index) in scope.row.dev" :key="index">
-              {{ item.devHandler }} ({{ item.devStatus }})
+            <li v-for="(item, index) in scope.row.devTasks" :key="index">
+              {{ item.handler }}
+              {{ item.taskStatus ? "(" + item.taskStatus + ")" : "" }}
             </li>
           </ul>
         </template>
@@ -38,15 +48,19 @@
       <el-table-column prop="funcTest" label="功能测试" align="center">
         <template slot-scope="scope">
           <ul>
-            <li v-for="(item, index) in scope.row.funTest" :key="index">
-              {{ item.funcTestHandler }} ({{ item.funcTestStatus }})
+            <li v-for="(item, index) in scope.row.funTestTasks" :key="index">
+              {{ item.handler }}
+              {{ item.taskStatus ? "(" + item.taskStatus + ")" : "" }}
             </li>
           </ul>
         </template>
       </el-table-column>
       <el-table-column prop="sysTest" label="联调测试" align="center">
         <template slot-scope="scope">
-          {{ scope.row.sysTestHandler }} ({{ scope.row.sysTestStatus }})
+          {{ scope.row.sysTester }}
+          {{
+            scope.row.sysTestStatus ? "(" + scope.row.sysTestStatus + ")" : ""
+          }}
         </template>
       </el-table-column>
       <el-table-column prop="release" label="上线发布" align="center">
@@ -82,7 +96,7 @@ export default {
             stories: [
               {
                 issueId: 20001,
-                title: "xxxx",
+                title: "呼叫中心故事1",
                 moduleName: "呼叫中心",
                 devTasks: [
                   {
@@ -98,14 +112,14 @@ export default {
                 ],
                 funTestTasks: [
                   {
-                    handler: "麻槐德",
-                    taskStatus: "已领取",
+                    handler: "刘星宝",
+                    taskStatus: "进行中",
                   },
                 ],
               },
               {
                 issueId: 20002,
-                title: "xxxx",
+                title: "营业故事1",
                 moduleName: "营业",
                 devTasks: [
                   {
@@ -124,6 +138,10 @@ export default {
                     handler: "刘星宝",
                     taskStatus: "进行中",
                   },
+                  {
+                    handler: "张勋",
+                    taskStatus: "已领取",
+                  },
                 ],
               },
             ],
@@ -138,13 +156,69 @@ export default {
             stories: [
               {
                 issueId: 30001,
-                title: "xxxx",
+                title: "BOSS接口故事1",
                 moduleName: "BOSS接口",
                 devTasks: [
+                  {
+                    issueId: 31001,
+                    handler: "李秀成",
+                    taskStatus: "已领取",
+                  },
+                  {
+                    issueId: 31002,
+                    handler: "曾国藩",
+                    taskStatus: "进行中",
+                  },
                 ],
                 funTestTasks: [
                   {
                     handler: "刘星宝",
+                    taskStatus: "进行中",
+                  },
+                ],
+              },
+              {
+                issueId: 30002,
+                title: "BOSS接口故事2",
+                moduleName: "短信接口",
+                devTasks: [
+                  {
+                    issueId: 31001,
+                    handler: "麻槐德",
+                    taskStatus: "已领取",
+                  },
+                  {
+                    issueId: 31002,
+                    handler: "赵前进",
+                    taskStatus: "进行中",
+                  },
+                ],
+                funTestTasks: [
+                  {
+                    handler: "付波",
+                    taskStatus: "进行中",
+                  },
+                ],
+              },
+              {
+                issueId: 30002,
+                title: "BOSS接口故事3",
+                moduleName: "短信接口",
+                devTasks: [
+                  {
+                    issueId: 31001,
+                    handler: "麻槐德",
+                    taskStatus: "已领取",
+                  },
+                  {
+                    issueId: 31002,
+                    handler: "赵前进",
+                    taskStatus: "进行中",
+                  },
+                ],
+                funTestTasks: [
+                  {
+                    handler: "付波",
                     taskStatus: "进行中",
                   },
                 ],
@@ -162,172 +236,130 @@ export default {
           },
         ],
       },
-      tableData: [
-        {
-          reqId: "BOSS-XXXXXXXXXXXXXXXXXXXXXXXXXXXXX",
-          reqName: " 北京移动XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX需求",
-          reqHandler: "殷总",
-          reqStatus: "分析中",
-          systemName: "CRM",
-          systemHandler: "郭海位",
-          systemStatus: "进行中",
-          moduleName: "呼叫中心",
-          dev: [
-            {
-              devHandler: "麻槐德",
-              devStatus: "已领取",
-            },
-            {
-              devHandler: "赵前进",
-              devStatus: "进行中",
-            },
-          ],
-          funTest: [
-            {
-              funcTestHandler: "刘宝星",
-              funcTestStatus: "进行中",
-            },
-          ],
-          sysTestHandler: "成铭",
-          sysTestStatus: "进行中",
-          release: "未发布",
-          finish: "未完成",
-        },
-        {
-          reqId: "BOSS-XXXXXXXXXXXXXXXXXXXXXXXXXXXXX",
-          reqName: " 北京移动XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX需求",
-          reqHandler: "殷总",
-          reqStatus: "分析中",
-          systemName: "CRM",
-          systemHandler: "郭海位",
-          systemStatus: "进行中",
-          moduleName: "营业",
-          dev: [
-            {
-              devHandler: "庄强",
-              devStatus: "进行中",
-            },
-            {
-              devHandler: "周智勇",
-              devStatus: "已完成",
-            },
-          ],
-          funTest: [
-            {
-              funcTestHandler: "刘宝星",
-              funcTestStatus: "进行中",
-            },
-            {
-              funcTestHandler: "张勋",
-              funcTestStatus: "已领取",
-            },
-          ],
-          sysTestHandler: "成铭",
-          sysTestStatus: "进行中",
-          release: "",
-          finish: "",
-        },
-        {
-          reqId: "BOSS-XXXXXXXXXXXXXXXXXXXXXXXXXXXXX",
-          reqName: " 北京移动XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX需求",
-          reqHandler: "殷总",
-          reqStatus: "分析中",
-          systemName: "BOSS",
-          systemHandler: "沈峰",
-          systemStatus: "分析完成",
-          moduleName: "BOSS接口",
-          dev: [],
-          funTest: [
-            {
-              funcTestHandler: "刘宝星",
-              funcTestStatus: "进行中",
-            },
-          ],
-          sysTestHandler: "成铭",
-          sysTestStatus: "未开始",
-          release: "",
-          finish: "",
-        },
-        {
-          reqId: "BOSS-XXXXXXXXXXXXXXXXXXXXXXXXXXXXX",
-          reqName: " 北京移动XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX需求",
-          reqHandler: "殷总",
-          reqStatus: "分析中",
-          systemName: "电商",
-          systemHandler: "王神话",
-          systemStatus: "分析中",
-          moduleName: "",
-          dev: [],
-          funTest: [],
-          sysTestHandler: "成铭",
-          sysTestStatus: "未开始",
-          release: "",
-          finish: "",
-        },
-      ],
+      tableData: [],
+      rowspan067: 1,
+      rowspan15: [2,0,3,0,0,1],
     };
   },
   methods: {
-    objectSpanMethod({ row, column, rowIndex, columnIndex }) {
-      console.log("row=" + row);
-      console.log("column=" + column);
-      console.log("rowIndex=" + rowIndex);
-      console.log("columnIndex=" + columnIndex);
-      if (columnIndex === 0) {
-        if (rowIndex === 0) {
-          return {
-            rowspan: 4,
-            colspan: 1,
-          };
-        } else {
-          return {
-            rowspan: 0,
-            colspan: 0,
-          };
-        }
-      }
-      if (columnIndex === 1) {
-        if (rowIndex === 0) {
-          return {
-            rowspan: 2,
-            colspan: 1,
-          };
-        } else if (rowIndex === 1) {
-          return {
-            rowspan: 0,
-            colspan: 0,
-          };
-        }
-      }
+    demandTransTable() {
+      this.tableData = [];
+      this.rowspan067 = 1;
+      this.rowspan15 = [];
 
-      if (columnIndex === 6 || columnIndex === 7) {
-        if (rowIndex === 0) {
-          return {
-            rowspan: 4,
-            colspan: 1,
-          };
-        } else {
-          return {
-            rowspan: 0,
-            colspan: 0,
-          };
-        }
-      }
+      // epic上没有feature，只往tableDate中放入一套数据
+      if (!this.data.features || this.data.features.length == 0) {
+        this.tableData.push({
+          //epic
+          epicIssueId: this.data.issueId,
+          bizNum: this.data.bizNum,
+          title: this.data.title,
+          epicHandler: this.data.handler,
+          epicStatus: this.data.epicSatus,
+          release: this.data.release,
+          finish: this.data.finish,
+        });
 
-      if (columnIndex === 5) {
-        if (rowIndex === 0) {
-          return {
-            rowspan: 2,
-            colspan: 1,
-          };
-        } else {
-          return {
-            rowspan: 1,
-            colspan: 1,
-          };
-        }
+        // 没有feature，只有一行，1，5列不合并
+        this.rowspan15.push(1);
+      } else {
+        // 第1,7,8列缩进，先以feature的个数赋值
+        this.rowspan067 = this.data.features.length;
+        this.data.features.forEach((feature, index) => {
+          // 如果feature上没有故事，只把epic+feature放入talbeData中
+          if (!feature.stories || feature.stories.length == 0) {
+            let obj = {
+              // epic
+              epicIssueId: this.data.issueId,
+              bizNum: this.data.bizNum,
+              title: this.data.title,
+              epicHandler: this.data.handler,
+              epicStatus: this.data.epicSatus,
+              release: this.data.release,
+              finish: this.data.finish,
+
+              // feature
+              featureIssueId: feature.issueId,
+              systemName: feature.systemName,
+              featureHandler: feature.handler,
+              featureStatus: feature.featureStatus,
+              sysTester: feature.sysTester,
+              sysTestStatus: feature.sysTestStatus,
+            };
+            this.tableData.push(obj);
+            this.rowspan15.push(1);
+          } else {
+            // 第1,7,8列缩进，先以feature的个数赋值,再以sotry个数-1累加
+            this.rowspan067 += feature.stories.length - 1;
+            feature.stories.forEach((story, index) => {
+              // 如果是第一个故事，需要把故事总数，当作rowspan
+              if(index ===0){
+                this.rowspan15.push(feature.stories.length);
+              // 如果不是第一个，不显示当前行
+              }else{
+                this.rowspan15.push(0);
+              }
+              let obj = {
+                // epic
+                epicIssueId: this.data.issueId,
+                bizNum: this.data.bizNum,
+                title: this.data.title,
+                epicHandler: this.data.handler,
+                epicStatus: this.data.epicSatus,
+                release: this.data.release,
+                finish: this.data.finish,
+
+                // feature
+                featureIssueId: feature.issueId,
+                systemName: feature.systemName,
+                featureHandler: feature.handler,
+                featureStatus: feature.featureStatus,
+                sysTester: feature.sysTester,
+                sysTestStatus: feature.sysTestStatus,
+
+                //sotry
+                storyIssueId: story.issueId,
+                sotryName: story.title,
+                moduleName: story.moduleName,
+
+                //开发任务
+                devTasks: story.devTasks,
+
+                // 功能测试任务
+                funTestTasks: story.funTestTasks,
+              };
+              this.tableData.push(obj);
+            });
+          }
+        });
       }
     },
+
+    objectSpanMethod({ row, column, rowIndex, columnIndex }) {
+      if (columnIndex === 0 || columnIndex === 6 || columnIndex === 7) {
+        if (rowIndex === 0) {
+          return {
+            rowspan: this.rowspan067,
+            colspan: 1,
+          };
+        } else {
+          return {
+            rowspan: 0,
+            colspan: 0,
+          };
+        }
+      }
+
+      if (columnIndex === 1 || columnIndex === 5) {
+        return {
+          rowspan: this.rowspan15[rowIndex],
+          colspan: this.rowspan15[rowIndex] > 0 ? 1 : 0
+        };
+      }
+    },
+  },
+  mounted() {
+    this.demandTransTable();
   },
 };
 </script>
