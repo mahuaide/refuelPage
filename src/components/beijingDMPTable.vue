@@ -161,12 +161,12 @@ export default {
                 devTasks: [
                   {
                     issueId: 31001,
-                    handler: "李秀成",
+                    handler: "张涛",
                     taskStatus: "已领取",
                   },
                   {
                     issueId: 31002,
-                    handler: "曾国藩",
+                    handler: "赵林进",
                     taskStatus: "进行中",
                   },
                 ],
@@ -196,7 +196,7 @@ export default {
                 funTestTasks: [
                   {
                     handler: "付波",
-                    taskStatus: "进行中",
+                    taskStatus: "已领取",
                   },
                 ],
               },
@@ -219,7 +219,7 @@ export default {
                 funTestTasks: [
                   {
                     handler: "付波",
-                    taskStatus: "进行中",
+                    taskStatus: "已领取",
                   },
                 ],
               },
