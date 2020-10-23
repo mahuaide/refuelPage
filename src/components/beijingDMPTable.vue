@@ -236,18 +236,15 @@ export default {
           },
         ],
       },
-      tableData: [],
-      rowspan067: 1,
-      rowspan15: [2,0,3,0,0,1],
+      tableData: [],  // table数据
+      rowspan_067: 1, // 第1，7，8列合并数
+      rowspan_15: [], // 第2，6列合并数组
     };
   },
   methods: {
     demandTransTable() {
-      this.tableData = [];
-      this.rowspan067 = 1;
-      this.rowspan15 = [];
-
-      // epic上没有feature，只往tableDate中放入一套数据
+      this.initData();
+      // epic上没有feature，只往tableDate中放入一层数据
       if (!this.data.features || this.data.features.length == 0) {
         this.tableData.push({
           //epic
@@ -261,10 +258,10 @@ export default {
         });
 
         // 没有feature，只有一行，1，5列不合并
-        this.rowspan15.push(1);
+        this.rowspan_15.push(1);
       } else {
         // 第1,7,8列缩进，先以feature的个数赋值
-        this.rowspan067 = this.data.features.length;
+        this.rowspan_067 = this.data.features.length;
         this.data.features.forEach((feature, index) => {
           // 如果feature上没有故事，只把epic+feature放入talbeData中
           if (!feature.stories || feature.stories.length == 0) {
@@ -287,17 +284,19 @@ export default {
               sysTestStatus: feature.sysTestStatus,
             };
             this.tableData.push(obj);
-            this.rowspan15.push(1);
+            
+            // 由于feature下没有故事，所以不合并1，5列单元格
+            this.rowspan_15.push(1);
           } else {
             // 第1,7,8列缩进，先以feature的个数赋值,再以sotry个数-1累加
-            this.rowspan067 += feature.stories.length - 1;
+            this.rowspan_067 += feature.stories.length - 1;
             feature.stories.forEach((story, index) => {
               // 如果是第一个故事，需要把故事总数，当作rowspan
               if(index ===0){
-                this.rowspan15.push(feature.stories.length);
+                this.rowspan_15.push(feature.stories.length);
               // 如果不是第一个，不显示当前行
               }else{
-                this.rowspan15.push(0);
+                this.rowspan_15.push(0);
               }
               let obj = {
                 // epic
@@ -335,11 +334,19 @@ export default {
       }
     },
 
+    initData(){
+      this.tableData = []; 
+      this.rowspan_067 = 1;
+      this.rowspan_15 = [];
+    },
+
+    // 合并单元格
     objectSpanMethod({ row, column, rowIndex, columnIndex }) {
+      // 第1列需求名称，第7列上线发布，第8列完成
       if (columnIndex === 0 || columnIndex === 6 || columnIndex === 7) {
         if (rowIndex === 0) {
           return {
-            rowspan: this.rowspan067,
+            rowspan: this.rowspan_067,
             colspan: 1,
           };
         } else {
@@ -350,10 +357,11 @@ export default {
         }
       }
 
+      // 第2列系统分支，第6列系统联调
       if (columnIndex === 1 || columnIndex === 5) {
         return {
-          rowspan: this.rowspan15[rowIndex],
-          colspan: this.rowspan15[rowIndex] > 0 ? 1 : 0
+          rowspan: this.rowspan_15[rowIndex],
+          colspan: this.rowspan_15[rowIndex] > 0 ? 1 : 0
         };
       }
     },
