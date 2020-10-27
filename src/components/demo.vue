@@ -18,6 +18,7 @@
     <router-link to="/dmpTree" tag="li">dmpTree</router-link>
     <router-link to="/beijingDMPTable" tag="li">beijingDMPTable</router-link>
     <router-link to="/testTable" tag="li">testTable</router-link>
+    <router-link to="/disabledDate" tag="li">disabledDate</router-link>
   </div>
 </template>
 

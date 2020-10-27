@@ -122,6 +122,12 @@ export const staticRouter = [
     name: 'testTable',
     component: () => import('@/components/testTable'),
   },
+  {
+    path: '/disabledDate',
+    name: 'disabledDate',
+    component: () => import('@/components/disabledDate'),
+  },
+
 
 
   {
