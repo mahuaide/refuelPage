@@ -8,9 +8,7 @@ import {
 } from "@http/api.js";
 export default {
   mounted() {
-      redirectAjax().then(res=>{
-          
-      })
+      window.location.href = redirectAjax;
   },
 };
 </script>
