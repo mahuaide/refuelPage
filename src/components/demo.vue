@@ -19,6 +19,7 @@
     <router-link to="/beijingDMPTable" tag="li">beijingDMPTable</router-link>
     <router-link to="/testTable" tag="li">testTable</router-link>
     <router-link to="/disabledDate" tag="li">disabledDate</router-link>
+    <router-link to="/redirectAjax" tag="li">重定向</router-link>
   </div>
 </template>
 

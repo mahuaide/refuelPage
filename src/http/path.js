@@ -1,7 +1,8 @@
 const REFUEL = '/refuel';
 const STATION = '/station';
-const USER = '/user'
-const GITLAB = '/gitlab'
+const USER = '/user';
+const GITLAB = '/gitlab';
+const URL = '/url';
 export default {
   register:USER + '/register',
   getRefuelLogAll:REFUEL+'/query/all',
@@ -31,5 +32,6 @@ export default {
   /*********************动态路由加载***********************/
   getRounts:'/getRouter',
   /*********************动态路由加载***********************/
+  redirectAjax:URL + "/backToIndex",
 }
 

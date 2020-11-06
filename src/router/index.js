@@ -127,7 +127,11 @@ export const staticRouter = [
     name: 'disabledDate',
     component: () => import('@/components/disabledDate'),
   },
-
+  {
+    path: '/redirectAjax',
+    name: 'redirectAjax',
+    component: () => import('@/components/redirectAjax'),
+  },
 
 
   {
