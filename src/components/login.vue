@@ -266,7 +266,7 @@
       background-color rgba(255, 255, 255, 0.9)
       z-index 2
       .sys-title
-        margin-left 60px
+        margin 20px 0 30px 60px
         text-align center
         font-size 24px
 </style>

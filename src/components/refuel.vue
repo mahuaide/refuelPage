@@ -378,11 +378,13 @@
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style lang="stylus" rel="stylesheet/stylus" scoped>
   .warpper
+    margin 20px 0 0 0
     width 100%
     .refuel-log
       width 90%
       margin 0 auto
       .title
+        margin 0 0 20px 0
         text-align left
         font-size 22px
         height 30px
@@ -390,6 +392,7 @@
         .license
           display inline-block
           height 30px
+          line-height 30px;
           text-align center
           padding 4px 10px
           margin-right 4px
