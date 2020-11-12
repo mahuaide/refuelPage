@@ -41,7 +41,7 @@
               height: 100,     // 信息窗口高度
               title: data.station_address  // 信息窗口标题
             }
-            var infoWindow = new BMap.InfoWindow(`${data.station_name}：加油${data.count}次，共${data.total_money}元`, opts);  // 创建信息窗口对象
+            var infoWindow = new BMap.InfoWindow(`${data.station_name}：加油${data.count}次，共${data.total_money.toFixed(2)}元`, opts);  // 创建信息窗口对象
             marker.openInfoWindow(infoWindow, new BMap.Point(data.lng, data.lat));
           }
         } else {

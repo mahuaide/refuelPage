@@ -14,11 +14,10 @@
     <router-link to="/tabNave/vue0" tag="li">水平导航</router-link>
     <router-link to="/ip" tag="li">获取本机ip（chrome老版本）</router-link>
     <router-link to="/selectTable" tag="li">表格翻页连选</router-link>
-    <router-link to="/tableTree" tag="li">tableTree</router-link>
+    <!-- <router-link to="/tableTree" tag="li">tableTree</router-link> -->
     <router-link to="/dmpTree" tag="li">dmpTree</router-link>
     <router-link to="/beijingDMPTable" tag="li">beijingDMPTable</router-link>
-    <router-link to="/testTable" tag="li">testTable</router-link>
-    <router-link to="/disabledDate" tag="li">disabledDate</router-link>
+    <!-- <router-link to="/disabledDate" tag="li">disabledDate</router-link> -->
     <router-link to="/redirectAjax" tag="li">重定向</router-link>
   </div>
 </template>
