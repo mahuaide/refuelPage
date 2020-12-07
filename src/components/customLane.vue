@@ -519,7 +519,7 @@
                           position absolute
                           right 12px
                           top 12px;
-                          font-size 16px
+                          font-size 12px
                       textarea.mod-list-name
                         font-family "Microsoft YaHei"
                         resize: none;
@@ -591,7 +591,7 @@
                             background-origin: padding-box;
                             border-radius: 3px;
                             opacity: .8;
-                            font-size 15px
+                            font-size 12px
                             padding: 4px;
                             position: absolute;
                             right: 2px;

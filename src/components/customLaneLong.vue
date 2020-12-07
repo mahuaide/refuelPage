@@ -532,7 +532,7 @@
                             background-origin: padding-box;
                             border-radius: 3px;
                             opacity: .8;
-                            font-size 15px
+                            font-size 12px
                             padding: 4px;
                             position: absolute;
                             right: 2px;
