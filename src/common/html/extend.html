@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <script>
+    //父类
+    function Father(name, age) {
+      this.name = name;
+      this.age = age;
+    }
+    //父类方法
+    Father.prototype.say = function () {
+      console.log("姓名：" + this.name + " 年龄:" + this.age);
+    }
+
+    //子类，继承父类构造函数，callthis
+    function Son(name, age, sex) {
+      Father.call(this, name, age);
+      this.sex = sex;
+    }
+    //子类的原型对象指向父类实例对象
+    Son.prototype = new Father();
+    //子类的原型对象构造函数，指向自己
+    Son.prototype.constructor = Son;
+    //子类的方法
+    Son.prototype.sayHello = function () {
+      console.log("姓名：" + this.name + " 年龄：" + this.age + " 性别：" + this.sex)
+    }
+
+    var zhangsan = new Son("张三", 12, "男")
+    console.log(zhangsan)
+    zhangsan.say();
+    zhangsan.sayHello();
+    console.log(Object.getPrototypeOf(zhangsan))
+    console.log(zhangsan.__proto__)
+
+    class Person {
+      constructor(name, age) {
+        Object.assign(this, {name, age});
+      }
+      say() {
+        console.log("姓名：" + this.name + " 年龄：" + this.age);
+      }
+    }
+
+    class Man extends Person {
+      constructor(name, age, sex) {
+        super(name, age);
+        this.sex = sex;
+      }
+      sayHello() {
+        console.log("姓名：" + this.name + " 年龄：" + this.age+ " 性别：" + this.sex);
+      }
+    }
+
+    var lisi = new Man("李四", 19, "男");
+    lisi.sayHello();
+    console.log(Object.getPrototypeOf(lisi))
+
+  </script>
+</head>
+
+<body>
+
+</body>
+
+</html>

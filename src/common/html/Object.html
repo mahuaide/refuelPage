@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script>
+        // ES5 ES6 全等于
+        console.log("NaN === NaN " + (NaN === NaN))
+        console.log("(Object.is(NaN,NaN) "+Object.is(NaN,NaN))
+        console.log("-0 === +0 " + (-0 === +0))
+        console.log("Object.is(-0,+0) "+Object.is(-0,+0))
+
+        // 重名覆盖
+        console.log(Object.assign({a:1},{a:2,b:3},{c:5}))
+
+        // Number,Boolean会被忽略，字符串打散（如果是包装类单独直接转对象）
+        console.log(Object.assign("abc"))
+        console.log(Object.assign({},"abc",1,true))
+
+        // 不可合并非枚举
+        var obj = Object.defineProperty({},"invisible",{
+            enumerable:false,
+            key:"vlaue"
+        })
+        console.log(Object.assign({},obj))
+
+        // 浅拷贝
+        const obj1 = {a: {b: 1}};
+        const obj2 = Object.assign({}, obj1);
+
+        obj1.a.b = 2;
+        obj2.a.b // 2
+        console.log(obj2);
+
+        //嵌套的对象 会替换
+        const target = { a: { b: 'c', d: 'e' } }
+        const source = { a: { b: 'hello' } }
+        var temp = Object.assign({},target, source);
+        console.log(temp);
+
+        // 数组
+        console.log(Object.assign([1, 2, 3], [4, 5]));
+
+        // 对象属性描述
+        const obj3 = {
+            foo: 123,
+            get bar() { return 'abc' }
+        };
+
+        console.log(Object.getOwnPropertyDescriptors(obj3));
+
+        // defineProperties+getOwnPropertyDescriptiors用来合并赋值取值方法
+        const shallowMerge = (target, source) => Object.defineProperties(
+            target,
+            Object.getOwnPropertyDescriptors(source)
+        );
+        const source1 = {
+            set foo(value) {
+                console.log(value);
+            }
+        };
+        const target2 = {};
+        shallowMerge(target2,source1)
+        console.log(target2)
+    </script>
+</head>
+<body>
+    
+</body>
+</html>
