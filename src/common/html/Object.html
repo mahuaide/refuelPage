@@ -20,7 +20,9 @@
 
         // 不可合并非枚举
         var obj = Object.defineProperty({},"invisible",{
+            writable:true,
             enumerable:false,
+            configurable:false,
             key:"vlaue"
         })
         console.log(Object.assign({},obj))
