@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <script>
+    // 改指向 call
+    var o = {
+      name: "abc"
+    }
+
+    function y(a, b) {
+      console.log(this.name);
+      console.log(a + b);
+    }
+    y.call(o, 1, 2)
+    // 改指向 apply
+    var arr = [1, 2, 3, 4, 5, 6, 7];
+    console.log(Math.max.apply(Math, arr))
+
+    // 改指向 bind 非立即执行
+    var f = y.bind(o, 1, 2);
+    f();
+
+    window.onload = function () {
+      var btns = document.querySelectorAll("button");
+      for (var i = 0; i < btns.length; i++) {
+        btns[i].onclick = function () {
+          var time = 3
+          this.disabled = true;
+          var si = setInterval(function () {
+            this.innerHTML = --time + "秒后"
+          }.bind(this), 1000)
+          setTimeout(function () {
+            time = 3;
+            this.disabled = false;
+            clearInterval(si);
+            si = null;
+            this.innerHTML = time + "秒后"
+          }.bind(this), time * 1000)
+        }
+      }
+    }
+
+  </script>
+</head>
+
+<body>
+  <div>
+    <button>3秒后</button>
+    <button>3秒后</button>
+    <button>3秒后</button>
+    <button>3秒后</button>
+    <button>3秒后</button>
+  </div>
+</body>
+
+</html>

@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <script>
+    // 1*2*3*...N
+    function product(n) {
+      if (n === 1) {
+        return 1;
+      }
+      return n * product(n - 1)
+    }
+    console.log(product(3))
+
+    //斐波那契数列，N位取值 0,1,1,2,3,5,8,13,21,34,55,89,144
+    function fibonacci(n) {
+      if (n === 1 || n === 2) {
+        return 1;
+      }
+      return fibonacci(n - 1) + fibonacci(n - 2);
+    }
+    console.log(fibonacci(12));
+
+    // 数组秭归
+    var json = [{
+        id: 1,
+        name: 1
+      },
+      {
+        id: 2,
+        name: 2,
+        children: [{
+            id: 21,
+            name: 21
+          },
+          {
+            id: 22,
+            name: 22
+          }
+        ]
+      },
+      {
+        id: 3,
+        name: 3,
+        children: [{
+            id: 31,
+            name: 31
+          },
+          {
+            id: 32,
+            name: 32
+          }
+        ]
+      }
+    ];
+
+    function getId(arr, id) {
+      var result = {};
+      arr.forEach(item => {
+        if (item.id === id) {
+          result = item;
+          return item;
+        } else if (item.children && item.children.length > 0) {
+          result = getId(item.children, id);
+        }
+      })
+      return result;
+    }
+
+    console.log(getId(json, 32))
+
+  </script>
+</head>
+
+<body>
+
+</body>
+
+</html>

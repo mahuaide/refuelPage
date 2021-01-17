@@ -35,3 +35,6 @@ export const getBranches = params=>{return axios.get(resfulParamsToUrl(Path.getB
 
 //动态路由
 export const getRounts = params=>{return axios.get(resfulParamsToUrl(Path.getRounts,params),{params})}
+
+//ajax重定向
+export const redirectAjax = axios.defaults.baseURL+Path.redirectAjax;

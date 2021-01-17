@@ -132,6 +132,12 @@ export const staticRouter = [
     name: 'jsmind',
     component: () => import('@/components/jsmind'),
   },
+    path: '/redirectAjax',
+    name: 'redirectAjax',
+    component: () => import('@/components/redirectAjax'),
+  },
+
+
   {
     path: '/demo',
     name: 'demo',

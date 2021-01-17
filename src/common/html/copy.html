@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <script>
+    console.log("--------ShallowClone--------")
+    var source = {
+      id: 1,
+      name: 2,
+      desc: {
+        ppt: 1,
+        java: 2
+      }
+    }
+    var target = {};
+    for (var key in source) {
+      target[key] = source[key]
+    }
+
+    target.desc.java = "sss"
+    console.log(source)
+    console.log(target)
+    console.log("--------ShallowClone--------")
+
+    console.log("--------DeepClone--------")
+    var obj = {
+      id: 1,
+      name: 2,
+      desc: {
+        ppt: 1,
+        java: 2
+      }
+    }
+
+    // obj = [1,2,3,4]
+
+    function deepClone(source) {
+      var result = Array.isArray(source) ? [] : {};
+      if (typeof source != "object") {
+        return source;
+      } else {
+        for (var key in source) {
+          if (typeof source[key] === 'object') {
+            result[key] = deepClone(source[key])
+          } else {
+            result[key] = source[key];
+          }
+        }
+      }
+      return result;
+    }
+
+    var result = deepClone(obj);
+    result.desc.java = "sss"
+    // result.push(1);
+    console.log(obj)
+    console.log(result)
+    console.log("--------DeepClone--------")
+
+  </script>
+</head>
+
+<body>
+
+</body>
+
+</html>
