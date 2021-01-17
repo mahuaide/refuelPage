@@ -5,6 +5,7 @@ import App from './App'
 import {router} from './router'
 import store from './store/store'
 import ElementUI from 'element-ui'
+import './common/jsmind/style/jsmind.css';
 import './font/iconfont.css'
 import './common/css/reset.css'
 import 'element-ui/lib/theme-chalk/index.css'

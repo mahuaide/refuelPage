@@ -127,9 +127,11 @@ export const staticRouter = [
     name: 'disabledDate',
     component: () => import('@/components/disabledDate'),
   },
-
-
-
+  {
+    path: '/jsmind',
+    name: 'jsmind',
+    component: () => import('@/components/jsmind'),
+  },
   {
     path: '/demo',
     name: 'demo',
