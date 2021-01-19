@@ -128,9 +128,14 @@ export const staticRouter = [
     component: () => import('@/components/disabledDate'),
   },
   {
-    path: '/redirectAjax',
-    name: 'redirectAjax',
-    component: () => import('@/components/redirectAjax'),
+    path: '/jsmind',
+    name: 'jsmind',
+    component: () => import('@/components/jsmind'),
+  },
+  {
+    path:'/redirectAjax',
+    name:'redirectAjax',
+    component:() => import('@/components/redirectAjax'),
   },
 
 
