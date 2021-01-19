@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <script>
+    // ()=>{}
+    let arr = [1, 2, 3, 4, 5];
+    const f = (n) => {
+      return arr.find(item => item === n)
+    }
+    console.log(f(5))
+
+    let obj = {id:1,name:2,age:3}
+    let {id,name} = obj;
+    console.log(`id:${id}  name:${name}`)
+
+    let arr1 = [1,2,3];
+    let arr2 = [4,5,6];
+    let arr3 = [...arr1,...arr2];
+    console.log(arr3)
+    let [first,...other] = arr3;
+    console.log(`first:${first}  other:${other}`)
+    arr3.push(...arr1)
+    console.log(arr3);
+
+    var str = "123".repeat(2);
+    var strArr = [...str];
+    console.log(strArr)
+
+    var set = new Set();
+    set.add(1).add(2).add(3);
+    console.log(set.size);
+    console.log(set);
+    set.delete(3);
+    console.log(set);
+    console.log(set.has(3));
+    set.clear()
+    console.log(set);
+
+    console.log(Array.from(new Set(str),item=>item*2));
+
+    
+
+  </script>
+</head>
+
+<body>
+
+</body>
+
+</html>
