@@ -7,7 +7,7 @@
   <title>Document</title>
   <script>
     window.onload = function () {
-      for (var i = 0; i < 4; i++) {
+      for (var i = 0; i < 3; i++) {
         setTimeout(function () {
           console.log(i)
         }, 1000)
@@ -57,7 +57,16 @@
       }
     };
     console.log(object.getNameFunc()());
-
+    var t = null;
+    function change(){
+      if(t){
+        clearTimeout(t);
+      }
+      let name = document.getElementById('name');
+      t = setTimeout(function(){
+        console.log(name.value);
+      },1000)
+    }
   </script>
 </head>
 
@@ -67,6 +76,7 @@
     <li>jerry</li>
     <li>lara</li>
   </ul>
+  <input type="text" onkeyup="change()" id="name">
 </body>
 
 </html>
