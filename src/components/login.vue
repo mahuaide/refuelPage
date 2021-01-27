@@ -14,11 +14,11 @@
       </dl>
       <div class="right">&copy; Ayitubie.Inc</div>
     </div>
-    <div class="login" v-show="loginShow">
+    <div class="login" v-show="loginShow" v-waterMaker="'Ayitubie'">
       <p class="sys-title">加油记录系统</p>
       <el-form ref="login" :model="form" label-width="80px">
         <el-form-item label="用户名" prop="userName" required>
-          <el-input name="userName" v-model="form.userName" placeholder="请输入用户名" autocomplete="off"></el-input>
+          <el-input name="userName" v-autoFocus v-model.trim="form.userName" placeholder="请输入用户名" autocomplete="off"></el-input>
         </el-form-item>
         <el-form-item label="密 码" prop="password" required>
           <el-input name="password" type="password" v-model="form.password" placeholder="请输入密码" autocomplete="off"
@@ -30,7 +30,7 @@
         </el-form-item>
       </el-form>
     </div>
-    <div class="register">
+    <div class="register" >
       <el-dialog title="注册" top="8vh" width="40%"  append-to-body="true"
                  :visible.sync="dialogFormRegister"
                  @close="closeRegister" custom-class="registerDialog"
