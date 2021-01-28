@@ -21,6 +21,8 @@
     <router-link to="/jsmind" tag="li">jsmind</router-link>
     <!-- <router-link to="/disabledDate" tag="li">disabledDate</router-link> -->
     <router-link to="/redirectAjax" tag="li">重定向</router-link>
+    <router-link to="/fatherAndChildren" tag="li">组件通讯</router-link>
+    <router-link to="/lifeCycle" tag="li">lifeCycle</router-link>
   </div>
 </template>
 

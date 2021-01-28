@@ -137,8 +137,16 @@ export const staticRouter = [
     name:'redirectAjax',
     component:() => import('@/components/redirectAjax'),
   },
-
-
+  {
+    path:'/fatherAndChildren',
+    name:'fatherAndChildren',
+    component:() => import('@/components/communication/father.vue'),
+  },
+  {
+    path:'/lifeCycle',
+    name:'lifeCycle',
+    component:() => import('@/components/lifeCycle/father.vue'),
+  },
   {
     path: '/demo',
     name: 'demo',
