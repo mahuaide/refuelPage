@@ -23,6 +23,7 @@
     <router-link to="/redirectAjax" tag="li">重定向</router-link>
     <router-link to="/fatherAndChildren" tag="li">组件通讯</router-link>
     <router-link to="/lifeCycle" tag="li">lifeCycle</router-link>
+    <router-link to="/slot" tag="li">slot</router-link>
   </div>
 </template>
 
