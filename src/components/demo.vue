@@ -24,6 +24,7 @@
     <router-link to="/fatherAndChildren" tag="li">组件通讯</router-link>
     <router-link to="/lifeCycle" tag="li">lifeCycle</router-link>
     <router-link to="/slot" tag="li">slot</router-link>
+    <router-link to="/async" tag="li">promise/async/await</router-link>
   </div>
 </template>
 

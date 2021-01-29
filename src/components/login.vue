@@ -73,6 +73,7 @@
           }
           checkUserExist(params).then(res => {
             let {data}  = res.data
+            console.log(data);
             if (data[0] && data[0].count >0) {
               callback(new Error('用户已存在'));
             } else {
