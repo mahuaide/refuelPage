@@ -11,6 +11,11 @@ Vue.use(Router)
 if (lsRead("user").userId) {
   store.commit(types.LOGIN, lsRead("user"));
 }
+
+window.onhashchange = function(){
+  //console.log(location.hash)
+}
+
 export const staticRouter = [
   {
     path: '/',
@@ -153,9 +158,10 @@ export const staticRouter = [
     component:() => import('@/components/slot/fatherSlot.vue'),
   },
   {
-    path:'/async',
+    path:'/async/:id',
     name:'async',
     component:() => import('@/components/promise.vue'),
+    props:true
   },
   {
     path: '/demo',
