@@ -158,6 +158,11 @@ export const staticRouter = [
     component:() => import('@/components/slot/fatherSlot.vue'),
   },
   {
+    path:'/log',
+    name:'log',
+    component:() => import('@/components/log.vue'),
+  },
+  {
     path:'/async/:id',
     name:'async',
     component:() => import('@/components/promise.vue'),

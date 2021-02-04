@@ -18,6 +18,7 @@
     "element-ui": "2.13.2",
     "highlight.js": "^9.15.10",
     "moment": "2.22.2",
+    "socket.io-client": "^3.1.0",
     "sortablejs": "^1.10.2",
     "stylus": "0.54.5",
     "stylus-loader": "3.0.2",
