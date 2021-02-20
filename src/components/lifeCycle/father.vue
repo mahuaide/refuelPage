@@ -1,8 +1,11 @@
 <template>
   <div>
-      <keep-alive>
+      <keep-alive> -->
+          <child v-if="keepAliveFlag"></child>
+       </keep-alive>
+
           <child v-if="flag"></child>
-      </keep-alive>
+      <el-button type="primary" @click="keepAliveFlag = !keepAliveFlag">keepAlive子组件</el-button>
       <el-button type="primary" @click="flag = !flag">子组件</el-button>
   </div>
 </template>
@@ -12,7 +15,8 @@ import child from '@/components/lifeCycle/child'
 export default {
     data() {
         return {
-            flag:false
+            flag:false,
+            keepAliveFlag:false
         }
     },
     components: {
