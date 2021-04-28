@@ -163,6 +163,11 @@ export const staticRouter = [
     component:() => import('@/components/log.vue'),
   },
   {
+    path:'/mime',
+    name:'log',
+    component:() => import('@/components/mime.vue'),
+  },
+  {
     path:'/async/:id',
     name:'async',
     component:() => import('@/components/promise.vue'),

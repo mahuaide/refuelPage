@@ -13,18 +13,19 @@ export default {
   },
   mounted() {
     var div = document.getElementById('scrolldIV');
-    this.socket = io.connect('http://localhost:3002', {
-      path: "/socketIoTest",
+    this.socket = io.connect('http://localhost', {
       autoConnect: true,
       forceNew: true,
       reconnectionDelay: 5000,
+      reconnectionDelayMax: 10000,
+      reconnectionAttempts: 5,
       randomizationFactor: 0.8,
       transports: ['websocket'],
       query: {
           who:"mahuaide"
       },
     });
-    this.socket.emit('getLog');
+    this.socket.emit('getLog',);
     this.socket.on("sendLog", (msg) => {
         this.log = msg;
         this.$nextTick(()=>{

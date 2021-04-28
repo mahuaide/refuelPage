@@ -26,6 +26,7 @@
     <router-link to="/slot" tag="li">slot</router-link>
     <router-link to="/async/1" tag="li">promise/async/await</router-link>
     <router-link to="/log" tag="li">日志</router-link>
+    <router-link to="/mime" tag="li">mime</router-link>
   </div>
 </template>
 

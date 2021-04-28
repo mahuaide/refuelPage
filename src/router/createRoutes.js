@@ -44,13 +44,13 @@ export const createRouter = (data) => {
 
 export const addRoutes = () => {
   return new Promise((resolve, reject) => {
-    getRounts().then(res => {
-      let routes = createRouter(res.data.data);
-      store.commit(types.CREATEROUTES, routes);
-      resolve(routes);
-    }).catch(e => {
-      reject("");
-    })
+    // getRounts().then(res => {
+    //   let routes = createRouter(res.data.data);
+    //   store.commit(types.CREATEROUTES, routes);
+    //   resolve(routes);
+    // }).catch(e => {
+    //   reject("");
+    // })
   }).catch((e) => {
     reject("");
   })

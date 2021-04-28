@@ -13,6 +13,7 @@ import filters from './filters' //自定义过滤器，挂在到Vue全局
 import autoFocus from '@/directives/autoFocus'
 import waterMaker from '@/directives/waterMaker'
 
+
 Vue.config.productionTip = false
 Object.keys(filters).forEach(key => Vue.filter(key, filters[key]))
 Vue.use(ElementUI);
