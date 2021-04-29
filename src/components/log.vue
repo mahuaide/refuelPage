@@ -13,7 +13,7 @@ export default {
   },
   mounted() {
     var div = document.getElementById('scrolldIV');
-    this.socket = io.connect('http://localhost', {
+    this.socket = io.connect('http://127.0.0.1:3003', {
       autoConnect: true,
       forceNew: true,
       reconnectionDelay: 5000,

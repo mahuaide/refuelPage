@@ -12,7 +12,9 @@ import 'element-ui/lib/theme-chalk/index.css'
 import filters from './filters' //自定义过滤器，挂在到Vue全局
 import autoFocus from '@/directives/autoFocus'
 import waterMaker from '@/directives/waterMaker'
+const mime = require("mime");
 
+Vue.prototype.$mime = mime
 
 Vue.config.productionTip = false
 Object.keys(filters).forEach(key => Vue.filter(key, filters[key]))
