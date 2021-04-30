@@ -36,6 +36,10 @@ export default {
         })
     })
   },
+  destroyed () {
+    console.log("disconnect")
+    this.socket.disconnect();
+  },
   methods: {
   },
 };
