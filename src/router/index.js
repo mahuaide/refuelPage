@@ -168,6 +168,11 @@ export const staticRouter = [
     component:() => import('@/components/mime.vue'),
   },
   {
+    path:'/sockjs',
+    name:'log',
+    component:() => import('@/components/sockjs.vue'),
+  },
+  {
     path:'/async/:id',
     name:'async',
     component:() => import('@/components/promise.vue'),
