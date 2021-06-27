@@ -14,7 +14,8 @@
         </dl>
         <div class="right">&copy; Ayitubie.Inc</div>
       </div>
-      <div class="login" v-show="loginShow" v-waterMaker="'Ayitubie'">
+      <!-- <div class="login" v-show="loginShow" v-waterMaker="'Ayitubie'"> -->
+      <div class="login" v-show="loginShow">
         <p class="sys-title">加油宝</p>
         <el-form ref="login" :model="form" label-width="80px">
           <el-form-item label="用户名" prop="userName" required>
