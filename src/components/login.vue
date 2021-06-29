@@ -256,7 +256,7 @@ export default {
     var context;
     var rains = new Array();
     var rainCount = 1; //数量
-    var intervalOffset = 6000;// 间隔距离
+    var intervalOffset = 4000;// 间隔距离
     var windowWidth = 0;
     //初始化画布及context
     function init() {
@@ -294,7 +294,7 @@ export default {
         this.length = Math.ceil(x);
         //         x = Math.random()*10+30;
         this.angle = 30; //流星倾斜角
-        this.speed = 15; //流星的速度
+        this.speed = 8; //流星的速度
         var cos = Math.cos((this.angle * 3.14) / 180);
         var sin = Math.sin((this.angle * 3.14) / 180);
         this.width = this.length * cos; //流星所占宽度
