@@ -38,7 +38,7 @@ export default {
     },
 
     /**
-     * AES  加密
+     * AES  加密 -CBC
      * ECB：是一种基础的加密方式，密文被分割成分组长度相等的块（不足补齐），
      *      然后单独一个个加密，一个个输出组成密文。
      * CBC：是一种循环模式，前一个分组的密文和当前分组的明文异或或操作后再加密，
@@ -69,7 +69,7 @@ export default {
       return encrypted.ciphertext.toString();
     },
 
-    // AES 解密
+    // AES 解密 -CBC
     decrypto() {
       var word = this.cipherText.toString();
       var key = CryptoJs.enc.Utf8.parse(KEY);
