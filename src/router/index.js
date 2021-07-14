@@ -164,13 +164,18 @@ export const staticRouter = [
   },
   {
     path:'/mime',
-    name:'log',
+    name:'mime',
     component:() => import('@/components/mime.vue'),
   },
   {
     path:'/crypto',
-    name:'log',
+    name:'crypto',
     component:() => import('@/components/crypto.vue'),
+  },
+  {
+    path:'/watch',
+    name:'watch',
+    component:() => import('@/components/watch.vue'),
   },
   {
     path:'/sockjs',
