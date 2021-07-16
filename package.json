@@ -26,6 +26,7 @@
     "vue": "2.5.2",
     "vue-router": "2.2.0",
     "vuex": "2.3.0",
+    "wangeditor": "^4.7.5",
     "webpack-dev-server": "^2.11.3"
   },
   "devDependencies": {

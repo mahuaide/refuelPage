@@ -29,6 +29,7 @@
     <router-link to="/mime" tag="li">mime</router-link>
     <router-link to="/crypto" tag="li">crypto</router-link>
     <router-link to="/watch" tag="li">watch</router-link>
+    <router-link to="/wangeditor" tag="li">wangeditor</router-link>
   </div>
 </template>
 

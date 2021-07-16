@@ -183,6 +183,11 @@ export const staticRouter = [
     component:() => import('@/components/sockjs.vue'),
   },
   {
+    path:'/wangeditor',
+    name:'log',
+    component:() => import('@/components/wangeditor.vue'),
+  },
+  {
     path:'/async/:id',
     name:'async',
     component:() => import('@/components/promise.vue'),
